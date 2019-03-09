@@ -37,8 +37,9 @@
 
   @media (--viewportLarge) {
     max-height: 800px;
-    min-height: 600px;
-    height: calc(70vh - var(--topbarHeightDesktop));
+    /*min-height: 600px;
+    height: calc(70vh - var(--topbarHeightDesktop));*/
+   height: 450px;
   }
 }
 
@@ -48,12 +49,12 @@
   padding-bottom: 32px;
 
   @media (--viewportMedium) {
-    padding-bottom: 83px;
+    padding-bottom: 101px;
   }
 
   @media (--viewportLarge) {
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 80px;
   }
 }
 

@@ -25,6 +25,7 @@
 
 .desktopInputRoot {
   height: var(--topbarHeightDesktop);
+  height: 48px;
 }
 
 .mobileIcon {

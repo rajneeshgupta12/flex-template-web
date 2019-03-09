@@ -56,7 +56,8 @@
   box-shadow: var(--boxShadowLight);
 
   @media (--viewportLarge) {
-    padding: 0 24px 0 0;
+    padding: 0 0 0 24px;
+   /* padding: 0 24px 0 0; */
   }
 }
 
@@ -66,15 +67,18 @@
   flex-shrink: 0;
   padding: 21px 24px 21px 24px;
   height: 100%;
+  width: 180px;
+  margin-left: 24px;
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    padding: 15px 0px 16px 0;
+    /*padding: 21px 36px 21px 36px;*/
   }
 }
 
 .logo {
   /* If height is increased, change link paddings accordingly */
-  height: 27px;
+  height: 42px;
 
   /* Good aspect ratio should be less than 160/27 (width/height) */
   /* NOTE: extremely wide logos, need special handling. */
@@ -87,11 +91,11 @@
 /* Search */
 .searchLink {
   flex-grow: 1;
-  height: 100%;
+
   margin-right: 24px;
-  border-left-style: solid;
+ /* border-left-style: solid;
   border-left-width: 1px;
-  border-left-color: var(--matterColorNegative);
+  border-left-color: var(--matterColorNegative);*/
 
   @media (--viewportLarge) {
     padding-left: 0;
@@ -105,9 +109,13 @@
 }
 
 .topbarSearchWithLeftPadding {
+   border: 2px solid black;
   padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   height: var(--topbarHeightDesktop);
 
+  width: 420px;
   @media (--viewportLarge) {
     padding-left: 34px;
   }

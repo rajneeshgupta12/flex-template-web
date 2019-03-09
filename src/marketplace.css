@@ -22,8 +22,8 @@
   /* Full screen Background image located in root-folder/src/assets */
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('../../assets/background-1440.jpg');
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.0)),
+      url('../../assets/1440_Wide.jpg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
@@ -34,15 +34,15 @@
     /* Align the image within the container */
     background-position: center center;
 
-    @media (--viewportLarge) {
+  /*  @media (--viewportLarge) {
       border-radius: 40px;
       border: solid 36px var(--matterColorBright);
-    }
+    }*/
   }
 
   /* ================ Colors ================ */
 
-  --marketplaceColor: #c0392b;
+  --marketplaceColor: #4d4dff;
   --marketplaceColorLight: #ff4c38;
   --marketplaceColorDark: #8c291e;
 
@@ -57,14 +57,13 @@
   --bannedColorDark: var(--marketplaceColor);
 
   --matterColorDark: #000000;
-  --matterColor: #4a4a4a;
+  --matterColor: #0a4a4a;
   --matterColorAnti: #b2b2b2;
   --matterColorNegative: #e7e7e7;
   --matterColorBright: #fcfcfc;
   --matterColorLight: #ffffff;
 
   --matterColorLightTransparent: rgba(255, 255, 255, 0.65);
-
   /* ================ Spacing unites ================ */
 
   /* Multiples of mobile and desktop spacing units should be used with margins and paddings. */
