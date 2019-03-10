@@ -68,7 +68,6 @@
   padding: 21px 24px 21px 24px;
   height: 100%;
   width: 180px;
-  margin-left: 24px;
 
   @media (--viewportLarge) {
     padding: 15px 0px 16px 0;
@@ -91,7 +90,7 @@
 /* Search */
 .searchLink {
   flex-grow: 1;
-
+  height: 100%;
   margin-right: 24px;
  /* border-left-style: solid;
   border-left-width: 1px;
@@ -109,13 +108,9 @@
 }
 
 .topbarSearchWithLeftPadding {
-   border: 2px solid black;
   padding-left: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
   height: var(--topbarHeightDesktop);
 
-  width: 420px;
   @media (--viewportLarge) {
     padding-left: 34px;
   }
