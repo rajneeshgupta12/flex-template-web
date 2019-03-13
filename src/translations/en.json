@@ -683,6 +683,7 @@
   "SectionHowItWorks.titleLineTwo": "(or how Saunatime works).",
   "SectionLocations.listingsInLocation": "Saunas in {location}",
   "SectionLocations.title": "Explore exotic locations in Finland",
+  "SectionRecommendation.title": "Best Oases for you",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
   "SelectSingleFilter.popupClear": "Clear",

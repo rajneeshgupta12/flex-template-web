@@ -40,6 +40,11 @@
     }*/
   }
 
+  --tentIcon: {
+    background: url('../../assets/Bell.png');
+    background-size: cover;
+  }
+
   /* ================ Colors ================ */
 
   --marketplaceColor: #4d4dff;

@@ -1,0 +1,6 @@
+@import '../../marketplace.css';
+
+.title {
+  @apply --marketplaceH1FontStyles;
+  margin-top: 0;
+}

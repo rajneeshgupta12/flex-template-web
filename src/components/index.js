@@ -155,10 +155,16 @@ export { default as EditListingPoliciesPanel } from './EditListingPoliciesPanel/
 export { default as EditListingPricingPanel } from './EditListingPricingPanel/EditListingPricingPanel';
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
 export { default as Footer } from './Footer/Footer';
+export { default as SectionDiscover } from './SectionDiscover/SectionDiscover';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';
 export { default as SectionLocations } from './SectionLocations/SectionLocations';
+export { default as SectionRecommendation } from './SectionRecommendation/SectionRecommendation';
 export { default as SectionThumbnailLinks } from './SectionThumbnailLinks/SectionThumbnailLinks';
+export { default as SectionType } from './SectionType/SectionType';
+export { default as SectionInterview } from './SectionInterview/SectionInterview';
+export { default as SectionHost } from './SectionHost/SectionHost';
+export { default as SectionAbout } from './SectionAbout/SectionAbout';
 export { default as Topbar } from './Topbar/Topbar';
 export { default as TopbarDesktop } from './TopbarDesktop/TopbarDesktop';
 export { default as TopbarMobileMenu } from './TopbarMobileMenu/TopbarMobileMenu';

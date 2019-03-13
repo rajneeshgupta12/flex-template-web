@@ -67,6 +67,9 @@
   overflow: auto;
 }
 
+.sectionDiscoer{
+  overflow: hidden;
+}
 /* Square corners for the last section if it's even */
 .section:nth-of-type(2n):last-of-type {
   @media (--viewportMedium) {
@@ -108,14 +111,14 @@
 }
 
 /* A bar on top of light sections */
-.section:nth-of-type(2n) .sectionContent::before {
+/*.section:nth-of-type(2n) .sectionContent::before {
   background: var(--marketplaceColor);
   content: '';
   display: block;
   width: 109px;
   height: 6px;
 
-  /* Place the bar on top of .sectionContent top margin */
+  /* Place the bar on top of .sectionContent top margin 
   position: relative;
   top: calc(-1 * var(--LandingPage_sectionMarginTop));
 
@@ -129,3 +132,4 @@
     top: calc(-1 * var(--LandingPage_sectionMarginTopLarge));
   }
 }
+*/

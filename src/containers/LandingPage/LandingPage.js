@@ -11,6 +11,12 @@ import {
   SectionHero,
   SectionHowItWorks,
   SectionLocations,
+  SectionHost,
+  SectionDiscover,
+  SectionRecommendation,
+  SectionInterview,
+  SectionType,
+  SectionAbout,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
@@ -62,9 +68,15 @@ export const LandingPageComponent = props => {
             <SectionHero className={css.hero} history={history} location={location} />
           </div>
           <ul className={css.sections}>
-            <li className={css.section}>
+
+            <li className={css.sectionDiscover}>
               <div className={css.sectionContentFirstChild}>
-                <SectionLocations />
+                <SectionDiscover />
+              </div>
+            </li>
+            <li className={css.section}>
+              <div className={css.sectionContent}>
+                <SectionRecommendation />
               </div>
             </li>
             <li className={css.section}>
@@ -72,6 +84,7 @@ export const LandingPageComponent = props => {
                 <SectionHowItWorks />
               </div>
             </li>
+            
           </ul>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
