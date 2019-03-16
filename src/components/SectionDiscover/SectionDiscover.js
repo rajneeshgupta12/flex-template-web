@@ -54,12 +54,17 @@ class SectionDiscover extends React.Component {
 	
 	click(direction) {
 		console.log(this.state.currentStartIndex);
-		if (direction === "right" && this.state.left >= -400) {
-			this.setState({left: this.state.left - 400});
-			this.state.currentStartIndex++ 
+		if (direction === "right" && this.state.left >= -320) {
+			this.setState({left: this.state.left - 320});
+			this.state.currentStartIndex++ ;
+
+		} else if (direction === "right" && this.state.left <-320) {
+			this.setState({left: 0});
+			
+
 			
 		} else if (direction === "left" && this.state.left < 0){
-			this.setState({left: this.state.left + 400});
+			this.setState({left: this.state.left + 320});
 			this.state.currentStartIndex--;
 		}
 	}
@@ -76,9 +81,9 @@ class SectionDiscover extends React.Component {
 					<FormattedMessage id="SectionDiscover.title" />
 				</div>
 				<div className={css.rowWrapper}>
-				<div className={css.leftFade} />
-				<div className={css.rightFade} />
+				
 					<button onClick={() => this.click("left")} className={css.leftArrow}>/</button>
+					<button onClick={() => this.click("right")} className={css.rightArrow}>/</button>
 				<div style={moveStyle} className={css.images}>
 				
 							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Romantic')
@@ -101,7 +106,7 @@ class SectionDiscover extends React.Component {
 						
 				</div>
 
-				<button onClick={() => this.click("right")} className={css.rightArrow}>/</button>
+				
 
 				</div>
 			</div>
