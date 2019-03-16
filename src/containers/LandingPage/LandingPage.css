@@ -67,7 +67,7 @@
   overflow: auto;
 }
 
-.sectionDiscoer{
+.sectionDiscover{
   overflow: hidden;
 }
 /* Square corners for the last section if it's even */
@@ -107,7 +107,7 @@
 
 .sectionContentFirstChild {
   composes: sectionContent;
-  margin-top: 3vh;
+  margin-top: 5vh;
 }
 
 /* A bar on top of light sections */

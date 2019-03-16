@@ -43,6 +43,7 @@
   --tentIcon: {
     background: url('../../assets/Bell.png');
     background-size: cover;
+    
   }
 
   /* ================ Colors ================ */
@@ -92,9 +93,9 @@
   /* ================ Z-index base levels ================ */
 
   /* topbar is positioned slightly above content */
-  --zIndexTopbar: 10;
+  --zIndexTopbar: 20;
   /* small popups on UI should use z-indexes above 50 */
-  --zIndexPopup: 50;
+  --zIndexPopup: 80;
   /* modals and UI overlays should use z-indexes above 100 */
   --zIndexModal: 100;
   /* generic error message should overlay even modals */

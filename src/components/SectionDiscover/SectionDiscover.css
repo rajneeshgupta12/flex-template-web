@@ -38,10 +38,14 @@
 }
 
 .location {
+  max-width: 243px;
+  max-height: 324px;
+  overflow: hidden;
   @media (--viewportMedium) {
     margin-right: 24px;
     margin-bottom: 0;
   }
+ 
 }
 
 .location:last-of-type {
@@ -52,12 +56,12 @@
 
 /* A wrapper for a responsive image that holds it's aspect ratio */
 .imageWrapper {
-
+  width: 200%;
   position: relative;
   z-index: -1;
-  width: 100%;
   border-radius: 4px;
   transition: var(--transitionStyleButton);
+
 /* &:hover {
     transform: scale(1.02);
     box-shadow: var(--boxShadowSectionLocationHover);
@@ -70,13 +74,17 @@
   display: block;
   position: absolute;
   height: 100%;
+ 
   top: 0;
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.5);
+
+
 }
 
 /* An image wrapper that defines the images aspect ratio */
+
 .aspectWrapper {
   padding-bottom: calc(6 / 13 * 100%); /* 13:6 Aspect Ratio */
 
@@ -88,7 +96,6 @@
 .locationImage {
   /* Layout - image will take space defined by aspect ratio wrapper */
   position: absolute;
-
   top: 0;
   bottom: 0;
   left: 0;
@@ -97,6 +104,7 @@
   height: 100%;
   border-radius: 4px;
   object-fit: cover;
+  clip: rect(0px, 243px, 324px, 0px);
 }
 
 .linkText {
@@ -107,7 +115,7 @@ position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 1;
   text-align: center;
   @media (--viewportMedium) {
     /*margin-top: 21px;*/
@@ -125,10 +133,10 @@ position: absolute;
 };
 
 .rowWrapper {
+
   width: 100%;
  position: relative;
   height: 100%;
-
  
 }
 
@@ -139,6 +147,8 @@ position: absolute;
   display: inline-flex;
   flex-direction: row;
   overflow: hidden;
+
+  transition: left .5s;
 }
 
 ::-webkit-scrollbar {
@@ -147,16 +157,40 @@ position: absolute;
 }
 
 .rightArrow {
-  width:40px;
+  width: 40px;
   height: 40px;
   background: #ff0000;
   position: absolute;
   right: 0px;
+  margin-top: calc(274px /2 - 20px);
+  z-index: 2;
 }
+
 .leftArrow {
-  width:40px;
+  display: block;
+  width: 40px;
   height: 40px;
   background: #ff0000;
   position: absolute;
-  left: 0px;
+  left: 0;
+  margin-top: calc(274px /2 - 20px);
+  z-index: 2;
+}
+
+.rightFade {
+  position: absolute;
+  right: 0;
+  height: 324px;
+  min-width: 13%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.0), rgba(255, 255, 255, 1) 90%);
+  z-index: 1;
+}
+
+.leftFade {
+  position: absolute;
+  left: 0;
+  height: 324px;
+  min-width: 13%;
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.0), rgba(255, 255, 255, 1) 90%);
+  z-index: 1;
 }

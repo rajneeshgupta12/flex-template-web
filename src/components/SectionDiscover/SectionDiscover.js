@@ -20,7 +20,7 @@ class DiscoverImage extends Component {
 
 const LazyImage = lazyLoadWithDimensions(DiscoverImage);
 
-const locationLink = (name, image, searchQuery) => {
+const locationLink = (name, image, searchQuery, title) => {
   const nameText = <span className={css.locationName}>{name}</span>;
   return (
     <NamedLink name="SearchPage" to={{ search: searchQuery }} className={css.location}>
@@ -28,7 +28,7 @@ const locationLink = (name, image, searchQuery) => {
       
       <div className={css.linkText}>
         <FormattedMessage
-          id="SectionDiscover.themeListings"
+          id={title}
           values={{ theme: nameText }}
         />
      
@@ -53,13 +53,14 @@ class SectionDiscover extends React.Component {
 	}
 	
 	click(direction) {
-		direction === "right" ? this.state.currentStartIndex++ : this.state.currentStartIndex--;
 		console.log(this.state.currentStartIndex);
-		if (direction === "right") {
-			this.setState({left: this.state.left - 160});
+		if (direction === "right" && this.state.left >= -400) {
+			this.setState({left: this.state.left - 400});
+			this.state.currentStartIndex++ 
 			
-		} else {
-			this.setState({left: this.state.left + 160});
+		} else if (direction === "left" && this.state.left < 0){
+			this.setState({left: this.state.left + 400});
+			this.state.currentStartIndex--;
 		}
 	}
 	
@@ -75,29 +76,33 @@ class SectionDiscover extends React.Component {
 					<FormattedMessage id="SectionDiscover.title" />
 				</div>
 				<div className={css.rowWrapper}>
-				<button onClick={() => this.click("left")} className={css.leftArrow}>\</button>
+				<div className={css.leftFade} />
+				<div className={css.rightFade} />
+					<button onClick={() => this.click("left")} className={css.leftArrow}>/</button>
 				<div style={moveStyle} className={css.images}>
 				
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Romantic')
 						}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Calm')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Convienent')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Great View')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Isolated')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic')
+							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'One of a kind')
 							}
 						
 				</div>
+
 				<button onClick={() => this.click("right")} className={css.rightArrow}>/</button>
+
 				</div>
 			</div>
 		);

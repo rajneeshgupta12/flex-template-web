@@ -32,6 +32,10 @@ export const TRANSITION_CANCEL = 'transition/cancel';
 // The backend will mark the transaction completed.
 export const TRANSITION_COMPLETE = 'transition/complete';
 
+//instabooking
+
+export const TRANSITION_INSTABOOK = 'transition/instabook';
+
 // Reviews are given through transaction transitions. Review 1 can be
 // by provider or customer, and review 2 will be the other party of
 // the transaction.
@@ -106,6 +110,7 @@ const stateDescription = {
       on: {
         [TRANSITION_ENQUIRE]: STATE_ENQUIRY,
         [TRANSITION_REQUEST]: STATE_PREAUTHORIZED,
+        [TRANSITION_INSTABOOK]: STATE_ACCEPTED,
       },
     },
     [STATE_ENQUIRY]: {
@@ -280,6 +285,7 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_DECLINE,
     TRANSITION_EXPIRE,
     TRANSITION_REQUEST,
+    TRANSITION_INSTABOOK,
     TRANSITION_REQUEST_AFTER_ENQUIRY,
     TRANSITION_REVIEW_1_BY_CUSTOMER,
     TRANSITION_REVIEW_1_BY_PROVIDER,
