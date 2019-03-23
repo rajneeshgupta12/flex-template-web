@@ -7,14 +7,14 @@
   max-width: 735px;
 
   @media (--viewportMedium) {
-    margin-bottom: 23px;
+    margin-bottom: 50px;
   }
 }
 
 .locations {
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
+  margin-top: 50px;
 
   @media (--viewportMedium) {
     flex-direction: row;
@@ -133,9 +133,8 @@ position: absolute;
 };
 
 .rowWrapper {
-
   width: 100%;
- position: relative;
+  position: relative;
   height: 100%;
  
 }

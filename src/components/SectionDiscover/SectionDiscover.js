@@ -54,11 +54,11 @@ class SectionDiscover extends React.Component {
 	
 	click(direction) {
 		console.log(this.state.currentStartIndex);
-		if (direction === "right" && this.state.left >= -320) {
+		if (direction === "right" && this.state.left > -320) {
 			this.setState({left: this.state.left - 320});
 			this.state.currentStartIndex++ ;
 
-		} else if (direction === "right" && this.state.left <-320) {
+		} else if (direction === "right" && this.state.left <=-320) {
 			this.setState({left: 0});
 			
 
@@ -101,8 +101,6 @@ class SectionDiscover extends React.Component {
 							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Isolated')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'One of a kind')
-							}
 						
 				</div>
 

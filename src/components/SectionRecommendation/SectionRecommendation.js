@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames'
 import { NamedLink}  from '../../components'
 import glampImage from './images/Space.png'
+
 //import 'react-responsive-carousel/lib/styles/carousel.min.css' ;
 import  { Carousel, Button, ButtonToolbar}  from 'react-bootstrap' 
 //mport 'bootstrap.css'
@@ -12,7 +13,7 @@ import css from './SectionRecommendation.css'
 
 
 const RecItem = props =>{
-   const { rootClassName, className } = props;
+   const { rootClassName, className, icon } = props;
    const n = null;
   const glamp = [{glampImage}, {glampImage}];
   const classes = classNames(rootClassName || css.root, className);
@@ -45,7 +46,7 @@ const RecItem = props =>{
     </div>
     <div className={css.textWrapper}>
       <div className={css.typeInfo}>
-        <i className={css.tentIcon} /> Tent / Seattle
+        <i className={icon} /> Tent / Seattle
       </div>
       <div className={css.titleInfo}>
         New House just for you omg its so great ahhh!!!
@@ -84,15 +85,15 @@ const SectionRecommendation = props => {
   </div>
   <div className ={css.allContainer}>
   <div className ={css.rowContainer}>
-  <RecItem />
-  <RecItem />
-  <RecItem />
+  <RecItem icon={css.hutIcon}/>
+  <RecItem icon={css.tentIcon}/>
+  <RecItem icon={css.tentIcon}/>
 
   </div>
   <div className = {css.rowContainer}>
-  <RecItem />
-  <RecItem />
-  <RecItem />
+  <RecItem icon={css.tentIcon}/>
+  <RecItem icon={css.tentIcon}/>
+  <RecItem icon={css.tentIcon}/>
   </div>
   </div>     
   </div>

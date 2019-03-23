@@ -15,7 +15,7 @@
 .allContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
+  margin-top: 50px;
 
 }
 
@@ -32,6 +32,8 @@
 .rowContainer:first-child {
   margin-top: 0;
 }
+
+.itemWrapper {}
 
 .carouselWrapper {
   margin-right: 25px;
@@ -88,11 +90,19 @@
 
 .tentIcon {
   @apply --tentIcon;
-  width: 30px;
-  height: 30px;
+  width: 17px;
+  height: 17px;
   display: inline-block;
   margin-right: 5px;
 
+}
+
+.hutIcon {
+  @apply --hutIcon;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .titleInfo {
@@ -108,9 +118,9 @@
 }
 
 .reviewInfo {
-    @apply --marketplaceH6FontStyles;
+  @apply --marketplaceH6FontStyles;
   color: grey;
-  left: -5px;
+
   display: flex;
   align-items: center;
 }

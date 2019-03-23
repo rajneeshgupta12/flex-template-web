@@ -3,4 +3,103 @@
 .title {
   @apply --marketplaceH1FontStyles;
   margin-top: 0;
+  margin-bottom: 50px;
+}
+
+.container {
+	display: flex;
+
+
+}
+
+.image {
+	@apply --backgroundImage;
+	width: 392px;
+	min-height: 266px;
+	margin-right: 48px;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+}
+
+.textTitle {
+	@apply --marketplaceH3FontStyles;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.quoteBox {
+	position: relative;
+	margin-top: 13px;
+	margin-bottom: 30px;
+}
+
+.quoteIcon {
+
+}
+
+.quoteIconFlipped {
+
+}
+
+
+.quote {
+	@apply --marketplaceH4FontStyles;
+	display: block;
+  margin-top: 25px;
+  margin-bottom: 1em;
+  margin-left: 40px;
+  margin-right: 40px;
+  width: 535px;
+}
+
+.buttonWrapper {
+	display: flex;
+}
+
+.readButton {
+	@apply --marketplaceButtonStyles;
+	margin-right: 38px;
+	width: 250px;
+	height: 65px;
+}
+
+.linkButton {
+	@apply --marketplaceButtonStyles;
+	width: 250px;
+	height: 65px;
+}
+
+.leftQuote {
+	position: absolute;
+	left: 0;
+	top: -5px;
+	width: 24px;
+  	height: 84px;
+	font-family: AppleSDGothicNeo;
+	font-size: 70px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #818181;
+}
+
+.rightQuote {
+	position: absolute;
+	right: 0px;
+	bottom: -30px;
+	width: 24px;
+  	height: 84px;
+	font-family: AppleSDGothicNeo;
+	font-size: 70px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #818181;
 }
