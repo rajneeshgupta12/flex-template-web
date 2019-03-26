@@ -40,6 +40,14 @@
     }*/
   }
 
+  --backgroundPopupImage: {
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)),
+      url('../../assets/SignUp.jpg');
+
+      background-size: cover;
+      background-position: center center;
+  }
+
   --tentIcon: {
     background: url('../../assets/Bell.png');
     background-size: cover;
