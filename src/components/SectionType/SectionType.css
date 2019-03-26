@@ -2,5 +2,180 @@
 
 .title {
   @apply --marketplaceH1FontStyles;
+
   margin-top: 0;
+  max-width: 735px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 50px;
+  }
+}
+
+.locations {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+
+  @media (--viewportMedium) {
+    flex-direction: row;
+    margin-top: 57px;
+  }
+}
+
+.location {
+  margin-top: 25px;
+  position: relative;
+  margin-right: 30px;
+  max-width: 100px;
+
+  /* Remove link's hover effect */
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+  }
+}
+
+
+.location:last-of-type {
+  @media (--viewportMedium) {
+    margin-right: 0;
+  }
+}
+
+.circleImage {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  @media (--viewportMedium) {
+    margin-right: 24px;
+    margin-bottom: 0;
+  }
+
+	border-radius: 50%;
+	border: solid 1px #979797;
+
+   
+}
+
+.imageContainer {
+	width: 80px;
+	height: 80px;
+	margin: auto auto;
+}
+
+/* A wrapper for a responsive image that holds it's aspect ratio */
+.imageWrapper {
+  width: 100%;
+  position: relative;
+  z-index: -1;
+  transition: var(--transitionStyleButton);
+
+
+/* &:hover {
+    transform: scale(1.02);
+    box-shadow: var(--boxShadowSectionLocationHover);
+  }*/
+}
+
+.imageWrapper::after{
+  content: " ";
+  z-index: 0;
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+ 
+  top: 0;
+  left: 0;
+  right: 0;
+  
+
+
+}
+
+/* An image wrapper that defines the images aspect ratio */
+
+.aspectWrapper {
+  padding-bottom: calc(100%); /* 13:6 Aspect Ratio */
+
+  @media (--viewportMedium) {
+    padding-bottom: calc(100%); /* 3:2 Aspect Ratio */
+  }
+}
+
+.locationImage {
+  /* Layout - image will take space defined by aspect ratio wrapper */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip: rect(0px, 100px, 100px, 0px);
+}
+
+.linkText {
+  @apply --marketplaceH4FontStyles;
+  color: var(--matterColor);
+  margin-top: 15px;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 17px;
+  }
+
+  text-align: center; 	
+
+}
+
+.rowWrapper {
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+
+.images {
+  position: relative;
+  left: 0;
+  width: calc((98vw + 1056px));
+  display: inline-flex;
+  flex-direction: row;
+  overflow: hidden;
+
+  transition: left .5s;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 0;
+}
+
+.rightArrow {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  right: 30px;
+  margin-top: calc(100px /2 - 40px);
+  z-index: 2;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, .9);
+}
+
+.leftArrow {
+  display: block;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  left: 30px;
+  margin-top: calc(100px /2 - 40px);
+  z-index: 2;
+  border-radius:50%;
+
+  background: rgba(255, 255, 255, .9);
 }

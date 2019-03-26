@@ -23,7 +23,7 @@
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)),
-      url('../../assets/1440_Wide.jpg');
+      url('../../assets/1440-2.jpg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
@@ -50,6 +50,8 @@
     background: url('../../assets/Hut.png');
     background-size: cover;
     }
+
+
 
   /* ================ Colors ================ */
 

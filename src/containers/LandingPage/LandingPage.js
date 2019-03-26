@@ -69,7 +69,7 @@ export const LandingPageComponent = props => {
           </div>
           <ul className={css.sections}>
 
-            <li className={css.sectionDiscover}>
+            <li className={css.sectionOverflow}>
               <div className={css.sectionContentFirstChild}>
                 <SectionDiscover />
               </div>
@@ -79,17 +79,23 @@ export const LandingPageComponent = props => {
                 <SectionRecommendation />
               </div>
             </li>
-           
+           <li className={css.sectionOverflow}>
+              <div className={css.sectionContent}>
+                <SectionType />
+              </div>
+            </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
                 <SectionInterview />
               </div>
             </li>
+             
                <li className={css.section}>
               <div className={css.sectionContent}>
                 <SectionHowItWorks />
               </div>
             </li>
+           
             
           </ul>
         </LayoutWrapperMain>

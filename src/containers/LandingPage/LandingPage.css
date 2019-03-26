@@ -67,7 +67,7 @@
   overflow: auto;
 }
 
-.sectionDiscover{
+.sectionOverflow{
   overflow: hidden;
 }
 /* Square corners for the last section if it's even */
@@ -79,10 +79,7 @@
 
 /* Every other section has a light background */
 .section:nth-of-type(2n) {
-  background-color: var(--matterColorLight);
-  @media (--viewportMedium) {
-    border-radius: 4px;
-  }
+  
 }
 
 .sectionContent {

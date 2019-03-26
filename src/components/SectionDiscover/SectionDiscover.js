@@ -82,8 +82,7 @@ class SectionDiscover extends React.Component {
 				</div>
 				<div className={css.rowWrapper}>
 				
-					<button onClick={() => this.click("left")} className={css.leftArrow}>/</button>
-					<button onClick={() => this.click("right")} className={css.rightArrow}>/</button>
+					
 				<div style={moveStyle} className={css.images}>
 				
 							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Romantic')
@@ -98,8 +97,7 @@ class SectionDiscover extends React.Component {
 							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Great View')
 							}
 						
-							{locationLink('Romantic Night', defaultImage, '?address=romantic', 'Isolated')
-							}
+						
 						
 						
 				</div>

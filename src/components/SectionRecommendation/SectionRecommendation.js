@@ -90,11 +90,7 @@ const SectionRecommendation = props => {
   <RecItem icon={css.tentIcon}/>
 
   </div>
-  <div className = {css.rowContainer}>
-  <RecItem icon={css.tentIcon}/>
-  <RecItem icon={css.tentIcon}/>
-  <RecItem icon={css.tentIcon}/>
-  </div>
+ 
   </div>     
   </div>
   

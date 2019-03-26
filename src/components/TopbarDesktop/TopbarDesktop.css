@@ -361,3 +361,36 @@
     }
   }
 }
+
+.hostLink {
+  
+  @apply --TopbarDesktop_linkHover;
+  @apply --marketplaceH4FontStyles;
+
+
+
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 12px 0 12px;
+  color: var(--marketplaceColor);
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.host {
+  @apply --TopbarDesktop_label;
+  position: relative;
+  padding: 9px 23px 12px 23px;
+ border: solid 2px #006db5;
+ margin: 12px 0px;
+ 
+}
