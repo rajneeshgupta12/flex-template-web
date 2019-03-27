@@ -30,7 +30,7 @@ import twitterImage from '../../assets/saunatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 
 export const LandingPageComponent = props => {
-  const { history, intl, location, scrollingDisabled } = props;
+  const { history, intl, location, scrollingDisabled, results } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
@@ -39,6 +39,8 @@ export const LandingPageComponent = props => {
   const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
+  let userName = null
+  userName = results && results.user && results.user.currentUser && results.user.currentUser.attributes && results.user.currentUser.attributes.profile && results.user.currentUser.attributes.profile.firstName;
 
   return (
     <Page
@@ -65,7 +67,7 @@ export const LandingPageComponent = props => {
         </LayoutWrapperTopbar>
         <LayoutWrapperMain>
           <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} />
+            <SectionHero className={css.hero} history={history} location={location} userName={userName || null} />
           </div>
           <ul className={css.sections}>
 
@@ -79,7 +81,7 @@ export const LandingPageComponent = props => {
                 <SectionRecommendation />
               </div>
             </li>
-           <li className={css.sectionOverflow}>
+            <li className={css.sectionOverflow}>
               <div className={css.sectionContent}>
                 <SectionType />
               </div>
@@ -89,14 +91,14 @@ export const LandingPageComponent = props => {
                 <SectionInterview />
               </div>
             </li>
-             
-               <li className={css.section}>
+
+            <li className={css.section}>
               <div className={css.sectionContent}>
                 <SectionHowItWorks />
               </div>
             </li>
-           
-            
+
+
           </ul>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
@@ -123,6 +125,7 @@ LandingPageComponent.propTypes = {
 const mapStateToProps = state => {
   return {
     scrollingDisabled: isScrollingDisabled(state),
+    results: state
   };
 };
 
