@@ -3,12 +3,22 @@ import { string } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { NamedLink } from '../../components';
+import { SearchForm } from '../../forms';
 
 import css from './SectionHero.css';
 
 const SectionHero = props => {
   const { rootClassName, className, userName } = props;
   const classes = classNames(rootClassName || css.root, className);
+
+
+  const search = (
+    <SearchForm
+      className={css.searchLink}
+      desktopInputRoot={css.SearchWithLeftPadding}
+      form="SearchFormDesktop"
+    />
+  );
 
   return (
     <div className={classes}>
@@ -21,7 +31,9 @@ const SectionHero = props => {
         </h2>
 
       </div>
-      <div className={css.heroSearchBar} />
+      <div className={css.heroSearchBar} >
+      {search}
+      </div>
     </div>
   );
 };
