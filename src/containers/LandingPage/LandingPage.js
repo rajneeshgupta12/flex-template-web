@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { getAllListings } from './LandingPage.duck';
 import config from '../../config';
+import { createResourceLocatorString } from '../../util/routes';
+import routeConfiguration from '../../routeConfiguration';
 import {
   Page,
   SectionHero,
@@ -29,84 +32,118 @@ import facebookImage from '../../assets/saunatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/saunatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 
-export const LandingPageComponent = props => {
-  const { history, intl, location, scrollingDisabled, results } = props;
+export class LandingPageComponent extends Component {
 
-  // Schema for search engines (helps them to understand what this page is about)
-  // http://schema.org
-  // We are using JSON-LD format
-  const siteTitle = config.siteTitle;
-  const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
-  const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
-  const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-  let userName = null
-  userName = results && results.user && results.user.currentUser && results.user.currentUser.attributes && results.user.currentUser.attributes.profile && results.user.currentUser.attributes.profile.firstName;
+  constructor(props) {
+    super(props);
+    this.state = {
+      props: {}
+    };
+  }
 
-  return (
-    <Page
-      className={css.root}
-      scrollingDisabled={scrollingDisabled}
-      contentType="website"
-      description={schemaDescription}
-      title={schemaTitle}
-      facebookImages={[{ url: facebookImage, width: 1200, height: 630 }]}
-      twitterImages={[
-        { url: `${config.canonicalRootURL}${twitterImage}`, width: 600, height: 314 },
-      ]}
-      schema={{
-        '@context': 'http://schema.org',
-        '@type': 'WebPage',
-        description: schemaDescription,
-        name: schemaTitle,
-        image: [schemaImage],
-      }}
-    >
-      <LayoutSingleColumn>
-        <LayoutWrapperTopbar>
-          <TopbarContainer />
-        </LayoutWrapperTopbar>
-        <LayoutWrapperMain>
-          <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} userName={userName || null} />
-          </div>
-          <ul className={css.sections}>
+  handleSubmit = (values) => {
+    const { currentSearchParams } = this.props;
+    const { search, selectedPlace } = values.location;
+    const { history } = this.props;
+    const { origin, bounds } = selectedPlace;
+    const originMaybe = config.sortSearchByDistance ? { origin } : {};
+    const searchParams = {
+      ...currentSearchParams,
+      ...originMaybe,
+      address: search,
+      bounds,
+    };
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
+  }
 
-            <li className={css.sectionOverflow}>
-              <div className={css.sectionContentFirstChild}>
-                <SectionDiscover />
-              </div>
-            </li>
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <SectionRecommendation />
-              </div>
-            </li>
-            <li className={css.sectionOverflow}>
-              <div className={css.sectionContent}>
-                <SectionType />
-              </div>
-            </li>
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <SectionInterview />
-              </div>
-            </li>
+  componentWillMount() {
+    this.props.getAllListings()
+  }
 
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <SectionHowItWorks />
-              </div>
-            </li>
+  componentWillReceiveProps(newProps) {
+    this.setState({ props: newProps });
+  }
 
+  render() {
+    const { history, intl, location, scrollingDisabled } = this.props;
+    let { props } = this.state
+    // http://schema.org
+    // We are using JSON-LD format
+    const siteTitle = config.siteTitle;
+    const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
+    const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
+    const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
+    // const listing = props.showListing('5c63bee0-e3d8-4d64-ac7a-3914ea0c914c')
 
-          </ul>
-        </LayoutWrapperMain>
-        <LayoutWrapperFooter>
-          <Footer />
-        </LayoutWrapperFooter>
-      </LayoutSingleColumn>
-    </Page>
-  );
+    let userName = null
+    userName = props && props.result && props.result.user && props.result.user.currentUser && props.result.user.currentUser.attributes && props.result.user.currentUser.attributes.profile && props.result.user.currentUser.attributes.profile.firstName
+    return (
+      <Page
+        className={css.root}
+        scrollingDisabled={scrollingDisabled}
+        contentType="website"
+        description={schemaDescription}
+        title={schemaTitle}
+        facebookImages={[{ url: facebookImage, width: 1200, height: 630 }]}
+        twitterImages={[
+          { url: `${config.canonicalRootURL}${twitterImage}`, width: 600, height: 314 },
+        ]}
+        schema={{
+          '@context': 'http://schema.org',
+          '@type': 'WebPage',
+          description: schemaDescription,
+          name: schemaTitle,
+          image: [schemaImage],
+        }}
+      >
+        <LayoutSingleColumn>
+          <LayoutWrapperTopbar>
+            <TopbarContainer />
+          </LayoutWrapperTopbar>
+          <LayoutWrapperMain>
+            <div className={css.heroContainer}>
+              <SectionHero
+                onSearchSubmit={this.handleSubmit}
+                className={css.hero} history={history} location={location} userName={userName || null} />
+            </div>
+            <ul className={css.sections}>
+
+              <li className={css.sectionOverflow}>
+                <div className={css.sectionContentFirstChild}>
+                  <SectionDiscover />
+                </div>
+              </li>
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionRecommendation {...props} />
+                </div>
+              </li>
+              <li className={css.sectionOverflow}>
+                <div className={css.sectionContent}>
+                  <SectionType />
+                </div>
+              </li>
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionInterview />
+                </div>
+              </li>
+
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionHowItWorks />
+                </div>
+              </li>
+
+            </ul>
+          </LayoutWrapperMain>
+          <LayoutWrapperFooter>
+            <Footer />
+          </LayoutWrapperFooter>
+        </LayoutSingleColumn>
+      </Page>
+    );
+  }
 };
 
 const { bool, object } = PropTypes;
@@ -122,13 +159,20 @@ LandingPageComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, landingPageReducer) => {
   return {
     scrollingDisabled: isScrollingDisabled(state),
-    results: state
+    result: state,
   };
 };
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getAllListings
+    },
+    dispatch
+  );
 // Note: it is important that the withRouter HOC is **outside** the
 // connect HOC, otherwise React Router won't rerender any Route
 // components since connect implements a shouldComponentUpdate
@@ -137,7 +181,7 @@ const mapStateToProps = state => {
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const LandingPage = compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(LandingPageComponent);
 
