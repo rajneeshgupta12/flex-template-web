@@ -7,6 +7,11 @@ export { default as EditListingLocationForm } from './EditListingLocationForm/Ed
 export { default as EditListingPhotosForm } from './EditListingPhotosForm/EditListingPhotosForm';
 export { default as EditListingPoliciesForm } from './EditListingPoliciesForm/EditListingPoliciesForm';
 export { default as EditListingPricingForm } from './EditListingPricingForm/EditListingPricingForm';
+
+export { default as EditListingBasicForm } from './EditListingBasicForm/EditListingBasicForm';
+export { default as EditListingCapacityForm } from './EditListingCapacityForm/EditListingCapacityForm';
+export { default as EditListingTravelForm } from './EditListingTravelForm/EditListingTravelForm';
+
 export { default as EmailVerificationForm } from './EmailVerificationForm/EmailVerificationForm';
 export { default as EnquiryForm } from './EnquiryForm/EnquiryForm';
 export { default as FilterForm } from './FilterForm/FilterForm';

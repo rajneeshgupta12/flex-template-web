@@ -17,6 +17,10 @@ import {
   EditListingPhotosPanel,
   EditListingPoliciesPanel,
   EditListingPricingPanel,
+
+  EditListingBasicPanel,
+  EditListingCapacityPanel,
+  EditListingTravelPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -28,16 +32,24 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
+export const BASIC = 'basic info'; 
+export const CAPACITY = 'capacity';
+export const TRAVEL = 'travel info';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
+
+  BASIC,
+  CAPACITY,
   DESCRIPTION,
   FEATURES,
   POLICY,
   LOCATION,
+  TRAVEL,
   PRICING,
   AVAILABILITY,
   PHOTOS,
+
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -258,6 +270,50 @@ const EditListingWizardTab = props => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
+        />
+      );
+    }
+    case BASIC: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewFeatures'
+        : 'EditListingWizard.saveEditFeatures';
+      return (
+        <EditListingBasicPanel
+          {...panelProps(BASIC)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+
+    case CAPACITY: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewFeatures'
+        : 'EditListingWizard.saveEditFeatures';
+      return (
+        <EditListingCapacityPanel
+          {...panelProps(CAPACITY)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+
+    case TRAVEL: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewFeatures'
+        : 'EditListingWizard.saveEditFeatures';
+      return (
+        <EditListingTravelPanel
+          {...panelProps(TRAVEL)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
         />
       );
     }

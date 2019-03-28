@@ -14,7 +14,7 @@ const SectionHero = props => {
     <div className={classes}>
       <div className={css.heroContent}>
         <h1 className={css.heroMainTitle}>
-          <FormattedMessage id={userName && userName.length > 0 ? "Welcome, " + userName : "SectionHero.title"} />
+          <FormattedMessage id={userName && userName.length > 0 ? "SectionHero.titleSignedIn" : "SectionHero.title"} values={{name: userName}}/>
         </h1>
         <h2 className={css.heroSubTitle}>
           <FormattedMessage id="SectionHero.subTitle" />

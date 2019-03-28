@@ -193,10 +193,3 @@ position: absolute;
   background: linear-gradient(-90deg, rgba(0, 0, 0, 0.0), rgba(255, 255, 255, 1) 90%);
   z-index: 1;
 }
-
-.findButton {
-  @apply --marketplaceButtonStyles;
-  width: 250px;
-  height: 65px;
-  margin-top: 50px;
-}

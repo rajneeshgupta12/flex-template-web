@@ -1,19 +1,21 @@
 import React from 'react';
-import { bool, func, object, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { ensureOwnListing } from '../../util/data';
-import { ListingLink } from '../../components';
+
 import { LISTING_STATE_DRAFT } from '../../util/types';
-import { EditListingDescriptionForm } from '../../forms';
-import config from '../../config';
+import { ensureListing } from '../../util/data';
+import { EditListingBasicForm } from '../../forms';
+import { ListingLink } from '../../components';
 
-import css from './EditListingDescriptionPanel.css';
+import css from './EditListingBasicPanel.css';
 
-const EditListingDescriptionPanel = props => {
+const BASIC_NAME = 'basic info';
+
+const EditListingBasicPanel = props => {
   const {
-    className,
     rootClassName,
+    className,
     listing,
     onSubmit,
     onChange,
@@ -24,55 +26,58 @@ const EditListingDescriptionPanel = props => {
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-  const currentListing = ensureOwnListing(listing);
-  const { description, title, publicData } = currentListing.attributes;
+  const currentListing = ensureListing(listing);
+  const { publicData } = currentListing.attributes;
+
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingDescriptionPanel.title"
+      id="EditListingBasicPanel.title"
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" values={{name: "you"}} />
+    <FormattedMessage id="EditListingBasicPanel.createListingTitle" />
   );
+
+  const amenities = publicData && publicData.amenities;
+  const initialValues = { amenities };
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingDescriptionForm
+      <EditListingBasicForm
         className={css.form}
-        initialValues={{ title, description, category: publicData.category }}
-        saveActionMsg={submitButtonText}
+        name={BASIC_NAME}
+        initialValues={initialValues}
         onSubmit={values => {
-          const { title, description, category } = values;
-          const updateValues = {
-            title: title.trim(),
-            description,
-            publicData: { category },
-          };
+          const { amenities = [] } = values;
 
-          onSubmit(updateValues);
+          const updatedValues = {
+            publicData: { amenities },
+          };
+          onSubmit(updatedValues);
         }}
         onChange={onChange}
+        saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        categories={config.custom.categories}
       />
     </div>
   );
 };
 
-EditListingDescriptionPanel.defaultProps = {
-  className: null,
+EditListingBasicPanel.defaultProps = {
   rootClassName: null,
-  errors: null,
+  className: null,
   listing: null,
 };
 
-EditListingDescriptionPanel.propTypes = {
-  className: string,
+const { bool, func, object, string } = PropTypes;
+
+EditListingBasicPanel.propTypes = {
   rootClassName: string,
+  className: string,
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: object,
@@ -85,4 +90,4 @@ EditListingDescriptionPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingDescriptionPanel;
+export default EditListingBasicPanel;

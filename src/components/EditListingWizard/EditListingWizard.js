@@ -22,6 +22,10 @@ import EditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
+
+  BASIC,
+  CAPACITY,
+  TRAVEL,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 
@@ -31,13 +35,17 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // TODO: PHOTOS panel needs to be the last one since it currently contains PayoutDetailsForm modal
 // All the other panels can be reordered.
 export const TABS = [
+  BASIC,
+  CAPACITY,
   DESCRIPTION,
   FEATURES,
   POLICY,
   LOCATION,
+  TRAVEL,
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
+  
 ];
 
 // Tabs are horizontal in small screens
@@ -59,6 +67,12 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
     key = 'EditListingWizard.tabLabelPhotos';
+  } else if (tab === BASIC) {
+    key = 'EditListingWizard.tabLabelBasic';
+  } else if (tab === CAPACITY) {
+    key = 'EditListingWizard.tabLabelCapacity';
+  } else if (tab === TRAVEL) {
+    key = 'EditListingWizard.tabLabelTravel';
   }
 
   return intl.formatMessage({ id: key });
@@ -98,6 +112,12 @@ const tabCompleted = (tab, listing) => {
       return !!availabilityPlan;
     case PHOTOS:
       return images && images.length > 0;
+    case BASIC:
+      return true;
+    case CAPACITY:
+      return true;
+    case TRAVEL:
+      return true;    
     default:
       return false;
   }
