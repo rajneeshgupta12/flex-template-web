@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames';
-import {
-  DayPickerSingleDateController,
-  isSameDay,
-  isInclusivelyBeforeDay,
-  isInclusivelyAfterDay,
-} from 'react-dates';
 import { Form, LocationAutocompleteInput } from '../../components';
 import css from './SearchForm.css';
 import config from '../../config';
@@ -107,7 +101,6 @@ class SearchFormComponent extends Component {
                   );
                 }}
               />
-              <DayPickerSingleDateController />
             </Form>
           );
         }}
