@@ -4,12 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { NamedLink } from '../../components';
 import { SearchForm } from '../../forms';
-import Calendar from './Calendar';
+
 import css from './SectionHero.css';
 
 const SectionHero = props => {
-
-  const { onSearchSubmit, rootClassName, className, userName, } = props;
+  const { rootClassName, className, userName } = props;
   const classes = classNames(rootClassName || css.root, className);
 
 
@@ -17,7 +16,6 @@ const SectionHero = props => {
     <SearchForm
       className={css.searchLink}
       desktopInputRoot={css.SearchWithLeftPadding}
-      onSubmit={onSearchSubmit}
       form="SearchFormDesktop"
     />
   );
@@ -31,16 +29,10 @@ const SectionHero = props => {
         <h2 className={css.heroSubTitle}>
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
+
       </div>
       <div className={css.heroSearchBar} >
-        {search}
-      </div>
-      <div style={{ ['marginLeft']: 59 + '%' }}>
-        <div onClick={() => { props.toggleCalendar() }} >
-          this weekend
-      </div>
-        {props.showCalendar &&
-          <Calendar onChange={props.onChange} />}
+      {search}
       </div>
     </div>
   );

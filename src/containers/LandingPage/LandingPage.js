@@ -42,13 +42,11 @@ export class LandingPageComponent extends Component {
   }
 
   handleSubmit = (values) => {
-
     const { currentSearchParams } = this.props;
     const { search, selectedPlace } = values.location;
     const { history } = this.props;
     const { origin, bounds } = selectedPlace;
     const originMaybe = config.sortSearchByDistance ? { origin } : {};
-    const { endDate, startDate } = this.state
     const searchParams = {
       ...currentSearchParams,
       ...originMaybe,
@@ -66,22 +64,9 @@ export class LandingPageComponent extends Component {
     this.setState({ props: newProps });
   }
 
-  toggleCalendar = () => {
-    const { showCalendar } = this.state
-
-    showCalendar ? this.setState({ showCalendar: false }) : this.setState({ showCalendar: true })
-  }
-
-  onDateChange = (dates) => {
-    this.setState(dates);
-    const { history } = this.props;
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, dates));
-  }
-
   render() {
     const { history, intl, location, scrollingDisabled } = this.props;
-    let { props, showCalendar } = this.state
+    let { props } = this.state
     // http://schema.org
     // We are using JSON-LD format
     const siteTitle = config.siteTitle;
@@ -119,11 +104,7 @@ export class LandingPageComponent extends Component {
             <div className={css.heroContainer}>
               <SectionHero
                 onSearchSubmit={this.handleSubmit}
-                className={css.hero} history={history} location={location} userName={userName || null}
-                toggleCalendar={this.toggleCalendar}
-                showCalendar={showCalendar}
-                onChange={this.onDateChange}
-              />
+                className={css.hero} history={history} location={location} userName={userName || null} />
             </div>
             <ul className={css.sections}>
 
