@@ -40,6 +40,7 @@ export default landingPageReducer;
 
 
 export const getAllListings = () => (dispatch, getState, sdk) => {
+  console.log( 'dispatch-----------------',dispatch, 'sdk---------------------',sdk)
   let dummyData = {
 
     "data": {
@@ -99,3 +100,9 @@ export const getAllListingsSuccess = listings => ({
   type: GET_ALL_LISTINGS_SUCCESS,
   payload: listings,
 });
+
+
+export const loadData = () => dispatch => {
+console.log('load data-----------------')
+  return dispatch(getAllListings());
+};

@@ -168,6 +168,7 @@ class DateRangeController extends Component {
           onDatesChange={this.onDatesChange}
           focusedInput={this.state.focusedInput}
           onFocusChange={this.onFocusChange}
+          numberOfMonths={2}
         />
       </div>
     );

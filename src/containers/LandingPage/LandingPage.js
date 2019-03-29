@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { getAllListings } from './LandingPage.duck';
+import { loadData, getAllListings } from './LandingPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -37,7 +37,9 @@ export class LandingPageComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      props: {}
+      props: {},
+      endDate: '',
+      startDate: ''
     };
   }
 
@@ -48,18 +50,19 @@ export class LandingPageComponent extends Component {
     const { history } = this.props;
     const { origin, bounds } = selectedPlace;
     const originMaybe = config.sortSearchByDistance ? { origin } : {};
-    const { endDate, startDate } = this.state
+
     const searchParams = {
       ...currentSearchParams,
       ...originMaybe,
       address: search,
-      bounds,
+      bounds
     };
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
+    this.setState({ searchParams })
   }
 
-  componentWillMount() {
-    this.props.getAllListings()
+  componentDidMount() {
+    // this.props.getAllListings()
+    this.props.loadData()
   }
 
   componentWillReceiveProps(newProps) {
@@ -74,9 +77,22 @@ export class LandingPageComponent extends Component {
 
   onDateChange = (dates) => {
     this.setState(dates);
-    const { history } = this.props;
+  }
 
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, dates));
+  submitSsearch = () => {
+    const { history } = this.props;
+    let { searchParams, endDate, startDate } = this.state
+    if (endDate) {
+      if (!searchParams) {
+        searchParams = {}
+      }
+    }
+
+    if (searchParams || endDate) {
+      searchParams['endDate'] = Date.parse(endDate)
+      searchParams['startDate'] = Date.parse(startDate)
+      history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
+    }
   }
 
   render() {
@@ -123,6 +139,7 @@ export class LandingPageComponent extends Component {
                 toggleCalendar={this.toggleCalendar}
                 showCalendar={showCalendar}
                 onChange={this.onDateChange}
+                submitSsearch={this.submitSsearch}
               />
             </div>
             <ul className={css.sections}>
@@ -185,13 +202,12 @@ const mapStateToProps = (state, landingPageReducer) => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getAllListings
-    },
-    dispatch
-  );
+
+const mapDispatchToProps = dispatch => ({
+  // getAllListings: () => dispatch(getAllListings()),
+  loadData:()=>dispatch(loadData())
+});
+
 // Note: it is important that the withRouter HOC is **outside** the
 // connect HOC, otherwise React Router won't rerender any Route
 // components since connect implements a shouldComponentUpdate
@@ -203,5 +219,5 @@ const LandingPage = compose(
   connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(LandingPageComponent);
-
+// LandingPage.getAllListings = loadData;
 export default LandingPage;

@@ -59,7 +59,6 @@ class SearchFormComponent extends Component {
 
           // Allow form submit only when the place has changed
           const preventFormSubmit = e => e.preventDefault();
-
           return (
             <Form className={classes} onSubmit={preventFormSubmit}>
               <Field

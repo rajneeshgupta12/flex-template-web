@@ -6,6 +6,7 @@ import { NamedLink } from '../../components';
 import { SearchForm } from '../../forms';
 import Calendar from './Calendar';
 import css from './SectionHero.css';
+import { Form } from 'react-final-form';
 
 const SectionHero = props => {
 
@@ -35,10 +36,15 @@ const SectionHero = props => {
       <div className={css.heroSearchBar} >
         {search}
       </div>
-      <div style={{ ['marginLeft']: 59 + '%' }}>
+      <div style={{ ['marginLeft']: 50 + '%' }}>
         <div onClick={() => { props.toggleCalendar() }} >
-          this weekend
+         this weekend
       </div>
+        <button  className={css.heroSearchBar}
+          className={css.desktopIcon}
+          onClick={() => { props.submitSsearch() }} >
+        Search
+          </button  >
         {props.showCalendar &&
           <Calendar onChange={props.onChange} />}
       </div>
