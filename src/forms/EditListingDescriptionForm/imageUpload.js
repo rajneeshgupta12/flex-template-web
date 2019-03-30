@@ -1,5 +1,4 @@
 import React from 'react';
-import './imageUpload.css'
 export default class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
