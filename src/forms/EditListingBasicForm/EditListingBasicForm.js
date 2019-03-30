@@ -1,7 +1,7 @@
 import React from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import classNames from 'classnames';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
 
@@ -28,7 +28,6 @@ const EditListingBasicFormComponent = props => (
         updateInProgress,
         fetchErrors,
       } = fieldRenderProps;
-
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
@@ -51,14 +50,59 @@ const EditListingBasicFormComponent = props => (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-
-          <FieldCheckboxGroup
-            className={css.features}
-            id={name}
-            name={name}
-            options={config.custom.amenities}
-          />
-
+          <div>
+            <label>Type of the property</label>
+            <Field name="property_type" component="select">
+              <option value={null} >Choose the type</option>
+              <option value="bell_tent">Bell tent</option>
+              <option value="rv_camper"> RV/camper</option>
+              <option value="safari_tent"> Safari tent</option>
+              <option value="tree_house"> Tree house</option>
+              <option value="glamping_pod"> Glamping pod</option>
+              <option value="tipi"> Tipi</option>
+              <option value="Tiny house"> Tiny house</option>
+              <option value="Boat/Yacht"> Boat/Yacht</option>
+              <option value="Yurt"> Yurt</option>
+              <option value="Cabin"> Cabin</option>
+              <option value="Igloo/dome"> Igloo/dome</option>
+              <option value="Hut"> Hut</option>
+            </Field>
+          </div>
+          <div>
+            <p>The guests can use the place</p>
+            <div>
+              <label>
+                <Field
+                  name="place"
+                  component="input"
+                  type="radio"
+                  value="entire_place"
+                />
+                <strong>Entire place: selected</strong>
+                <span className="small">  The guests can use the whole place: Bedrooms, kitchens and toilets are available for guests only.</span>
+              </label>
+              <label>
+                <Field
+                  name="place"
+                  component="input"
+                  type="radio"
+                  value="private_place"
+                />
+                <strong>Private place</strong>
+                <span className="small">The guest can use the private room during the stay. Other facilities can be shared with others.</span>
+              </label>
+              <label>
+                <Field
+                  name="place"
+                  component="input"
+                  type="radio"
+                  value="shared_place"
+                />
+                <strong>Shared place</strong>
+                <span className="small">The guest can sleep or use the place with others.</span>
+              </label>
+            </div>
+          </div>
           <Button
             className={css.submitButton}
             type="submit"

@@ -32,7 +32,7 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-export const BASIC = 'basic info'; 
+export const BASIC = 'basic info';
 export const CAPACITY = 'capacity';
 export const TRAVEL = 'travel info';
 
@@ -106,6 +106,9 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    currentUser,
+    guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber,
+    updateCapacityValues
   } = props;
 
   const { type } = params;
@@ -119,6 +122,8 @@ const EditListingWizardTab = props => {
   };
 
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
+    updateValues.publicData = updateValues.publicData ? updateValues.publicData : {}
+    updateValues.publicData['capacity'] = { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber }
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -177,6 +182,7 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
         />
       );
     }
@@ -284,6 +290,8 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
+
         />
       );
     }
@@ -299,6 +307,11 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          updateCapacityValues={updateCapacityValues}
+          guestNumber={guestNumber}
+          bedsNumber={bedsNumber}
+          bedroomsNumber={bedroomsNumber}
+          bathroomsNumber={bathroomsNumber}
         />
       );
     }

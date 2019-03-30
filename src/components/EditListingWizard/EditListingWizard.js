@@ -45,7 +45,7 @@ export const TABS = [
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
-  
+
 ];
 
 // Tabs are horizontal in small screens
@@ -117,7 +117,7 @@ const tabCompleted = (tab, listing) => {
     case CAPACITY:
       return true;
     case TRAVEL:
-      return true;    
+      return true;
     default:
       return false;
   }
@@ -162,11 +162,24 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
+      guestNumber: 0, bedsNumber: 0, bedroomsNumber: 0, bathroomsNumber: 0
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
     this.handlePayoutSubmit = this.handlePayoutSubmit.bind(this);
+    this.updateCapacityValues = this.updateCapacityValues.bind(this);
+  }
+
+  updateCapacityValues(name, type) {
+    let value = this.state[name]
+    if (type == 'increment') {
+      value += 1
+    }
+    if (type == 'derement') {
+      value -= 1
+    }
+    (value > 0) ? this.setState({ [name]: value }) : this.setState({ [name]: 0 })
   }
 
   handleCreateFlowTabScrolling(shouldScroll) {
@@ -259,7 +272,7 @@ class EditListingWizard extends Component {
     const tabLink = tab => {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
-
+    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber } = this.state
     return (
       <div className={classes}>
         <Tabs
@@ -271,6 +284,7 @@ class EditListingWizard extends Component {
             return (
               <EditListingWizardTab
                 {...rest}
+                {...this.props}
                 key={tab}
                 tabId={`${id}_${tab}`}
                 tabLabel={tabLabel(intl, tab)}
@@ -286,6 +300,11 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
+                guestNumber={guestNumber}
+                bedsNumber={bedsNumber}
+                bedroomsNumber={bedroomsNumber}
+                bathroomsNumber={bathroomsNumber}
+                updateCapacityValues={this.updateCapacityValues}
               />
             );
           })}

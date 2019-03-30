@@ -8,12 +8,13 @@ import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
-
+import ImageUpload from './imageUpload'
 import css from './EditListingDescriptionForm.css';
-
 const TITLE_MAX_LENGTH = 60;
 
+
 const EditListingDescriptionFormComponent = props => (
+
   <FinalForm
     {...props}
     render={fieldRenderProps => {
@@ -81,6 +82,7 @@ const EditListingDescriptionFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -107,14 +109,16 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-
-          <CustomCategorySelectFieldMaybe
-            id="category"
-            name="category"
-            categories={categories}
-            intl={intl}
+          <FieldTextInput
+            id="images"
+            name="description"
+            className={css.description}
+            type="textarea"
+            label={descriptionMessage}
+            placeholder={descriptionPlaceholderMessage}
+            validate={composeValidators(required(descriptionRequiredMessage))}
           />
-
+          <ImageUpload/>
           <Button
             className={css.submitButton}
             type="submit"

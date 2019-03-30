@@ -23,24 +23,27 @@ const EditListingBasicPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    currentUser
   } = props;
-
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   const panelTitle = isPublished ? (
     <FormattedMessage
       id="EditListingBasicPanel.title"
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingBasicPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingBasicPanel.createListingTitle" values={{ name: userName }} />
+    );
 
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
+  const place = publicData && publicData.place;
+  const property_type = publicData && publicData.property_type;
+
+  const initialValues = { property_type, place };
 
   return (
     <div className={classes}>
@@ -50,10 +53,11 @@ const EditListingBasicPanel = props => {
         name={BASIC_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { amenities = [] } = values;
+          const { place = '', property_type = '' } = values;
 
           const updatedValues = {
-            publicData: { amenities },
+            publicData: { place, property_type },
+            title: Math.random().toString()
           };
           onSubmit(updatedValues);
         }}

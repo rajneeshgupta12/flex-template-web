@@ -172,7 +172,7 @@ export const ensureListing = listing => {
   const empty = {
     id: null,
     type: 'listing',
-    attributes: { publicData: {} },
+    attributes: {title:'', publicData: {} },
     images: [],
   };
   return { ...empty, ...listing };
@@ -277,7 +277,7 @@ export const userDisplayNameAsString = (user, defaultUserDisplayName) => {
  */
 export const userDisplayName = (user, bannedUserDisplayName) => {
   console.warn(
-    `Function userDisplayName is deprecated! 
+    `Function userDisplayName is deprecated!
 User function userDisplayNameAsString or component UserDisplayName instead.`
   );
 

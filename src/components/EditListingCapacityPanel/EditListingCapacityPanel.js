@@ -23,6 +23,11 @@ const EditListingCapacityPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    guestNumber,
+    bedsNumber,
+    bedroomsNumber,
+    bathroomsNumber,
+    updateCapacityValues
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -36,8 +41,8 @@ const EditListingCapacityPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
+    );
 
   const amenities = publicData && publicData.amenities;
   const initialValues = { amenities };
@@ -50,18 +55,18 @@ const EditListingCapacityPanel = props => {
         name={CAPACITY_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { amenities = [] } = values;
-
-          const updatedValues = {
-            publicData: { amenities },
-          };
-          onSubmit(updatedValues);
+          onSubmit({});
         }}
         onChange={onChange}
         saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        guestNumber={guestNumber}
+        bedsNumber={bedsNumber}
+        bedroomsNumber={bedroomsNumber}
+        bathroomsNumber={bathroomsNumber}
+        updateCapacityValues={updateCapacityValues}
       />
     </div>
   );
