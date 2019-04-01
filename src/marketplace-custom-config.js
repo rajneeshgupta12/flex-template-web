@@ -2,38 +2,114 @@
  * Marketplace specific configuration.
  */
 
-export const amenities = [
+
+export const amenities_hospitality = [
   {
-    key: 'towels',
-    label: 'Towels',
+    key: 'beddings',
+    label: 'Beddings',
   },
   {
-    key: 'bathroom',
-    label: 'Bathroom',
+    key: 'towel',
+    label: 'Towel',
   },
   {
-    key: 'swimming_pool',
-    label: 'Swimming pool',
+    key: 'body_cleaneser_shampoo',
+    label: 'Shampoo &amp; body cleanser',
   },
   {
-    key: 'own_drinks',
-    label: 'Own drinks allowed',
+    key: 'hair_dryer',
+    label: 'Hair dryer',
   },
   {
-    key: 'jacuzzi',
-    label: 'Jacuzzi',
+    key: 'bathtub',
+    label: 'Bathtub',
   },
   {
-    key: 'audiovisual_entertainment',
-    label: 'Audiovisual entertainment',
+    key: 'refrigerator',
+    label: 'Refrigerator',
   },
   {
-    key: 'barbeque',
-    label: 'Barbeque',
+    key: 'kitchenware',
+    label: 'Kitchenware',
   },
   {
-    key: 'own_food_allowed',
-    label: 'Own food allowed',
+    key: 'heat',
+    label: 'Heat',
+  },
+  {
+    key: 'air_conditioning',
+    label: 'Air conditioning',
+  },
+  {
+    key: 'tv',
+    label: 'TV / Projector',
+  },
+  {
+    key: 'wifi',
+    label: 'Wifi',
+  },
+];
+
+export const amenities_glamping = [
+  {
+    key: 'firepit',
+    label: 'firepit',
+  },
+  {
+    key: 'stove',
+    label: 'stove',
+  },
+  {
+    key: 'kichenette',
+    label: 'kichenette',
+  },
+  {
+    key: 'pot_pen',
+    label: 'pot/pen',
+  },
+  {
+    key: 'utensils',
+    label: 'utensils',
+  },
+  {
+    key: 'silverware',
+    label: 'silverware',
+  },
+  {
+    key: 'picnic_table_bench',
+    label: 'picnic table with bench',
+  },
+  {
+    key: 'picnic_blanket',
+    label: 'picnic blanket',
+  },
+  {
+    key: 'camping_chair',
+    label: 'camping chair',
+  },
+  {
+    key: 'shower',
+    label: 'shower',
+  },
+  {
+    key: 'toilet',
+    label: 'toilet',
+  },
+  {
+    key: 'electrical_outlet',
+    label: 'electrical outlet',
+  },
+  {
+    key: 'hot_tub',
+    label: 'hot tub',
+  },
+  {
+    key: 'BBQ_grill',
+    label: 'BBQ grill',
+  },
+  {
+    key: 'campfire',
+    label: 'Campfire',
   },
 ];
 

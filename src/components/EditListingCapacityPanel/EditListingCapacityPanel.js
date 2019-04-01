@@ -27,9 +27,9 @@ const EditListingCapacityPanel = props => {
     bedsNumber,
     bedroomsNumber,
     bathroomsNumber,
-    updateCapacityValues
+    updateCapacityValues,
+    history,
   } = props;
-
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
@@ -43,14 +43,14 @@ const EditListingCapacityPanel = props => {
   ) : (
       <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
     );
-
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
+  const capacity = publicData && publicData.capacity;
+  const initialValues = { bathroomsNumber: capacity && capacity.bathroomsNumber, bedroomsNumber: capacity && capacity.bedroomsNumber, bedsNumber: capacity && capacity.bedsNumber, guestNumber: capacity && capacity.guestNumber };
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingCapacityForm
+        history={history}
         className={css.form}
         name={CAPACITY_NAME}
         initialValues={initialValues}
@@ -62,10 +62,10 @@ const EditListingCapacityPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        guestNumber={guestNumber}
-        bedsNumber={bedsNumber}
-        bedroomsNumber={bedroomsNumber}
-        bathroomsNumber={bathroomsNumber}
+        guestNumber={(guestNumber ||capacity &&  capacity.guestNumber) || 2}
+        bedsNumber={(bedsNumber ||capacity &&  capacity.bedsNumber) || 1}
+        bedroomsNumber={(bedroomsNumber ||capacity &&  capacity.bedroomsNumber) || 1}
+        bathroomsNumber={(bathroomsNumber ||capacity &&  capacity.bathroomsNumber) || 1}
         updateCapacityValues={updateCapacityValues}
       />
     </div>

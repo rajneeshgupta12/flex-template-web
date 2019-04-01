@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
+import { hashHistory } from 'react-router';
 
 import { propTypes } from '../../util/types';
 import config from '../../config';
@@ -47,10 +48,32 @@ const EditListingCapacityFormComponent = props => (
         </p>
       ) : null;
 
-      const incrementButton = (name) => {
+
+      const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber } = props
+      const initialData = {
+        guestNumber: {
+          guestNumber,
+          'minVal': 1,
+          'maxVal': 7
+        },
+        bedsNumber: {
+          bedsNumber,
+          'minVal': 1,
+          'maxVal': 99
+        }, bedroomsNumber: {
+          bedroomsNumber,
+          'minVal': 1,
+          'maxVal': 99
+        }, bathroomsNumber: {
+          bathroomsNumber,
+          'minVal': 1,
+          'maxVal': 99
+        }
+      }
+      const incrementButton = (name, preValues) => {
         return <button
           type="button"
-          onClick={(e) => { props.updateCapacityValues(name, 'increment') }}
+          onClick={(e) => { props.updateCapacityValues(name, 'increment', initialData) }}
         > +
       </button>
       }
@@ -58,26 +81,23 @@ const EditListingCapacityFormComponent = props => (
       const derementButton = (name) => {
         return <button
           type="button"
-          onClick={(e) => { props.updateCapacityValues(name, 'derement') }}
+          onClick={(e) => { props.updateCapacityValues(name, 'derement', initialData) }}
         >
           -
       </button>
       }
-
-      const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber } = props
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-
           <div>
             <p>How many gusets can stay comfortably?</p>
             <div>
               <strong>Number of guests</strong>
               <label>
-                {incrementButton("guestNumber")}
-                {guestNumber}
                 {derementButton("guestNumber")}
+                {guestNumber || '    '}
+                {incrementButton("guestNumber")}
               </label>
             </div>
           </div>
@@ -86,9 +106,9 @@ const EditListingCapacityFormComponent = props => (
             <div>
               <strong>Bedroom</strong>
               <label>
-                {incrementButton('bedroomsNumber')}
-                {bedroomsNumber}
                 {derementButton('bedroomsNumber')}
+                {bedroomsNumber || '    '}
+                {incrementButton('bedroomsNumber')}
               </label>
             </div>
           </div>
@@ -96,9 +116,9 @@ const EditListingCapacityFormComponent = props => (
             <div>
               <strong>Bed</strong>
               <label>
-                {incrementButton('bedsNumber')}
-                {bedsNumber}
                 {derementButton('bedsNumber')}
+                {bedsNumber || '    '}
+                {incrementButton('bedsNumber')}
               </label>
             </div>
           </div>
@@ -107,9 +127,9 @@ const EditListingCapacityFormComponent = props => (
             <div>
               <strong>Bathroom</strong>
               <label>
-                {incrementButton('bathroomsNumber')}
-                {bathroomsNumber}
                 {derementButton('bathroomsNumber')}
+                {bathroomsNumber || '    '}
+                {incrementButton('bathroomsNumber')}
               </label>
             </div>
           </div>
@@ -130,6 +150,7 @@ const EditListingCapacityFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+           <div onClick={()=>props.history.goBack()}>Back: Basic info</div>
         </Form>
       );
     }}

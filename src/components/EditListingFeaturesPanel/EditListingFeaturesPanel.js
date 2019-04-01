@@ -36,24 +36,26 @@ const EditListingFeaturesPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+    );
 
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
+  const amenities_hospitality = publicData && publicData.amenities_hospitality;
+  const amenities_glamping = publicData && publicData.amenities_glamping;
+  const initialValues = { amenities_glamping: amenities_glamping, amenities_hospitality: amenities_hospitality };
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingFeaturesForm
+        {...props}
         className={css.form}
         name={FEATURES_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { amenities = [] } = values;
+          const { amenities_hospitality = [], amenities_glamping = [] } = values;
 
           const updatedValues = {
-            publicData: { amenities },
+            publicData: { amenities_hospitality,amenities_glamping },
           };
           onSubmit(updatedValues);
         }}

@@ -1,14 +1,16 @@
 import React from 'react';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
+import DropzoneComponent from 'react-dropzone-component';
+import ReactDOMServer from 'react-dom/server';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
+import { Field } from 'react-final-form'
+
 import { Form, Button, FieldTextInput } from '../../components';
-import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
-import ImageUpload from './imageUpload'
 import css from './EditListingDescriptionForm.css';
 const TITLE_MAX_LENGTH = 60;
 
@@ -45,7 +47,6 @@ const EditListingDescriptionFormComponent = props => (
           maxLength: TITLE_MAX_LENGTH,
         }
       );
-
       const descriptionMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.description',
       });
@@ -82,7 +83,25 @@ const EditListingDescriptionFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
+      const djsConfig = {
+        previewTemplate: ReactDOMServer.renderToStaticMarkup(
+          <div className="dz-preview dz-file-preview">
 
+            <div className="dz-details">
+              <div className="dz-filename"><span data-dz-name="true"></span></div>
+              <img data-dz-thumbnail="true" />
+            </div>
+            <div className="dz-progress"><span className="dz-upload" data-dz-uploadprogress="true"></span></div>
+          </div>
+        )
+      }
+      const eventHandlers = { addedfile: (file) => console.log('added', file), removedfile: (file) => console.log('remove', file), }
+
+      const componentConfig = {
+        iconFiletypes: ['.jpg', '.png', '.gif'],
+        postUrl: 'no-url',
+        showFiletypeIcon: true,
+      };
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -109,16 +128,69 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-          <FieldTextInput
-            id="images"
-            name="description"
-            className={css.description}
-            type="textarea"
-            label={descriptionMessage}
-            placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
-          />
-          <ImageUpload/>
+            <div>
+            <label>Choose the theme of your place</label>
+            <div>
+              <label>
+                <Field
+                  name="place_theme"
+                  component="input"
+                  type="checkbox"
+                  value="couple_friendly"
+                />{' '}
+                couple friendly
+              </label>
+              <label>
+                <Field
+                  name="place_theme"
+                  component="input"
+                  type="checkbox"
+                  value="family_friendly"
+                />{' '}
+                family-friendly
+              </label>
+              <label>
+                <Field
+                  name="place_theme"
+                  component="input"
+                  type="checkbox"
+                  value="pet_friendly"
+                />{' '}
+                pet-friendly
+              </label>
+              <label>
+                <Field
+                  name="place_theme"
+                  component="input"
+                  type="checkbox"
+                  value="e_p_friendly"
+                />{' '}
+                event/party-friendly
+              </label>
+               <label>
+                <Field
+                  name="place_theme"
+                  component="input"
+                  type="checkbox"
+                  value="for_single_trip"
+                />{' '}
+                for single trip
+              </label>
+            </div>
+          </div>
+          <div>
+            <label>
+              Photos
+            </label>
+            <DropzoneComponent config={componentConfig}
+              eventHandlers={eventHandlers}
+              djsConfig={djsConfig} >
+              <div className="dz-message">+ Choose an image…</div>
+            </DropzoneComponent>
+            <span >
+              Tip: Choose 5-10 best photos of your place from different angles in a good light that really show the space.
+            </span>
+          </div>
           <Button
             className={css.submitButton}
             type="submit"

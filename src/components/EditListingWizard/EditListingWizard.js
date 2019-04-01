@@ -37,15 +37,14 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 export const TABS = [
   BASIC,
   CAPACITY,
-  DESCRIPTION,
   FEATURES,
-  POLICY,
   LOCATION,
   TRAVEL,
+  DESCRIPTION,
+  POLICY,
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
-
 ];
 
 // Tabs are horizontal in small screens
@@ -86,7 +85,7 @@ const tabLabel = (intl, tab) => {
  *
  * @return true if tab / step is completed.
  */
-const tabCompleted = (tab, listing) => {
+const tabCompleted = (tab, listing, previousTabIndex) => {
   const {
     availabilityPlan,
     description,
@@ -96,30 +95,40 @@ const tabCompleted = (tab, listing) => {
     publicData,
   } = listing.attributes;
   const images = listing.images;
-
   switch (tab) {
     case DESCRIPTION:
-      return !!(description && title);
-    case FEATURES:
-      return !!(publicData && publicData.amenities);
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
+    return false
+    //   // return !!(description && title);
+    // case FEATURES:
+    // return true
+
+    //   // return !!(publicData && (publicData.amenities_glamping || publicData.amenities_hospitality));
+    // case POLICY:
+    // // return true
+
+    //   return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
-      return !!(geolocation && publicData && publicData.location && publicData.location.address);
-    case PRICING:
-      return !!price;
-    case AVAILABILITY:
-      return !!availabilityPlan;
-    case PHOTOS:
-      return images && images.length > 0;
-    case BASIC:
-      return true;
-    case CAPACITY:
-      return true;
-    case TRAVEL:
-      return true;
+    return false
+
+    //   return !!(geolocation && publicData && publicData.location && publicData.location.address);
+    // case PRICING:
+    // return true
+    //   // return !!price;
+    // case AVAILABILITY:
+    //   return true;
+    // case PHOTOS:
+    // return true
+    //   // return images && images.length > 0;
+    // case BASIC:
+    //   return true;
+    // case CAPACITY:
+    // return true
+
+      // return publicData.place ? true : false;
+    // case TRAVEL:
+    //   return true;
     default:
-      return false;
+      return true;
   }
 };
 
@@ -136,7 +145,8 @@ const tabsActive = (isNew, listing) => {
   return TABS.reduce((acc, tab) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
-      previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing) : true;
+      previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing, previousTabIndex) : true;
+
     return { ...acc, [tab]: isActive };
   }, {});
 };
@@ -162,16 +172,16 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
-      guestNumber: 0, bedsNumber: 0, bedroomsNumber: 0, bathroomsNumber: 0
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
     this.handlePayoutSubmit = this.handlePayoutSubmit.bind(this);
     this.updateCapacityValues = this.updateCapacityValues.bind(this);
+
   }
 
-  updateCapacityValues(name, type) {
+  updateCapacityValues(name, type, defaultValues) {
     let value = this.state[name]
     if (type == 'increment') {
       value += 1
@@ -179,7 +189,7 @@ class EditListingWizard extends Component {
     if (type == 'derement') {
       value -= 1
     }
-    (value > 0) ? this.setState({ [name]: value }) : this.setState({ [name]: 0 })
+    (value >= defaultValues[name].minVal && value <= defaultValues[name].maxVal) ? this.setState({ [name]: value }) : this.setState({ [name]: defaultValues[name][name] })
   }
 
   handleCreateFlowTabScrolling(shouldScroll) {

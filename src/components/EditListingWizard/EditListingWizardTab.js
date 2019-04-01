@@ -108,9 +108,8 @@ const EditListingWizardTab = props => {
     intl,
     currentUser,
     guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber,
-    updateCapacityValues
+    updateCapacityValues,
   } = props;
-
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
@@ -144,7 +143,11 @@ const EditListingWizardTab = props => {
           if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
-
+            this.setState({
+              redirect: {
+                params, tab, marketplaceTabs, history, id: r.data.data.id.uuid
+              }
+            })
             // After successful saving of draft data, user should be redirected to next tab
             redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
           } else {
@@ -177,6 +180,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditDescription';
       return (
         <EditListingDescriptionPanel
+          history={props.history}
           {...panelProps(DESCRIPTION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -192,6 +196,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingFeaturesPanel
+          history={props.history}
           {...panelProps(FEATURES)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -206,6 +211,8 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditPolicies';
       return (
         <EditListingPoliciesPanel
+          history={props.history}
+
           {...panelProps(POLICY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -220,6 +227,8 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditLocation';
       return (
         <EditListingLocationPanel
+          history={props.history}
+
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -234,6 +243,8 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditPricing';
       return (
         <EditListingPricingPanel
+          history={props.history}
+
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -248,6 +259,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditAvailability';
       return (
         <EditListingAvailabilityPanel
+          history={props.history}
           {...panelProps(AVAILABILITY)}
           availability={availability}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
@@ -266,6 +278,7 @@ const EditListingWizardTab = props => {
       return (
         <EditListingPhotosPanel
           {...panelProps(PHOTOS)}
+          history={props.history}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           newListingPublished={newListingPublished}
           fetchInProgress={fetchInProgress}
@@ -302,6 +315,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingCapacityPanel
+          history={props.history}
           {...panelProps(CAPACITY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -322,6 +336,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingTravelPanel
+          history={props.history}
           {...panelProps(TRAVEL)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
