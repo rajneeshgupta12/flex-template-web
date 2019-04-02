@@ -64,6 +64,7 @@ export class EditListingAvailabilityFormComponent extends Component {
               >
                 {saveActionMsg}
               </Button>
+              <div onClick={(props) => props.history.goBack()}>Back: Pricing</div>
             </Form>
           );
         }}

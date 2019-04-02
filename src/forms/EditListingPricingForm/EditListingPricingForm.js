@@ -1,7 +1,7 @@
 import React from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import config from '../../config';
@@ -9,7 +9,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldRadioButton } from '../../components';
 import css from './EditListingPricingForm.css';
 
 const { Money } = sdkTypes;
@@ -38,8 +38,8 @@ export const EditListingPricingFormComponent = props => (
       const translationKey = isNightly
         ? 'EditListingPricingForm.pricePerNight'
         : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
+          ? 'EditListingPricingForm.pricePerDay'
+          : 'EditListingPricingForm.pricePerUnit';
 
       const pricePerUnitMessage = intl.formatMessage({
         id: translationKey,
@@ -75,6 +75,7 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
+      const showAsRequired = pristine;
 
       return (
         <Form onSubmit={handleSubmit} className={classes}>
@@ -98,7 +99,41 @@ export const EditListingPricingFormComponent = props => (
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
-
+          <label>
+            Cancellation & Refund
+          </label>
+          <div className={css.radioButtonRow}>
+            <FieldRadioButton
+              name="cancellation_or_refund"
+              showAsRequired={showAsRequired}
+              id="free"
+              value="free"
+              label={`If cancel anytime before the check in day and time, the guest will receive a full refund (minus service fee).`}
+            />
+            <FieldRadioButton
+              name="cancellation_or_refund"
+              showAsRequired={showAsRequired}
+              value="flexible"
+              id="flexible"
+              label={`If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).`}
+            />
+            <FieldRadioButton
+              name="cancellation_or_refund"
+              id="moderate"
+              value="moderate"
+              showAsRequired={showAsRequired}
+              label={`If cancel at least 15 days before the check in day and time, the guest will receive a full refund (minus service fee).
+            Cancelation between 7 to 15 days before the check in day and time,
+            the guest will receive a 50% refund (minus service fee).`}
+            />
+            <FieldRadioButton
+              name="cancellation_or_refund"
+              value="strict"
+              id="strict"
+              showAsRequired={showAsRequired}
+              label={"There will be no refund after the booking is confirmed."}
+            />
+          </div>
           <Button
             className={css.submitButton}
             type="submit"
@@ -108,6 +143,7 @@ export const EditListingPricingFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+          <div onClick={()=>props.history.goBack()}>Back: Description</div>
         </Form>
       );
     }}

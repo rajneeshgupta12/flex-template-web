@@ -21,6 +21,7 @@ const EditListingAvailabilityPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    history
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -38,6 +39,7 @@ const EditListingAvailabilityPanel = props => {
       { dayOfWeek: 'sun', seats: 1 },
     ],
   };
+
   const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
 
   return (
@@ -49,27 +51,36 @@ const EditListingAvailabilityPanel = props => {
             values={{ listingTitle: <ListingLink listing={listing} /> }}
           />
         ) : (
-          <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
-        )}
+            <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
+          )}
       </h1>
       <EditListingAvailabilityForm
         className={css.form}
         listingId={currentListing.id}
-        initialValues={{ availabilityPlan }}
+        // initialValues={{ availabilityPlan }}
         availability={availability}
         availabilityPlan={availabilityPlan}
-        onSubmit={() => {
+        onSubmit={(values) => {
+          console.log('values', values)
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,
           // which is visible on this panel.
           onSubmit({ availabilityPlan });
         }}
-        onChange={onChange}
+        onChange={(values) => {
+          console.log('onChange-----,values', values)
+          // We save the default availability plan
+          // I.e. this listing is available every night.
+          // Exceptions are handled with live edit through a calendar,
+          // which is visible on this panel.
+          onChange({ availabilityPlan });
+        }}
         saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateError={errors.updateListingError}
         updateInProgress={updateInProgress}
+        history={history}
       />
     </div>
   );

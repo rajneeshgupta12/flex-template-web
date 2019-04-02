@@ -33,7 +33,6 @@ const EditListingCapacityPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
-
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -54,23 +53,26 @@ const EditListingCapacityPanel = props => {
         className={css.form}
         name={CAPACITY_NAME}
         initialValues={initialValues}
-        onSubmit={values => {
-          onSubmit({});
+        onSubmit={() => {
+          const updatedValues = {
+            publicData: { capacity: { bedsNumber, guestNumber, bathroomsNumber, bedroomsNumber } },
+          };
+          onSubmit(updatedValues);
         }}
         onChange={onChange}
         saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        guestNumber={(guestNumber ||capacity &&  capacity.guestNumber) || 2}
-        bedsNumber={(bedsNumber ||capacity &&  capacity.bedsNumber) || 1}
-        bedroomsNumber={(bedroomsNumber ||capacity &&  capacity.bedroomsNumber) || 1}
-        bathroomsNumber={(bathroomsNumber ||capacity &&  capacity.bathroomsNumber) || 1}
+        guestNumber={(guestNumber || capacity && capacity.guestNumber) || 2}
+        bedsNumber={(bedsNumber || capacity && capacity.bedsNumber) || 1}
+        bedroomsNumber={(bedroomsNumber || capacity && capacity.bedroomsNumber) || 1}
+        bathroomsNumber={(bathroomsNumber || capacity && capacity.bathroomsNumber) || 1}
         updateCapacityValues={updateCapacityValues}
       />
     </div>
   );
-};
+}
 
 EditListingCapacityPanel.defaultProps = {
   rootClassName: null,

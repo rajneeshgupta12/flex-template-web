@@ -113,6 +113,56 @@ export const amenities_glamping = [
   },
 ];
 
+export const available_transportaion = [
+  { key: 'lyft', label: 'Lyft' },
+  { key: 'uber', label: 'Uber' },
+  { key: 'taxi', label: 'Taxi' },
+  { key: 'bus', label: 'Bus' },
+  { key: 'subway', label: 'Subway' },
+  { key: 'train', label: 'Train' },
+  { key: 'parking_available', label: 'Parking available' },
+];
+
+export const facilities_culture = [
+  { key: 'library', label: 'Library' },
+  { key: 'movie_theater', label: 'Movie theater' },
+  { key: 'theater', label: 'Theater(performance, concert)' },
+  { key: 'museum', label: 'Museum' },
+  { key: 'art_gallary', label: 'Art gallary' }
+];
+
+export const facilities_nature = [
+  { key: 'lake', label: 'lake' },
+  { key: 'beach', label: 'beach' },
+  { key: 'park', label: 'park' },
+  { key: 'mountain', label: 'mountain' },
+  { key: 'river', label: 'river' },
+  { key: 'desert', label: 'desert' }
+];
+
+export const facilities_convenience = [
+  { key: 'restaurant', label: 'restaurant' },
+  { key: 'bar', label: 'bar' },
+  { key: 'cafe', label: 'cafe' },
+  { key: 'grocery_store', label: 'grocery store' },
+  { key: 'hospital', label: 'hospital' },
+  { key: 'airport', label: 'airport' },
+  { key: 'shopping_mall', label: 'shopping mall' },
+  { key: 'gym', label: 'gym' },
+];
+
+export const facilities_tour = [
+  { key: 'winery', label: 'winery' },
+  { key: 'brewery', label: 'brewery' },
+  { key: 'roastery', label: 'roastery' },
+  { key: 'zoo', label: 'zoo' },
+  { key: 'amusement_park', label: 'amusement park' },
+  { key: 'market_flea_farmers', label: 'flea market/farmers market mall' },
+  { key: 'tower', label: 'tower' },
+  { key: 'historical_building_area', label: 'historical building/area' },
+  { key: 'regional_tour_spot', label: 'regional tour spot' },
+];
+
 export const categories = [
   { key: 'smoke', label: 'Smoke' },
   { key: 'electric', label: 'Electric' },

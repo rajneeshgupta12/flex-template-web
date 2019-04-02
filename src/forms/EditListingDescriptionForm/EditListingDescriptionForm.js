@@ -95,7 +95,13 @@ const EditListingDescriptionFormComponent = props => (
           </div>
         )
       }
-      const eventHandlers = { addedfile: (file) => console.log('added', file), removedfile: (file) => console.log('remove', file), }
+
+      const eventHandlers = {
+        addedfile: (file) => {
+          props.descriptionImages.push(file);
+          props.uploadDescriptionImages(props.descriptionImages)
+        }
+      }
 
       const componentConfig = {
         iconFiletypes: ['.jpg', '.png', '.gif'],
@@ -128,7 +134,7 @@ const EditListingDescriptionFormComponent = props => (
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
-            <div>
+          <div>
             <label>Choose the theme of your place</label>
             <div>
               <label>
@@ -167,7 +173,7 @@ const EditListingDescriptionFormComponent = props => (
                 />{' '}
                 event/party-friendly
               </label>
-               <label>
+              <label>
                 <Field
                   name="place_theme"
                   component="input"
@@ -184,7 +190,8 @@ const EditListingDescriptionFormComponent = props => (
             </label>
             <DropzoneComponent config={componentConfig}
               eventHandlers={eventHandlers}
-              djsConfig={djsConfig} >
+              djsConfig={djsConfig}
+            >
               <div className="dz-message">+ Choose an image…</div>
             </DropzoneComponent>
             <span >
@@ -200,6 +207,7 @@ const EditListingDescriptionFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+          <div onClick={() => props.history.goBack()}>Back: Travel Info</div>
         </Form>
       );
     }}

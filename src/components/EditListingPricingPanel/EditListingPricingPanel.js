@@ -23,13 +23,16 @@ const EditListingPricingPanel = props => {
     submitButtonText,
     panelUpdated,
     updateInProgress,
+    currentUser,
     errors,
+    history
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { price } = currentListing.attributes;
 
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -37,26 +40,37 @@ const EditListingPricingPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingPricingPanel.createListingTitle"
+        values={{ name: userName }}
+      />
+    );
 
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
       initialValues={{ price }}
-      onSubmit={onSubmit}
+      onSubmit={values => {
+        const { cancellation_or_refund = '', price = '' } = values;
+
+        const updatedValues = {
+          price,
+          publicData: { cancellation_or_refund },
+        };
+        onSubmit(updatedValues);
+      }}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       updated={panelUpdated}
       updateInProgress={updateInProgress}
       fetchErrors={errors}
+      history={history}
     />
   ) : (
-    <div className={css.priceCurrencyInvalid}>
-      <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
-    </div>
-  );
+      <div className={css.priceCurrencyInvalid}>
+        <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
+      </div>
+    );
 
   return (
     <div className={classes}>

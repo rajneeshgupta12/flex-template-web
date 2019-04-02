@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldCheckboxGroup, Form, FieldTextInput } from '../../components';
 
 import css from './EditListingTravelForm.css';
 
@@ -27,6 +27,8 @@ const EditListingTravelFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        showTravelSubfield,
+        travelSubFields
       } = fieldRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
@@ -46,19 +48,90 @@ const EditListingTravelFormComponent = props => (
           <FormattedMessage id="EditListingTravelForm.showListingFailed" />
         </p>
       ) : null;
-
       return (
-        <Form className={classes} onSubmit={handleSubmit}>
+        <Form onChange={(e) => {
+          e.target.value === 'subway' && showTravelSubfield('subway');
+          e.target.value === 'train' && showTravelSubfield('train');
+          e.target.value === 'bus' && showTravelSubfield('bus');
+        }} className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
+          <div>
+            <label>
+              Available transportaion
+          </label>
+            <FieldCheckboxGroup
 
-          <FieldCheckboxGroup
-            className={css.features}
-            id={name}
-            name={name}
-            options={config.custom.amenities}
-          />
-
+              className={css.features}
+              id={'available_transportaion'}
+              name={'available_transportaion'}
+              options={config.custom.available_transportaion}
+            />
+            {travelSubFields.subway && <div>
+              <FieldTextInput
+                type="text"
+                name="traval_subway"
+                id="traval_subway"
+                placeholder={'Subway stations nearby(optional)'}
+              />
+            </div>
+            }
+            {travelSubFields.bus && <div>
+              <FieldTextInput
+                type="text"
+                name="traval_bus"
+                id="traval_bus"
+                placeholder={'Bus stops nearby(optional)'}
+              />
+            </div>
+            }
+            {travelSubFields.train && <div>
+              <FieldTextInput
+                type="text"
+                name="traval_train"
+                id="traval_train"
+                placeholder={'Train stations nearby(optional)'}
+              />
+            </div>
+            }</div>
+          <div>
+            <label>
+              Facilities and Landmarks
+          </label>
+            <span>
+              Culture
+          </span>
+            <FieldCheckboxGroup
+              className={css.features}
+              id={'facilities_culture'}
+              name={'facilities_culture'}
+              options={config.custom.facilities_culture}
+            /><span>
+              Nature
+        </span>
+            <FieldCheckboxGroup
+              className={css.features}
+              id={'facilities_nature'}
+              name={'facilities_nature'}
+              options={config.custom.facilities_nature}
+            />   <span>
+              Convenience
+        </span>
+            <FieldCheckboxGroup
+              className={css.features}
+              id={'facilities_convenience'}
+              name={'facilities_convenience'}
+              options={config.custom.facilities_convenience}
+            /><span>
+              Tour
+      </span>
+            <FieldCheckboxGroup
+              className={css.features}
+              id={'facilities_tour'}
+              name={'facilities_tour'}
+              options={config.custom.facilities_tour}
+            />
+          </div>
           <Button
             className={css.submitButton}
             type="submit"
@@ -68,6 +141,7 @@ const EditListingTravelFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+          <div onClick={()=>props.history.goBack()}>Back: Location</div>
         </Form>
       );
     }}

@@ -28,7 +28,7 @@ const EditListingFeaturesFormComponent = props => (
         updateInProgress,
         fetchErrors,
       } = fieldRenderProps;
-
+console.log('----------3---------',props)
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;

@@ -9,6 +9,7 @@ import {
   autocompleteSearchRequired,
   autocompletePlaceSelected,
   composeValidators,
+  required
 } from '../../util/validators';
 import { Form, LocationAutocompleteInputField, Button, FieldTextInput } from '../../components';
 
@@ -35,6 +36,19 @@ export const EditListingLocationFormComponent = props => (
       const titleRequiredMessage = intl.formatMessage({ id: 'EditListingLocationForm.address' });
       const addressPlaceholderMessage = intl.formatMessage({
         id: 'EditListingLocationForm.addressPlaceholder',
+      });
+
+      const stateMessage = intl.formatMessage({ id: 'EditListingLocationForm.state' });
+      const cityMessage = intl.formatMessage({ id: 'EditListingLocationForm.city' });
+      const zipMessage = intl.formatMessage({ id: 'EditListingLocationForm.zip' });
+      const zipPlaceholderMessage = intl.formatMessage({
+        id: 'EditListingLocationForm.zipPlaceholder',
+      });
+      const statePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingLocationForm.statePlaceholder',
+      });
+      const cityPlaceholderMessage = intl.formatMessage({
+        id: 'EditListingLocationForm.cityPlaceholder',
       });
       const addressRequiredMessage = intl.formatMessage({
         id: 'EditListingLocationForm.addressRequired',
@@ -96,8 +110,35 @@ export const EditListingLocationFormComponent = props => (
             id="building"
             label={buildingMessage}
             placeholder={buildingPlaceholderMessage}
-          />
 
+          />
+          <FieldTextInput
+            className={css.building}
+            type="text"
+            name="city"
+            id="city"
+            label={cityMessage}
+            placeholder={cityPlaceholderMessage}
+            required
+          />
+          <FieldTextInput
+            className={css.building}
+            type="text"
+            name="state"
+            id="state"
+            label={stateMessage}
+            placeholder={statePlaceholderMessage}
+            required
+          />
+          <FieldTextInput
+            className={css.building}
+            type="text"
+            name="zip"
+            id="zip"
+            label={zipMessage}
+            placeholder={zipPlaceholderMessage}
+            required
+          />
           <Button
             className={css.submitButton}
             type="submit"
@@ -107,6 +148,7 @@ export const EditListingLocationFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+          <div onClick={()=>props.history.goBack()}>Back: Amenities</div>
         </Form>
       );
     }}

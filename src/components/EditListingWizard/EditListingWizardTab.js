@@ -48,8 +48,7 @@ export const SUPPORTED_TABS = [
   TRAVEL,
   PRICING,
   AVAILABILITY,
-  PHOTOS,
-
+  PHOTOS
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -109,6 +108,10 @@ const EditListingWizardTab = props => {
     currentUser,
     guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber,
     updateCapacityValues,
+    showTravelSubfield,
+    travelSubFields,
+    descriptionImages,
+    uploadDescriptionImages
   } = props;
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
@@ -120,9 +123,8 @@ const EditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
+
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
-    updateValues.publicData = updateValues.publicData ? updateValues.publicData : {}
-    updateValues.publicData['capacity'] = { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber }
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -143,11 +145,6 @@ const EditListingWizardTab = props => {
           if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
-            this.setState({
-              redirect: {
-                params, tab, marketplaceTabs, history, id: r.data.data.id.uuid
-              }
-            })
             // After successful saving of draft data, user should be redirected to next tab
             redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
           } else {
@@ -187,6 +184,8 @@ const EditListingWizardTab = props => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           currentUser={currentUser}
+          descriptionImages={descriptionImages}
+          uploadDescriptionImages={uploadDescriptionImages}
         />
       );
     }
@@ -244,7 +243,6 @@ const EditListingWizardTab = props => {
       return (
         <EditListingPricingPanel
           history={props.history}
-
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -294,7 +292,7 @@ const EditListingWizardTab = props => {
     }
     case BASIC: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveNewBasic'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingBasicPanel
@@ -311,7 +309,7 @@ const EditListingWizardTab = props => {
 
     case CAPACITY: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveCapicity'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingCapacityPanel
@@ -332,7 +330,7 @@ const EditListingWizardTab = props => {
 
     case TRAVEL: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveNewTravel'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingTravelPanel
@@ -342,6 +340,9 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
+          showTravelSubfield={showTravelSubfield}
+          travelSubFields={travelSubFields}
         />
       );
     }

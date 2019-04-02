@@ -30,7 +30,7 @@ import EditListingWizardTab, {
 import css from './EditListingWizard.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
-const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
+// const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 
 // TODO: PHOTOS panel needs to be the last one since it currently contains PayoutDetailsForm modal
 // All the other panels can be reordered.
@@ -41,10 +41,8 @@ export const TABS = [
   LOCATION,
   TRAVEL,
   DESCRIPTION,
-  POLICY,
   PRICING,
-  ...availabilityMaybe,
-  PHOTOS,
+  AVAILABILITY || []
 ];
 
 // Tabs are horizontal in small screens
@@ -85,7 +83,7 @@ const tabLabel = (intl, tab) => {
  *
  * @return true if tab / step is completed.
  */
-const tabCompleted = (tab, listing, previousTabIndex) => {
+const tabCompleted = (tab, listing) => {
   const {
     availabilityPlan,
     description,
@@ -95,43 +93,35 @@ const tabCompleted = (tab, listing, previousTabIndex) => {
     publicData,
   } = listing.attributes;
   const images = listing.images;
+
   switch (tab) {
     case DESCRIPTION:
-    return false
-    //   // return !!(description && title);
-    // case FEATURES:
-    // return true
-
-    //   // return !!(publicData && (publicData.amenities_glamping || publicData.amenities_hospitality));
-    // case POLICY:
-    // // return true
-
-    //   return !!(publicData && typeof publicData.rules !== 'undefined');
+      return !!(publicData && publicData.place_theme && description && title);
+    case FEATURES:
+      return !!(publicData && publicData.amenities_glamping || publicData.amenities_hospitality
+      );
     case LOCATION:
-    return false
-
-    //   return !!(geolocation && publicData && publicData.location && publicData.location.address);
-    // case PRICING:
-    // return true
-    //   // return !!price;
-    // case AVAILABILITY:
-    //   return true;
-    // case PHOTOS:
-    // return true
-    //   // return images && images.length > 0;
-    // case BASIC:
-    //   return true;
-    // case CAPACITY:
-    // return true
-
-      // return publicData.place ? true : false;
-    // case TRAVEL:
-    //   return true;
+      return !!(publicData && publicData.location && publicData.location.address);
+    case PRICING:
+      return !!price;
+    case AVAILABILITY:
+      return !!availabilityPlan;
+    case BASIC:
+    return !!(title);
+    case CAPACITY:
+      return !!(publicData && publicData.capacity);;
+    case TRAVEL:
+      return !!(
+        publicData && publicData.travel_info &&
+        (publicData.travel_info.available_transportaion ||
+          publicData.travel_info.facilities_convenience ||
+          publicData.travel_info.facilities_culture ||
+          publicData.travel_info.facilities_nature ||
+          publicData.travel_info.facilities_tour));
     default:
       return true;
   }
 };
-
 /**
  * Check which wizard tabs are active and which are not yet available. Tab is active if previous
  * tab is completed. In edit mode all tabs are active.
@@ -146,7 +136,6 @@ const tabsActive = (isNew, listing) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
       previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing, previousTabIndex) : true;
-
     return { ...acc, [tab]: isActive };
   }, {});
 };
@@ -172,13 +161,25 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
+      guestNumber: 2, bedsNumber: 1, bedroomsNumber: 1, bathroomsNumber: 1,
+      travelSubFields: {
+        bus: false,
+        train: false,
+        subway: false
+      },
+      descriptionImages: []
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
     this.handlePayoutSubmit = this.handlePayoutSubmit.bind(this);
     this.updateCapacityValues = this.updateCapacityValues.bind(this);
+    this.showTravelSubfield = this.showTravelSubfield.bind(this);
+    this.uploadDescriptionImages = this.uploadDescriptionImages.bind(this);
+  }
 
+  uploadDescriptionImages(files) {
+    this.setState({ descriptionImages: files })
   }
 
   updateCapacityValues(name, type, defaultValues) {
@@ -226,6 +227,12 @@ class EditListingWizard extends Component {
       .catch(() => {
         // do nothing
       });
+  }
+
+  showTravelSubfield(field) {
+    let temp = this.state.travelSubFields
+    temp[field] = true
+    this.setState({ travelSubFields: temp })
   }
 
   render() {
@@ -282,7 +289,7 @@ class EditListingWizard extends Component {
     const tabLink = tab => {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
-    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber } = this.state
+    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages } = this.state
     return (
       <div className={classes}>
         <Tabs
@@ -315,6 +322,10 @@ class EditListingWizard extends Component {
                 bedroomsNumber={bedroomsNumber}
                 bathroomsNumber={bathroomsNumber}
                 updateCapacityValues={this.updateCapacityValues}
+                showTravelSubfield={this.showTravelSubfield}
+                travelSubFields={travelSubFields}
+                descriptionImages={descriptionImages}
+                uploadDescriptionImages={this.uploadDescriptionImages}
               />
             );
           })}

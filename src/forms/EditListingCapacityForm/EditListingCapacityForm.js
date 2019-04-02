@@ -73,6 +73,7 @@ const EditListingCapacityFormComponent = props => (
       const incrementButton = (name, preValues) => {
         return <button
           type="button"
+          name = {name}
           onClick={(e) => { props.updateCapacityValues(name, 'increment', initialData) }}
         > +
       </button>
@@ -81,6 +82,7 @@ const EditListingCapacityFormComponent = props => (
       const derementButton = (name) => {
         return <button
           type="button"
+          name = {name}
           onClick={(e) => { props.updateCapacityValues(name, 'derement', initialData) }}
         >
           -

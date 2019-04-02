@@ -23,11 +23,16 @@ const EditListingTravelPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    currentUser,
+    showTravelSubfield,
+    travelSubFields,
+    history
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -36,12 +41,11 @@ const EditListingTravelPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingTravelPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingTravelPanel.createListingTitle" values={{ name: userName }} />
+    );
 
   const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
-
+  const initialValues = { publicData };
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -50,10 +54,24 @@ const EditListingTravelPanel = props => {
         name={TRAVEL_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { amenities = [] } = values;
+          const {
+            traval_subway = '', traval_bus = '', traval_train = '',
+            available_transportaion = [],
+            facilities_culture = [],
+            facilities_nature = [],
+            facilities_convenience = [],
+            facilities_tour = []
+          } = values;
 
           const updatedValues = {
-            publicData: { amenities },
+            publicData: {
+              travel_info: {
+                traval_subway, traval_bus,
+                traval_train, available_transportaion,
+                facilities_culture, facilities_nature,
+                facilities_convenience, facilities_tour
+              }
+            },
           };
           onSubmit(updatedValues);
         }}
@@ -62,6 +80,10 @@ const EditListingTravelPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        showTravelSubfield={showTravelSubfield}
+        travelSubFields={travelSubFields}
+        history={history}
+
       />
     </div>
   );
