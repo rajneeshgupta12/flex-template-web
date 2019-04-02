@@ -106,15 +106,77 @@
   }
 }
 
-.heroSearchBar {
+.searchArea {
   margin: 0 auto;
   margin-top: 45px;
+  position: relative;
+}
+
+.searchIconCoverBox {
+  background-color: white;
+  z-index: 4;
+  width: 24px;
+  height: 70px;
+  position: absolute;
+  top:0;
+}
+
+.heroSearchBar {
+  
   background-color: white;
   @media (--viewportMedium) {
     width: 872px;
     min-height: 72px;
   }
+
+  display: flex;
 }
+
+.searchSection: {
+  width: 500px;
+  
+
+}
+
+.calendarSection {
+  @apply --marketplaceH2FontStyles;
+  position: relative;
+  top: -4px;
+  margin: 0;
+  align-self: center;
+  text-align: center;
+  width: 300px;
+  height: 100%;
+
+}
+
+.calendarIcon {
+  position: relative;
+  top: 6px;
+  left: 5px ;
+
+}
+
+.calendar {
+  position: absolute;
+  top: 58px;
+  z-index: 200;
+
+}
+
+.buttonSection {
+
+  align-self: center;
+  width: 72px;
+  height: 72px;
+}
+
+.iconButton{
+  &.button {
+    border-radius: 0;
+  }
+}
+
 .heroButton {
 
   @apply --marketplaceButtonStyles;
@@ -127,3 +189,4 @@
     width: 260px;
   }
 }
+

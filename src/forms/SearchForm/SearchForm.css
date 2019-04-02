@@ -77,12 +77,14 @@
   width: 24px;
   align-self: stretch;
   background-color: var(--matterColorLight);
+  color: var(--matterColorLight);
 }
 
 .desktopInput {
   flex-grow: 1;
   /* Font */
   @apply --marketplaceH4FontStyles;
+  font-size: 24px;
   height: var(--topbarHeightDesktop);
   line-height: unset;
   border: none;
@@ -125,6 +127,8 @@
     margin-bottom: 0;
     font-weight: var(--fontWeightSemiBold);
   }
+  width: 476px;
+  border-right: 1px solid grey;
 }
 
 .mobilePredictions {
@@ -164,5 +168,4 @@
     var(--topbarHeightDesktop) - var(--TopbarSearchForm_inputHeight) +
       var(--TopbarSearchForm_bottomBorder)
   );
-  max-width: 434px;
 }

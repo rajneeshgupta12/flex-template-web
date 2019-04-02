@@ -7,6 +7,8 @@ import { SearchForm } from '../../forms';
 import Calendar from './Calendar';
 import css from './SectionHero.css';
 import { Form } from 'react-final-form';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 
 const SectionHero = props => {
 
@@ -33,20 +35,29 @@ const SectionHero = props => {
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
       </div>
+      <div className={css.searchArea} >
+
       <div className={css.heroSearchBar} >
+        <div className={css.searchSection} >
         {search}
+        <div className={css.searchIconCoverBox} />
+        </div>      
+        <div className={css.calendarSection} onClick={() => { props.toggleCalendar() }} >
+           this weekend
+           <Icon className={css.calendarIcon} style={{fontSize: 30}}>expand_more</Icon>
+           <div className={css.calendar}>
+      {props.showCalendar &&
+            <Calendar onChange={props.onChange} />}
+            </div>
+        </div>
+        <div className={css.buttonSection} > 
+          <Button label="button" variant="contained" color="primary" onClick={() => {props.submitSsearch() }} 
+          className={css.iconButton}>
+            <Icon>search</Icon>
+          </Button>      
+        </div>
       </div>
-      <div style={{ ['marginLeft']: 50 + '%' }}>
-        <div onClick={() => { props.toggleCalendar() }} >
-         this weekend
-      </div>
-        <button  className={css.heroSearchBar}
-          className={css.desktopIcon}
-          onClick={() => { props.submitSsearch() }} >
-        Search
-          </button  >
-        {props.showCalendar &&
-          <Calendar onChange={props.onChange} />}
+      
       </div>
     </div>
   );

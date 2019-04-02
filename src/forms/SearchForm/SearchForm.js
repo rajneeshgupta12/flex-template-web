@@ -89,7 +89,7 @@ class SearchFormComponent extends Component {
                       predictionsAttributionClassName={
                         isMobile ? css.mobilePredictionsAttribution : null
                       }
-                      placeholder={intl.formatMessage({ id: 'SearchForm.placeholder' })}
+                      placeholder={intl.formatMessage({ id: 'SearchForm.placeholder'}, {place: 'Seattle'})}
                       closeOnBlur={!isMobile}
                       inputRef={node => {
                         this.searchInput = node;

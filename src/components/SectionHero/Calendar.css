@@ -26,6 +26,8 @@
 .desktopInputRoot {
   height: var(--topbarHeightDesktop);
   height: 48px;
+
+ 
 }
 
 .mobileIcon {
@@ -125,6 +127,11 @@
     margin-bottom: 0;
     font-weight: var(--fontWeightSemiBold);
   }
+}
+
+.DayPickerNavigation_button {
+  width: 50%;
+  display: inline-block;
 }
 
 .mobilePredictions {

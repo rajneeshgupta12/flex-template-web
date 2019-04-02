@@ -19,10 +19,10 @@ export const ANCHOR_LEFT = 'left';
 // IconArrowHead component might not be defined if exposed directly to the file.
 // This component is called before IconArrowHead component in components/index.js
 const PrevIcon = props => (
-  <IconArrowHead {...props} direction="left" rootClassName={css.arrowIcon} />
+  <IconArrowHead {...props} direction="left" rootClassName={css.leftArrowIcon} />
 );
 const NextIcon = props => (
-  <IconArrowHead {...props} direction="right" rootClassName={css.arrowIcon} />
+  <IconArrowHead {...props} direction="right" rootClassName={css.rightArrowIcon} />
 );
 
 const defaultProps = {
@@ -44,8 +44,8 @@ const defaultProps = {
   hideKeyboardShortcutsPanel: true,
 
   // navigation related props
-  navPrev: <PrevIcon />,
-  navNext: <NextIcon />,
+  navPrev: null,
+  navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
   transitionDuration: 200, // milliseconds between next month changes etc.
