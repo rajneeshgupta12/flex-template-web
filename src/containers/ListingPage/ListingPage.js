@@ -80,7 +80,8 @@ export class ListingPageComponent extends Component {
     const { enquiryModalOpenForListingId, params } = props;
     this.state = {
       pageClassNames: [],
-      imageCarouselOpen: false,
+      // imageCarouselOpen: false,
+      props: props,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
     };
 
@@ -158,12 +159,18 @@ export class ListingPageComponent extends Component {
       });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ props: newProps })
+  }
+
   render() {
+
     const {
       unitType,
       isAuthenticated,
       currentUser,
       getListing,
+      listing,
       getOwnListing,
       intl,
       onManageDisableScrolling,
@@ -179,15 +186,18 @@ export class ListingPageComponent extends Component {
       fetchTimeSlotsError,
       categoriesConfig,
       amenitiesConfig,
-    } = this.props;
+    } = this.state.props;
 
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
-    const currentListing =
-      isPendingApprovalVariant || isDraftVariant
-        ? ensureOwnListing(getOwnListing(listingId))
-        : ensureListing(getListing(listingId));
+    const currentListing = listing && listing.data//ensureOwnListing(getOwnListing(listingId))
+    if (!currentListing) {
+      return <div></div>
+    }
+    // isPendingApprovalVariant || isDraftVariant
+    //   ? ensureOwnListing(getOwnListing(listingId))
+    //   : ensureListing(getListing(listingId));
 
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
@@ -196,7 +206,6 @@ export class ListingPageComponent extends Component {
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
-
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 
@@ -296,7 +305,7 @@ export class ListingPageComponent extends Component {
       // trying to open the carousel as well.
       e.stopPropagation();
       this.setState({
-        imageCarouselOpen: true,
+        // imageCarouselOpen: true,
       });
     };
     const authorAvailable = currentListing && currentListing.author;
@@ -366,7 +375,6 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
         </span>
       ) : null;
-
     return (
       <Page
         title={schemaTitle}
@@ -398,8 +406,8 @@ export class ListingPageComponent extends Component {
                   type: listingType,
                   tab: listingTab,
                 }}
-                imageCarouselOpen={this.state.imageCarouselOpen}
-                onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
+                // imageCarouselOpen={this.state.imageCarouselOpen}
+                // onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
                 handleViewPhotosClick={handleViewPhotosClick}
                 onManageDisableScrolling={onManageDisableScrolling}
               />
@@ -525,6 +533,7 @@ const mapStateToProps = state => {
   const {
     showListingError,
     reviews,
+    listing,
     fetchReviewsError,
     timeSlots,
     fetchTimeSlotsError,
@@ -549,6 +558,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated,
     currentUser,
+    listing,
     getListing,
     getOwnListing,
     scrollingDisabled: isScrollingDisabled(state),

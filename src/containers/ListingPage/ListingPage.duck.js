@@ -45,6 +45,7 @@ const initialState = {
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
+  listing:null
 };
 
 const listingPageReducer = (state = initialState, action = {}) => {
@@ -53,8 +54,10 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case SET_INITAL_VALUES:
       return { ...initialState, ...payload };
 
-    case SHOW_LISTING_REQUEST:
-      return { ...state, id: payload.id, showListingError: null };
+    // case SHOW_LISTING_REQUEST:
+    // console.log('SHOW_LISTING_REQUEST-----1----',payload)
+
+    //   return { ...state, listing: payload, showListingError: null };
     case SHOW_LISTING_ERROR:
       return { ...state, showListingError: payload };
 
@@ -76,8 +79,10 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, sendEnquiryInProgress: true, sendEnquiryError: null };
     case SEND_ENQUIRY_SUCCESS:
       return { ...state, sendEnquiryInProgress: false };
-    case SEND_ENQUIRY_ERROR:
+      case SEND_ENQUIRY_ERROR:
       return { ...state, sendEnquiryInProgress: false, sendEnquiryError: payload };
+      case SHOW_LISTING_REQUEST:
+      return { ...state,  listing: payload };
 
     default:
       return state;
@@ -129,8 +134,8 @@ export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, p
 
 // ================ Thunks ================ //
 
-export const showListing = (listingId, isOwn = false) => (dispatch, getState, sdk) => {
-  dispatch(showListingRequest(listingId));
+export const showListing = (listingId, isOwn = false) =>async (dispatch, getState, sdk) => {
+  // dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
     id: listingId,
@@ -158,16 +163,16 @@ export const showListing = (listingId, isOwn = false) => (dispatch, getState, sd
     ],
   };
 
-  const show = isOwn ? sdk.ownListings.show(params) : sdk.listings.show(params);
-
-  return show
-    .then(data => {
-      dispatch(addMarketplaceEntities(data));
-      return data;
-    })
-    .catch(e => {
-      dispatch(showListingError(storableError(e)));
-    });
+  const show = isOwn ? sdk.ownListings.show(params) :await sdk.ownListings.show(params);
+  return dispatch({
+    type: SHOW_LISTING_REQUEST,
+    payload: show.data,
+  })
+  //dispatch(addMarketplaceEntities(show.data));
+    // })
+    // .catch(e => {
+    //   dispatch(showListingError(storableError(e)));
+    // });
 };
 
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {
@@ -271,7 +276,6 @@ export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => 
 
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
-
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
     return dispatch(showListing(listingId, true));
