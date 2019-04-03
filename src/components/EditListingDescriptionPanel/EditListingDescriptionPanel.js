@@ -23,7 +23,9 @@ const EditListingDescriptionPanel = props => {
     errors,
     descriptionImages,
     history,
-    uploadDescriptionImages
+    uploadDescriptionImages,
+    handlePlaceTheme,
+    placeTheme
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -44,14 +46,13 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, place_theme: publicData.place_theme }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, place_theme = [], images } = values;
+          const { title, description, images } = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { place_theme, description_images: descriptionImages },
+            publicData: { place_theme:placeTheme, description_images: descriptionImages },
           };
           onSubmit(updateValues);
         }}
@@ -63,6 +64,8 @@ const EditListingDescriptionPanel = props => {
         descriptionImages={descriptionImages}
         uploadDescriptionImages={uploadDescriptionImages}
         history={history}
+        handlePlaceTheme={handlePlaceTheme}
+        placeTheme={placeTheme}
       />
     </div>
   );

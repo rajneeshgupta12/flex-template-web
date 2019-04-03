@@ -111,13 +111,14 @@ const EditListingWizardTab = props => {
     showTravelSubfield,
     travelSubFields,
     descriptionImages,
-    uploadDescriptionImages
+    uploadDescriptionImages,
+    handlePlaceTheme,
+    placeTheme
   } = props;
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
-
   const currentListing = ensureListing(listing);
   const imageIds = images => {
     return images ? images.map(img => img.imageId || img.id) : null;
@@ -125,6 +126,7 @@ const EditListingWizardTab = props => {
 
 
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
+    console.log('(tab, updateValues)',(tab, updateValues))
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -186,6 +188,8 @@ const EditListingWizardTab = props => {
           currentUser={currentUser}
           descriptionImages={descriptionImages}
           uploadDescriptionImages={uploadDescriptionImages}
+          handlePlaceTheme={handlePlaceTheme}
+          placeTheme={placeTheme}
         />
       );
     }

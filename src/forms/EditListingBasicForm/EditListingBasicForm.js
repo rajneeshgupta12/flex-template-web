@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, Form, FieldRadioButton, FieldSelect } from '../../components';
+import { maxLength, required, composeValidators, requiredSelectBox, requiredRadioBox } from '../../util/validators';
 
 import css from './EditListingBasicForm.css';
 
@@ -27,11 +28,12 @@ const EditListingBasicFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        invalid
       } = fieldRenderProps;
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
-      const submitDisabled = disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
@@ -52,7 +54,7 @@ const EditListingBasicFormComponent = props => (
           {errorMessageShowListing}
           <div>
             <label>Type of the property</label>
-            <FieldSelect name="property_type" component="select">
+            <FieldSelect name="property_type" component="select" validate={composeValidators(required(requiredSelectBox('required')))}>
               <option value={null} >Choose the type</option>
               <option value="bell_tent">Bell tent</option>
               <option value="rv_camper"> RV/camper</option>
@@ -77,6 +79,7 @@ const EditListingBasicFormComponent = props => (
                   value="entire_place"
                   id="entire_place"
                   label={"Entire place:"}
+                  validate={composeValidators(required('required'))}
                 />
                 <span className="small">  The guests can use the whole place: Bedrooms, kitchens and toilets are available for guests only.</span>
               </label>
@@ -86,6 +89,7 @@ const EditListingBasicFormComponent = props => (
                   value="private_place"
                   id="private_place"
                   label= "Private place"
+                  validate={composeValidators(required(requiredSelectBox('required')))}
                 />
                 <span className="small">The guest can use the private room during the stay. Other facilities can be shared with others.</span>
               </label>
@@ -95,6 +99,7 @@ const EditListingBasicFormComponent = props => (
                   id="shared_place"
                   value="shared_place"
                   label="Shared place"
+                  validate={composeValidators(required(requiredSelectBox('required')))}
                 />
                 <span className="small">The guest can sleep or use the place with others.</span>
               </label>

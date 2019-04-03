@@ -166,6 +166,12 @@ class EditListingWizard extends Component {
         bus: false,
         train: false,
         subway: false
+      }, placeTheme: {
+        couple_friendly: false,
+        family_friendly: false,
+        pet_friendly: false,
+        e_p_friendly: false,
+        for_single_trip: false,
       },
       descriptionImages: []
     };
@@ -176,6 +182,7 @@ class EditListingWizard extends Component {
     this.updateCapacityValues = this.updateCapacityValues.bind(this);
     this.showTravelSubfield = this.showTravelSubfield.bind(this);
     this.uploadDescriptionImages = this.uploadDescriptionImages.bind(this);
+    this.handlePlaceTheme = this.handlePlaceTheme.bind(this);
   }
 
   uploadDescriptionImages(files) {
@@ -235,6 +242,13 @@ class EditListingWizard extends Component {
     this.setState({ travelSubFields: temp })
   }
 
+  handlePlaceTheme(type) {
+    let { placeTheme } = this.state
+    let currentStatus = placeTheme[type];
+    placeTheme[type] = !currentStatus
+    this.setState(placeTheme)
+  }
+
   render() {
     const {
       id,
@@ -289,7 +303,7 @@ class EditListingWizard extends Component {
     const tabLink = tab => {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
-    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages } = this.state
+    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages, placeTheme } = this.state
     return (
       <div className={classes}>
         <Tabs
@@ -326,6 +340,8 @@ class EditListingWizard extends Component {
                 travelSubFields={travelSubFields}
                 descriptionImages={descriptionImages}
                 uploadDescriptionImages={this.uploadDescriptionImages}
+                handlePlaceTheme={this.handlePlaceTheme}
+                placeTheme={placeTheme}
               />
             );
           })}

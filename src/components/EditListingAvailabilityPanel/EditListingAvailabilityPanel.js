@@ -61,7 +61,6 @@ const EditListingAvailabilityPanel = props => {
         availability={availability}
         availabilityPlan={availabilityPlan}
         onSubmit={(values) => {
-          console.log('values', values)
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,
@@ -69,7 +68,6 @@ const EditListingAvailabilityPanel = props => {
           onSubmit({ availabilityPlan });
         }}
         onChange={(values) => {
-          console.log('onChange-----,values', values)
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,

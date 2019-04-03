@@ -136,11 +136,6 @@ const EditListingCapacityFormComponent = props => (
             </div>
           </div>
           <div>
-            <label>
-              <button disabled > + </button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button disabled > - </button>
-            </label>
           </div>
 
           <Button

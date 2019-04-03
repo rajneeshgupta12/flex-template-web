@@ -32,6 +32,8 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        handlePlaceTheme,
+        placeTheme
       } = fieldRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -136,58 +138,66 @@ const EditListingDescriptionFormComponent = props => (
           />
           <div>
             <label>Choose the theme of your place</label>
-            <div>
-              <label>
-                <Field
+            <div onClick={(e) => {
+              handlePlaceTheme(e.target.value)
+            }}>
+              <div>
+                <Button
                   name="place_theme"
-                  component="input"
-                  type="checkbox"
-                  value="couple_friendly"
-                />{' '}
-                couple friendly
-              </label>
-              <label>
-                <Field
+                  type="button"
+                  value='couple_friendly'
+                >
+                  {'couple friendly'}
+                </Button>
+                <br />
+              </div>
+              <div>
+                <Button
                   name="place_theme"
-                  component="input"
-                  type="checkbox"
-                  value="family_friendly"
-                />{' '}
-                family-friendly
-              </label>
-              <label>
-                <Field
+                  type="button"
+                  value='family_friendly'
+                >
+                  {'family-friendly'}
+                </Button>
+                <br />
+              </div>
+              <div>
+                <Button
                   name="place_theme"
-                  component="input"
-                  type="checkbox"
-                  value="pet_friendly"
-                />{' '}
-                pet-friendly
-              </label>
-              <label>
-                <Field
+                  type="button"
+                  value='pet_friendly'
+                >
+                  {'pet-friendly'}
+                </Button>
+
+                <br />
+              </div>
+              <div>
+                <Button
                   name="place_theme"
-                  component="input"
-                  type="checkbox"
-                  value="e_p_friendly"
-                />{' '}
-                event/party-friendly
-              </label>
-              <label>
-                <Field
+                  type="button"
+                  value='e_p_friendly'
+                >
+                  {'event/party-friendly'}
+                </Button>
+
+                <br />
+              </div>
+              <div>
+                <Button
                   name="place_theme"
-                  component="input"
-                  type="checkbox"
-                  value="for_single_trip"
-                />{' '}
-                for single trip
-              </label>
+                  type="button"
+                  value='for_single_trip'
+                >
+                  {'for single trip'}
+                </Button>
+              </div>
+              <div>
+              </div>
             </div>
-          </div>
-          <div>
             <label>
               Photos
-            </label>
+               </label>
             <DropzoneComponent config={componentConfig}
               eventHandlers={eventHandlers}
               djsConfig={djsConfig}
@@ -196,7 +206,7 @@ const EditListingDescriptionFormComponent = props => (
             </DropzoneComponent>
             <span >
               Tip: Choose 5-10 best photos of your place from different angles in a good light that really show the space.
-            </span>
+                  </span>
           </div>
           <Button
             className={css.submitButton}

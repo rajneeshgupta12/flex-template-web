@@ -108,31 +108,48 @@ export const EditListingPricingFormComponent = props => (
               showAsRequired={showAsRequired}
               id="free"
               value="free"
-              label={`If cancel anytime before the check in day and time, the guest will receive a full refund (minus service fee).`}
+              label={`Free`}
+              validate={validators.composeValidators(validators.requiredRadioBox('required'))}
+
             />
+            <label>
+              If cancel anytime before the check in day and time, the guest will receive a full refund (minus service fee).
+            </label>
             <FieldRadioButton
+              validate={validators.composeValidators(validators.requiredRadioBox('required'))}
               name="cancellation_or_refund"
               showAsRequired={showAsRequired}
               value="flexible"
               id="flexible"
-              label={`If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).`}
+              label={`Flexible`}
             />
+            <label>
+              If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).
+            </label>
             <FieldRadioButton
+              validate={validators.composeValidators(validators.requiredRadioBox('required'))}
               name="cancellation_or_refund"
               id="moderate"
               value="moderate"
               showAsRequired={showAsRequired}
-              label={`If cancel at least 15 days before the check in day and time, the guest will receive a full refund (minus service fee).
-            Cancelation between 7 to 15 days before the check in day and time,
-            the guest will receive a 50% refund (minus service fee).`}
+              label={`Moderate`}
             />
+            <label>
+              If cancel at least 15 days before the check in day and time, the guest will receive a full refund (minus service fee).
+              Cancelation between 7 to 15 days before the check in day and time,
+              the guest will receive a 50% refund (minus service fee).
+            </label>
             <FieldRadioButton
+              validate={validators.composeValidators(validators.requiredRadioBox('required'))}
               name="cancellation_or_refund"
               value="strict"
               id="strict"
               showAsRequired={showAsRequired}
-              label={"There will be no refund after the booking is confirmed."}
+              label={`Strict`}
             />
+            <label>
+              There will be no refund after the booking is confirmed.
+            </label>
           </div>
           <Button
             className={css.submitButton}
@@ -143,7 +160,7 @@ export const EditListingPricingFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
-          <div onClick={()=>props.history.goBack()}>Back: Description</div>
+          <div onClick={() => props.history.goBack()}>Back: Description</div>
         </Form>
       );
     }}

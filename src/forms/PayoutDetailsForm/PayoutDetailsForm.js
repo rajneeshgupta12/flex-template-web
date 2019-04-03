@@ -6,7 +6,7 @@ import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import config from '../../config';
-import { Button, ExternalLink, FieldRadioButton, FieldSelect, Form } from '../../components';
+import { Button,FieldCheckboxGroup, ExternalLink, FieldRadioButton, FieldSelect, Form } from '../../components';
 import { isStripeInvalidPostalCode } from '../../util/errors';
 import * as validators from '../../util/validators';
 
@@ -101,6 +101,7 @@ const PayoutDetailsFormComponent = props => (
         </ExternalLink>
       );
 
+      const options = [{ key: "accept_terms", label: 'I accept all the Terms and conditions' }]
       return config.stripe.publishableKey ? (
         <Form className={classes} onSubmit={handleSubmit}>
           {usesOldAPI ? (
@@ -130,6 +131,26 @@ const PayoutDetailsFormComponent = props => (
           {accountType ? (
             <React.Fragment>
               <div className={css.sectionContainer}>
+                <div>
+                  <p>Account type</p>
+                  <div>
+                    <FieldRadioButton
+                      name="account_type"
+                      id="individual"
+                      value="individual"
+                      label="I’m an individual"
+                      validate={validators.composeValidators(validators.required(validators.requiredSelectBox('required')))}
+                    />
+                    <FieldRadioButton
+                      name="account_type"
+                      id="company"
+                      value="company"
+                      label="I represent a company"
+                      validate={validators.composeValidators(validators.required(validators.requiredSelectBox('required')))}
+                    />
+                  </div>
+                </div>
+
                 <h3 className={css.subTitle}>Country</h3>
                 <FieldSelect
                   id="country"
@@ -168,6 +189,14 @@ const PayoutDetailsFormComponent = props => (
                   values={{ stripeConnectedAccountTermsLink }}
                 />
               </p>
+              <FieldCheckboxGroup
+                className={css.features}
+                id={'accept_terms'}
+                name={'accept_terms'}
+                options={options}
+                validate={validators.composeValidators(validators.requiredFieldArrayCheckbox('required'))}
+              />
+              <a href="#">Terms and conditions</a>
               <Button
                 className={css.submitButton}
                 type="submit"
@@ -178,17 +207,17 @@ const PayoutDetailsFormComponent = props => (
                 {submitButtonText ? (
                   submitButtonText
                 ) : (
-                  <FormattedMessage id="PayoutDetailsForm.submitButtonText" />
-                )}
+                    <FormattedMessage id="PayoutDetailsForm.submitButtonText" />
+                  )}
               </Button>
             </React.Fragment>
           ) : null}
         </Form>
       ) : (
-        <div className={css.missingStripeKey}>
-          <FormattedMessage id="PayoutDetailsForm.missingStripeKey" />
-        </div>
-      );
+          <div className={css.missingStripeKey}>
+            <FormattedMessage id="PayoutDetailsForm.missingStripeKey" />
+          </div>
+        );
     }}
   />
 );

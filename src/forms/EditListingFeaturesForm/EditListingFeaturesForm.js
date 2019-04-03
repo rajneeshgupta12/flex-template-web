@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-
+import { required, composeValidators, requiredFieldArrayCheckbox } from '../../util/validators';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
@@ -26,13 +26,13 @@ const EditListingFeaturesFormComponent = props => (
         saveActionMsg,
         updated,
         updateInProgress,
+        invalid,
         fetchErrors,
       } = fieldRenderProps;
-console.log('----------3---------',props)
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
-      const submitDisabled = disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
@@ -59,6 +59,7 @@ console.log('----------3---------',props)
             id={'amenities_hospitality'}
             name={'amenities_hospitality'}
             options={config.custom.amenities_hospitality}
+            validate={composeValidators(requiredFieldArrayCheckbox('required'))}
           />
           <label>
             Amenities for Glamping
@@ -68,6 +69,7 @@ console.log('----------3---------',props)
             id={'amenities_glamping'}
             name={'amenities_glamping'}
             options={config.custom.amenities_glamping}
+            validate={composeValidators(requiredFieldArrayCheckbox('required'))}
           />
 
           <Button
@@ -79,7 +81,7 @@ console.log('----------3---------',props)
           >
             {saveActionMsg}
           </Button>
-          <div onClick={()=>props.history.goBack()}>Back: Capacity</div>
+          <div onClick={() => props.history.goBack()}>Back: Capacity</div>
         </Form>
       );
     }}
