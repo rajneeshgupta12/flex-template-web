@@ -13,7 +13,7 @@ const TermsOfService = props => {
     <div className={classes}>
       <p className={css.lastUpdated}>Last updated: April 2, 2019</p>
     
-      <h2>1 AGREEMENT TO TERMS</h2>
+      <h2>AGREEMENT TO TERMS</h2>
       <p>
         These Terms of Use constitute a legally binding agreement made between you, whether personally 
         or on behalf of an entity (“you”) and Glamp Oasis (“we,” “us” or “our”), concerning your access to 
@@ -53,32 +53,147 @@ const TermsOfService = props => {
         to use or register for Glamp Oasis. 
       </p>
 
-      <h2>2 Sed ut perspiciatis unde</h2>
+      <h2>TERMS APPLICABLE TO GUESTS</h2>
       <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-        aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-        consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-        dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-        exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-        consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
-        molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+        <bold>Booking.</bold> 
+        These Terms and Conditions shall govern any Booking, in addition to any terms and conditions 
+        applicable to Hosts and Property.
+      </p>
+      <p>
+        <bold>Bookings.</bold>
+        Glamp Oasis acts solely as an online service that facilitates communication between Guests and Hosts 
+        and shall not be construed as a party to any transaction.
+      </p>
+      <p>
+        Pricing for Bookings is set by the applicable Host. By making a Booking, you agree that you, and not Glamp 
+        Oasis, will be responsible for upholding the obligations of any agreement you may have with a Host or of 
+        Glamping Rules (defined below) set forth by a Host. You further acknowledge and agree that you, and not Glamp 
+        Oasis, shall be responsible for any liability arising from or related to any such agreements, requirements, 
+        or policies.
+      </p>
+      <p>
+        In the event that a Host claims for damage and provides evidence thereof, Guests agree to be solely liable 
+        for the damage, as described below.
+      </p>
+      <p>
+        <bold>Property.</bold> 
+        You acknowledge and agree that you will comply with all applicable policies that are created by 
+        the Host (“Glamping Rules”), federal or state laws, rules, regulations, and local ordinances. Use of any 
+        Property will be subject to: (i) availability of the Property as provided by the Host; (ii) payment of all 
+        fees and charges associated with Booking prior to the first day of the reservation; and (iii) compliance 
+        with the Terms of Use, Glamping Rules, federal or state laws, rules, regulations, and local ordinances.
+      </p>
+      <p>
+        A violation of Glamping Rules may result in cancellation of Booking(s), forfeiture of any monies paid 
+        for such Booking(s), rescission of access to any Property, and/or termination of your Account. 
+      </p>
+      <p>
+        <bold>Damage to Property.</bold> 
+        As a Guest, you are responsible for leaving the Property in the initial condition 
+        it was provided to you. You acknowledge and agree that you are responsible for any damages arising from 
+        your Booking for the length of your occupancy at the applicable Property. You agree that Glamp Oasis is 
+        authorized to charge your Account for all fees and charges due and payable to Glamp Oasis for the
+        distribution to the Hosts for any damage to the Property and that no consent is required.
+      </p>
+      <p>
+        Upon receipt of the claim for damage and evidence thereof from a Host, Glamp Oasis will notify Guests 
+        of the claim and provide forty eight (48) hours to respond to the claim. If no response is received within 
+        the specified period of time, the payment will be charged to and taken from the credit card on file in 
+        your Account. If a response is received, Glamp Oasis will investigate the claim and response.
+      </p>
+      <p>
+        <bold>Promotions.</bold>
+        Glamp Oasis, at its sole discretion, may provide promotional offers, deals and/or codes in 
+        connection with Booking(s). We reserve the right to modify the terms of such offers, suspend such 
+        offers with or without notice, and reject or refuse to honor any promotions with or without cause. 
       </p>
 
-      <h2>3 At vero eos et accusamus</h2>
+      <h2>TERMS APPLICABLE TO HOSTS</h2>
       <p>
-        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-        voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-        cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id
-        est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam
-        libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod
-        maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
-        Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-        et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a
-        sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis
-        doloribus asperiores repellat
+        <bold>Listings.</bold> 
+        By making your Property available to Guests for Booking and occupancy, you may create a 
+        listing of your Property on our Website (“Listing”). Before any Listing is made available to Guests, 
+        you are required to verify your identity, provide information about your Property, describe Glamping Rules, 
+        and set fees associated with Booking. By making any Listing you acknowledge and agree that: (1) your 
+        Listing will be made publicly available on our Website, (2) Glamp Oasis may remove or hide your Listing 
+        from its Website for any reason, and (3) you will bear the responsibility of complying with any laws 
+        applicable to the jurisdiction in which your Property is located.
+      </p>
+      <p>
+        You may create unique policies for your Property, such as check-in and check-out time, provided that 
+        said policies do not conflict or violate any terms of this Agreement and any federal, state, or local laws. 
+      </p>
+      <p>
+        <bold>Compliance with Laws.</bold> 
+        IT IS YOUR RESPONSIBILITY AS A HOST TO UNDERSTAND AND COMPLY WITH ALL FEDERAL 
+        OR STATE LAWS, RULES, REGULATIONS, AND LOCAL ORDINANCES IN THE JURISDICTION OF YOUR PROPERTY, AS WELL 
+        AS ANY THIRD-PARTY AGREEMENTS YOU MAY HAVE WITH RESPECT TO YOUR PROPERTY (E.G. LEASE OR RENTAL AGREEMENTS), 
+        TAX REQUIREMENTS, ZONING REQUIREMENTS, PERMITS, LICENSES, AND REGISTRATIONS.
+      </p>
+      <p>
+        <bold>Availability.</bold> 
+        The availability and pricing of your Property is in your discretion. You have the right 
+        to accept or reject Booking requests. You are not allowed to retroactively request a higher price or 
+        charge additional or supplemental fees for any Booking after you have accepted a Booking request or 
+        after a Booking is confirmed through Instant Book. 
+      </p>
+      <p>
+        When you accept a Booking request or have pre-approved Instant Book, you are entering into a 
+        legally binding agreement with the Guest and are required to provide your Property to the Guest as 
+        described in your Listing. 
+      </p>
+      <p>
+        <bold>Relationship with Glamp Oasis.</bold> 
+        Hosts are not employees or agents of Glamp Oasis in any way. Nothing in this Agreement is intended 
+        or should be construed to create a partnership, joint venture, or employer-employee relationship 
+        between Glamp Oasis and you. You are not entitled to or eligible for any benefits that Glamp Oasis may 
+        provide to its employees, such as health insurance, life insurance, disability benefits, pension or 
+        401(k) benefits, bonus, or profit-sharing benefits.
+      </p>
+      <p>
+        <bold>Tax.</bold> You are solely responsible for filing all tax returns and submitting all payments as required 
+        by any federal, state, local, or foreign tax laws for any income you may accrue from your Listing(s). 
+      </p>
+  
+      <h2>DISPUTES BETWEEN GUESTS AND HOSTS</h2>
+      <p>
+        In the event of any disputes between a Guest and a Host, Glamp Oasis may at its sole discretion assist in 
+        resolving such dispute. However, both Guests and Hosts acknowledge and agree that Glamp Oasis has no liability 
+        arising from any disputes.
+      </p>
+      <p>
+        Both Guests and Hosts agree to cooperate with Glamp Oasis in good faith in its assistance in resolving any 
+        disputes, including: (1) providing Glamp Oasis with any requested information, (2) taking actions as may be 
+        reasonably requested by Glamp Oasis, and (3) agreeing to participate in mediation conducted by Glamp Oasis 
+        or a third party selected by Glamp Oasis in an effort to resolve the dispute.
+      </p>
+  
+      <h2>INTELLECTUAL PROPERTY RIGHTS</h2>
+      <p>
+        Unless otherwise indicated, Glamp Oasis is our proprietary property and all source code, databases, 
+        functionality, software, website designs, audio, video, text, photographs, and graphics on Glamp Oasis 
+        (collectively, the “Content”) and the trademarks, service marks, and logos contained therein (the “Marks”)     
+        are owned or controlled by us or licensed to us, and are protected by copyright and trademark laws and 
+        various other intellectual property rights and unfair competition laws of the United States, foreign 
+        jurisdictions, and international conventions. 
+      </p>
+      <p>
+        The Content and the Marks are provided on Glamp Oasis “AS IS” for your information and personal use only. 
+        Except as expressly provided in these Terms of Use, no part of Glamp Oasis and no Content or Marks may be 
+        copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, 
+        transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, 
+        without our express prior written permission.
+      </p>
+      <p>
+        Provided that you are eligible to use Glamp Oasis, you are granted a limited license to access and use 
+        Glamp Oasis and to download or print a copy of any portion of the Content to which you have properly gained 
+        access solely for your personal, non-commercial use. We reserve all rights not expressly granted to you and 
+        to Glamp Oasis in the Content and the Marks.
+      </p>
+  
+      <h2>USER REPRESENTATIONS</h2>
+      </p>
+        
       </p>
     </div>
   );
