@@ -78,17 +78,17 @@ class SectionType extends React.Component {
   
   click(direction) {
     console.log(this.state.currentStartIndex);
-    if (direction === "right" && this.state.left >= -320) {
-      this.setState({left: this.state.left - 320});
+    if (direction === "right" && this.state.left >= -390) {
+      this.setState({left: this.state.left - 390});
       this.state.currentStartIndex++ ;
 
-    } else if (direction === "right" && this.state.left <-320) {
+    } else if (direction === "right" && this.state.left <-390) {
       this.setState({left: 0});
       
 
       
     } else if (direction === "left" && this.state.left < 0){
-      this.setState({left: this.state.left + 320});
+      this.setState({left: this.state.left + 390});
       this.state.currentStartIndex--;
     }
   }

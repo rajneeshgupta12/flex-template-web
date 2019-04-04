@@ -105,6 +105,8 @@ class SectionDiscover extends React.Component {
 				
 
 				</div>
+
+				
 			</div>
 		);
 	}

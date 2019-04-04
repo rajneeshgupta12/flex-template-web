@@ -7,22 +7,21 @@ import { NamedLink } from '../../components';
 import css from './SectionHero.css';
 
 const SectionHero = props => {
-  const { rootClassName, className } = props;
-
+  const { rootClassName, className, userName } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   return (
     <div className={classes}>
       <div className={css.heroContent}>
         <h1 className={css.heroMainTitle}>
-          <FormattedMessage id="SectionHero.title" />
+          <FormattedMessage id={userName && userName.length > 0 ? "SectionHero.titleSignedIn" : "SectionHero.title"} values={{name: userName}}/>
         </h1>
         <h2 className={css.heroSubTitle}>
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
 
       </div>
-       <div className={css.heroSearchBar} />
+      <div className={css.heroSearchBar} />
     </div>
   );
 };
@@ -45,7 +44,7 @@ export default SectionHero;
           }}
           className={css.heroButton}
         >
-        
+
           <FormattedMessage id="SectionHero.browseButton" />
         </NamedLink>
         */

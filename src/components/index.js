@@ -154,6 +154,11 @@ export { default as EditListingPhotosPanel } from './EditListingPhotosPanel/Edit
 export { default as EditListingPoliciesPanel } from './EditListingPoliciesPanel/EditListingPoliciesPanel';
 export { default as EditListingPricingPanel } from './EditListingPricingPanel/EditListingPricingPanel';
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
+
+export { default as EditListingBasicPanel } from './EditListingBasicPanel/EditListingBasicPanel';
+export { default as EditListingCapacityPanel } from './EditListingCapacityPanel/EditListingCapacityPanel';
+export { default as EditListingTravelPanel } from './EditListingTravelPanel/EditListingTravelPanel';
+
 export { default as Footer } from './Footer/Footer';
 export { default as SectionDiscover } from './SectionDiscover/SectionDiscover';
 export { default as SectionHero } from './SectionHero/SectionHero';

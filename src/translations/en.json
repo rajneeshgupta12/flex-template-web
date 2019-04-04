@@ -139,6 +139,17 @@
   "EditListingAvailabilityForm.updateFailed": "Failed to update listing. Please try again.",
   "EditListingAvailabilityPanel.title": "Edit the availability of {listingTitle}",
   "EditListingAvailabilityPanel.createListingTitle": "When is it available?",
+
+  "EditListingBasicForm.showListingFailed": "Fetching listing data failed",
+  "EditListingBasicForm.updateFailed": "Failed to update listing. Please try again.",
+  "EditListingBasicPanel.createListingTitle": "{name}, let's get started listing your place.",
+  "EditListingBasicPanel.title": "Edit the basic information of {listingTitle}",
+
+  "EditListingCapacityForm.showListingFailed": "Fetching listing data failed",
+  "EditListingCapacityForm.updateFailed": "Failed to update listing. Please try again.",
+  "EditListingCapacityPanel.createListingTitle": "{name}, let's get started listing your place.",
+  "EditListingCapacityPanel.title": "Edit the basic information of {listingTitle}",
+
   "EditListingDescriptionForm.categoryLabel": "Sauna type",
   "EditListingDescriptionForm.categoryPlaceholder": "Choose the type of your sauna…",
   "EditListingDescriptionForm.categoryRequired": "You need to select a category for your sauna.",
@@ -152,7 +163,7 @@
   "EditListingDescriptionForm.titlePlaceholder": "What's the name of your sauna?",
   "EditListingDescriptionForm.titleRequired": "You need to add a name.",
   "EditListingDescriptionForm.updateFailed": "Failed to update listing. Please try again.",
-  "EditListingDescriptionPanel.createListingTitle": "Add your sauna",
+  "EditListingDescriptionPanel.createListingTitle": "{name}, let's get started listing your place",
   "EditListingDescriptionPanel.title": "Edit details of {listingTitle}",
   "EditListingFeaturesForm.showListingFailed": "Fetching listing data failed",
   "EditListingFeaturesForm.updateFailed": "Failed to update listing. Please try again.",
@@ -218,6 +229,10 @@
   "EditListingWizard.saveNewPhotos": "Publish listing",
   "EditListingWizard.saveNewPolicies": "Next: Location",
   "EditListingWizard.saveNewPricing": "Next: Availability",
+
+  "EditListingWizard.saveEditBasic": "Save basic info",
+  "EditListingWizard.saveNewBasic": "Next: Capacity",
+
   "EditListingWizard.tabLabelDescription": "Description",
   "EditListingWizard.tabLabelFeatures": "Amenities",
   "EditListingWizard.tabLabelAvailability": "Availability",
@@ -225,6 +240,11 @@
   "EditListingWizard.tabLabelPhotos": "Photos",
   "EditListingWizard.tabLabelPolicy": "Sauna rules",
   "EditListingWizard.tabLabelPricing": "Pricing",
+
+  "EditListingWizard.tabLabelBasic": "Basic Info",
+  "EditListingWizard.tabLabelCapacity": "Capacity",
+  "EditListingWizard.tabLabelTravel": "Travel Info",
+
   "EmailVerificationForm.finishAccountSetup": "We will need to send you email notifications. To allow this, please verify your email address {email}.",
   "EmailVerificationForm.successButtonText": "Continue exploring",
   "EmailVerificationForm.successText": "Everything looks good. Time to get out there – have a great day.",
@@ -674,6 +694,9 @@
   "SectionHero.browseButton": "Browse saunas",
   "SectionHero.subTitle": "Have a unique stay in the city",
   "SectionHero.title": "Glamp Oasis",
+  "SectionHero.titleSignedIn": "Welcome, {name}",
+  "SectionHost.title": "Become a Host!",
+  "SectionHost.hostButton": "Start Hosting",
   "SectionHowItWorks.createListingLink": "PS. You can also become a Saunatime host in just a few clicks!",
   "SectionHowItWorks.part1Text": "Start by searching for a location. Once you find a sauna you like, simply check the availability, book it, and make a secure payment right away.",
   "SectionHowItWorks.part1Title": "1. Browse and book",
@@ -688,6 +711,7 @@
   "SectionInterview.title": "Here's the special Oasis",
   "SectionType.title": "Various stay types",
   "SectionRecommendation.title": "Best Oases for you",
+  "SectionRecommendation.findButton": "Find More",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
   "SelectSingleFilter.popupClear": "Clear",

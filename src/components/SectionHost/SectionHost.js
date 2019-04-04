@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-
+import { NamedLink } from '../../components';
 import css from './SectionHost.css';
 
 
@@ -14,6 +14,20 @@ const SectionHost= props => {
   			<div className ={css.title}>
   				<FormattedMessage id="SectionHost.title" />
   			</div>
+        <p className={css.info}>
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        </p>
+        <NamedLink
+          name="SearchPage"
+          to={{
+            search:
+              's?address=Finland&bounds=70.0922932%2C31.5870999%2C59.693623%2C20.456500199999937',
+          }}
+          className={css.hostButton}
+        >
+
+          <FormattedMessage id="SectionHost.hostButton" />
+        </NamedLink>
   		</div>
 	);
 };

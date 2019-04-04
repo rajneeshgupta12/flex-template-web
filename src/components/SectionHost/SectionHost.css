@@ -4,3 +4,22 @@
   @apply --marketplaceH1FontStyles;
   margin-top: 0;
 }
+
+.root {
+	background-color: #d1d1d1;
+	padding: 55px 53px 61px 53px;
+	width: auto;
+}
+
+.info {
+	@apply --marketplaceH4FontStyles;
+	width: 582px;
+	margin-top: 10px;
+	margin-bottom: 45px;
+}
+
+.hostButton {
+	@apply --marketplaceButtonStyles;
+	width: 252px;
+	height: 65px;
+}

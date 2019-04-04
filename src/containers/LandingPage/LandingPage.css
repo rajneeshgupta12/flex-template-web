@@ -83,28 +83,35 @@
 }
 
 .sectionContent {
-  margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
+  margin: var(--LandingPage_sectionMarginTop) 24px 0px 24px;
 
   @media (--viewportMedium) {
     max-width: 100%;
-    margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
+    margin: var(--LandingPage_sectionMarginTopMedium) 24px 0px 24px;
   }
 
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px 0 36px;
-    margin: var(--LandingPage_sectionMarginTopLarge) auto 93px auto;
+    margin: var(--LandingPage_sectionMarginTopLarge) auto 0px auto;
   }
 
   @media (--viewportXLarge) {
     max-width: 1056px;
     padding: 0;
   }
+
+  margin-top: 80px;
 }
 
 .sectionContentFirstChild {
   composes: sectionContent;
-  margin-top: 5vh;
+  margin-top: 80px;
+}
+
+.sectionContentExtra {
+  composes: sectionContent;
+  margin-top: 80px;
 }
 
 /* A bar on top of light sections */
@@ -130,3 +137,19 @@
   }
 }
 */
+
+.sectionText {
+  composes: sectionContent;
+    @apply --marketplaceH2FontStyles;
+  display: flex;
+  align-content: center;
+  width: 100%;
+
+  margin-top: 80px;
+}
+
+.dash {
+  height: 3px;
+  width: 128px;
+  display: inline-block;
+}
