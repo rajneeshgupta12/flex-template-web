@@ -185,7 +185,14 @@ export class ListingPageComponent extends Component {
       timeSlots,
       fetchTimeSlotsError,
       categoriesConfig,
-      amenitiesConfig,
+      hospitalityAmenitiesConfig,
+      glampingAmenitiesConfig,
+      transportaionAmenitiesConfig,
+      cultureAmenitiesConfig,
+      natureAmenitiesConfig,
+      convenienceAmenitiesConfig,
+      tourAmenitiesConfig,
+
     } = this.state.props;
 
     const listingId = new UUID(rawParams.id);
@@ -233,7 +240,6 @@ export class ListingPageComponent extends Component {
       title = '',
       publicData,
     } = currentListing.attributes;
-
     const richTitle = (
       <span>
         {richText(title, {
@@ -244,10 +250,10 @@ export class ListingPageComponent extends Component {
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && price.amount }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
-
+    // const bookingSubTitle =
     const topbar = <TopbarContainer />;
 
     if (showListingError && showListingError.status === 404) {
@@ -321,7 +327,6 @@ export class ListingPageComponent extends Component {
     // Because listing can be never showed with banned or deleted user we don't have to provide
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
-
     const { formattedPrice, priceTitle } = priceData(price, intl);
 
     const handleBookingSubmit = values => {
@@ -375,6 +380,7 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
         </span>
       ) : null;
+
     return (
       <Page
         title={schemaTitle}
@@ -416,6 +422,7 @@ export class ListingPageComponent extends Component {
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}
+                    publicData={publicData}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     category={category}
@@ -423,10 +430,18 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
-                  <SectionDescriptionMaybe description={description} />
+                  <SectionDescriptionMaybe description={description} publicData={publicData} />
                   <SectionFeatures
-                    options={amenitiesConfig}
-                    selectedOptions={publicData.amenities}
+                    hospitalityAmenitiesConfig={hospitalityAmenitiesConfig}
+                    glampingAmenitiesConfig={glampingAmenitiesConfig}
+
+                    transportaionAmenitiesConfig={transportaionAmenitiesConfig}
+                    cultureAmenitiesConfig={cultureAmenitiesConfig}
+                    natureAmenitiesConfig={natureAmenitiesConfig}
+                    convenienceAmenitiesConfig={convenienceAmenitiesConfig}
+                    tourAmenitiesConfig={tourAmenitiesConfig}
+
+                    publicData={publicData}
                   />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
@@ -461,6 +476,7 @@ export class ListingPageComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   timeSlots={timeSlots}
                   fetchTimeSlotsError={fetchTimeSlotsError}
+                  price={price}
                 />
               </div>
             </div>
@@ -485,7 +501,13 @@ ListingPageComponent.defaultProps = {
   fetchTimeSlotsError: null,
   sendEnquiryError: null,
   categoriesConfig: config.custom.categories,
-  amenitiesConfig: config.custom.amenities,
+  hospitalityAmenitiesConfig: config.custom.amenities_hospitality,
+  glampingAmenitiesConfig: config.custom.amenities_glamping,
+  transportaionAmenitiesConfig: config.custom.available_transportaion,
+  cultureAmenitiesConfig: config.custom.facilities_culture,
+  natureAmenitiesConfig: config.custom.facilities_nature,
+  convenienceAmenitiesConfig: config.custom.facilities_convenience,
+  tourAmenitiesConfig: config.custom.facilities_tour,
 };
 
 ListingPageComponent.propTypes = {
@@ -525,7 +547,15 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
 
   categoriesConfig: array,
-  amenitiesConfig: array,
+  glampingAmenitiesConfig: array,
+  hospitalityAmenitiesConfig: array,
+
+  transportaionAmenitiesConfig: array,
+  cultureAmenitiesConfig: array,
+  natureAmenitiesConfig: array,
+  convenienceAmenitiesConfig: array,
+  tourAmenitiesConfig: array,
+
 };
 
 const mapStateToProps = state => {
