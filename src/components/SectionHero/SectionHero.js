@@ -9,6 +9,16 @@ import css from './SectionHero.css';
 import { Form } from 'react-final-form';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import {withStyles } from '@material-ui/core/styles';
+
+const StyledButton = withStyles({
+  root: {
+    width: '72px',
+    height  : '72px',
+    borderRadius: 0,
+  },
+})(Button);
+
 
 const SectionHero = props => {
 
@@ -51,10 +61,10 @@ const SectionHero = props => {
             </div>
         </div>
         <div className={css.buttonSection} > 
-          <Button label="button" variant="contained" color="primary" onClick={() => {props.submitSsearch() }} 
+          <StyledButton variant="contained" color="primary" onClick={() => {props.submitSsearch() }} 
           className={css.iconButton}>
             <Icon>search</Icon>
-          </Button>      
+          </StyledButton>      
         </div>
       </div>
       

@@ -147,6 +147,7 @@
   text-align: center;
   width: 300px;
   height: 100%;
+  left: 7px;
 
 }
 
@@ -172,9 +173,7 @@
 }
 
 .iconButton{
-  &.button {
-    border-radius: 0;
-  }
+ 
 }
 
 .heroButton {
