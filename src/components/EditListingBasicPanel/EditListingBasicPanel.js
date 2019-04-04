@@ -57,7 +57,7 @@ const EditListingBasicPanel = props => {
 
           const updatedValues = {
             publicData: { place, property_type },
-            title: Math.random().toString()
+            title: 'test thing'
           };
           onSubmit(updatedValues);
         }}

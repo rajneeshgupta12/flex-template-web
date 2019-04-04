@@ -40,3 +40,77 @@
     margin-top: 100px;
   }
 }
+
+.dropWrapper {
+
+}
+
+.dropHeader {
+  padding: 15px;
+  padding-left: 40px;
+   border: solid 1px #e6e6e6;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.dropHeaderTitle{
+  display:  inline-block;
+}
+
+.dropIcon {
+  position: relative;
+  top: 5px;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-basis: auto 0 0 ;
+
+  height: 430px;
+  width: 670px;
+  padding-top: 40px;
+  padding-left: 44px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+.listItem{
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 30px;
+
+}
+
+.listItems::after {
+    display: block;
+    content: attr(key);
+    font-weight: normal;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.listItemImage{
+  width: 46px;
+  height: 46px;
+}
+
+
+.listItemSelectedImage {
+  composes: listItemImage;
+  -webkit-filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+  filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+}
+
+.listItemText {
+  position: relative;
+  bottom: 5px;
+  left: 3px;
+}
+
+.listItemTextSelected {
+  composes: listItemText;
+  font-weight: bold;
+}
