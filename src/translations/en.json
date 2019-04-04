@@ -663,6 +663,9 @@
   "ReviewModal.description": "Reviews are an important part of the Saunatime community. Please share what went well and what could have been improved.",
   "ReviewModal.later": "Later",
   "ReviewModal.title": "Leave a review for {revieweeName}",
+  "SearchForm.placeholder": "Find an Oasis in {place}!",
+  "SearchForm.searchHelp": "Tip: You can also search saunas by zip code, for example \"00500\" or city district \"Sörnäinen\".",
+
   "SearchFilters.amenitiesLabel": "Amenities",
   "SearchFilters.categoryLabel": "Category",
   "SearchFilters.filtersButtonLabel": "Filters",
