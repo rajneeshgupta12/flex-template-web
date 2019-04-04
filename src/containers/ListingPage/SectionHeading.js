@@ -15,6 +15,7 @@ const SectionHeading = props => {
     hostLink,
     showContactUser,
     onContactUser,
+    publicData
   } = props;
 
   const unitType = config.bookingUnitType;
@@ -24,23 +25,23 @@ const SectionHeading = props => {
   const unitTranslationKey = isNightly
     ? 'ListingPage.perNight'
     : isDaily
-    ? 'ListingPage.perDay'
-    : 'ListingPage.perUnit';
+      ? 'ListingPage.perDay'
+      : 'ListingPage.perUnit';
 
   return (
     <div className={css.sectionHeading}>
       <div className={css.desktopPriceContainer}>
-        <div className={css.desktopPriceValue} title={priceTitle}>
+        {/* <div className={css.desktopPriceValue} title={priceTitle}>
           {formattedPrice}
         </div>
         <div className={css.desktopPerUnit}>
           <FormattedMessage id={unitTranslationKey} />
-        </div>
+        </div> */}
       </div>
       <div className={css.heading}>
         <h1 className={css.title}>{richTitle}</h1>
         <div className={css.author}>
-          {category}
+          {publicData.property_type}
           <FormattedMessage id="ListingPage.hostedBy" values={{ name: hostLink }} />
           {showContactUser ? (
             <span className={css.contactWrapper}>
