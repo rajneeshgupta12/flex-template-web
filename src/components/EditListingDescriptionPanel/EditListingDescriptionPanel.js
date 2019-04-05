@@ -21,6 +21,7 @@ const EditListingDescriptionPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    onImageUpload,
     descriptionImages,
     history,
     uploadDescriptionImages,
@@ -48,11 +49,11 @@ const EditListingDescriptionPanel = props => {
         className={css.form}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, images } = values;
+          const { title, description, glamping_rules } = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { place_theme:placeTheme, description_images: descriptionImages },
+            publicData: { place_theme:placeTheme, glamping_rules },
           };
           onSubmit(updateValues);
         }}
@@ -66,6 +67,8 @@ const EditListingDescriptionPanel = props => {
         history={history}
         handlePlaceTheme={handlePlaceTheme}
         placeTheme={placeTheme}
+
+        onImageUpload={onImageUpload}
       />
     </div>
   );

@@ -10,7 +10,7 @@ import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
 import { Field } from 'react-final-form'
 
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, EditListingPhotosPanel } from '../../components';
 import css from './EditListingDescriptionForm.css';
 const TITLE_MAX_LENGTH = 60;
 
@@ -97,12 +97,11 @@ const EditListingDescriptionFormComponent = props => (
           </div>
         )
       }
-
       const eventHandlers = {
         addedfile: (file) => {
-          props.descriptionImages.push(file);
-          props.uploadDescriptionImages(props.descriptionImages)
+          props.onImageUpload({ id: Date.now(), file })
         }
+
       }
 
       const componentConfig = {
@@ -135,6 +134,16 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
+          />
+
+          <FieldTextInput
+            id="glamping_rules"
+            name="glamping_rules"
+            className={css.description}
+            type="textarea"
+            label={"Glamping Rules"}
+            placeholder={"Rules"}
+            validate={composeValidators(required("You need to add a rules."))}
           />
           <div>
             <label>Choose the theme of your place</label>
@@ -176,17 +185,6 @@ const EditListingDescriptionFormComponent = props => (
                 <Button
                   name="place_theme"
                   type="button"
-                  value='e_p_friendly'
-                >
-                  {'event/party-friendly'}
-                </Button>
-
-                <br />
-              </div>
-              <div>
-                <Button
-                  name="place_theme"
-                  type="button"
                   value='for_single_trip'
                 >
                   {'for single trip'}
@@ -204,6 +202,7 @@ const EditListingDescriptionFormComponent = props => (
             >
               <div className="dz-message">+ Choose an image…</div>
             </DropzoneComponent>
+
             <span >
               Tip: Choose 5-10 best photos of your place from different angles in a good light that really show the space.
                   </span>

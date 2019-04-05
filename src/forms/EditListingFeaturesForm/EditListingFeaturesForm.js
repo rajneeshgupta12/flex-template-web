@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-import { required, composeValidators, requiredFieldArrayCheckbox } from '../../util/validators';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
@@ -59,7 +58,6 @@ const EditListingFeaturesFormComponent = props => (
             id={'amenities_hospitality'}
             name={'amenities_hospitality'}
             options={config.custom.amenities_hospitality}
-            validate={composeValidators(requiredFieldArrayCheckbox('required'))}
           />
           <label>
             Amenities for Glamping
@@ -69,7 +67,6 @@ const EditListingFeaturesFormComponent = props => (
             id={'amenities_glamping'}
             name={'amenities_glamping'}
             options={config.custom.amenities_glamping}
-            validate={composeValidators(requiredFieldArrayCheckbox('required'))}
           />
 
           <Button

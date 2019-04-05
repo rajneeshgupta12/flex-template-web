@@ -392,7 +392,6 @@ class ManageAvailabilityCalendar extends Component {
 
     const monthName = currentMonth.format('MMMM');
     const classes = classNames(rootClassName || css.root, className);
-
     return (
       <div
         className={classes}
@@ -443,12 +442,12 @@ class ManageAvailabilityCalendar extends Component {
               <FormattedMessage id="EditListingAvailabilityForm.blockedDay" />
             </span>
           </div>
-          <div className={css.legendRow}>
+          {/* <div className={css.legendRow}>
             <span className={css.legendReservedColor} />
             <span className={css.legendText}>
               <FormattedMessage id="EditListingAvailabilityForm.bookedDay" />
             </span>
-          </div>
+          </div> */}
         </div>
         {fetchExceptionsError && fetchBookingsError ? (
           <p className={css.error}>

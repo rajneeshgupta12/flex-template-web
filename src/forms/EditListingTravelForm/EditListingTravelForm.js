@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-import { required, composeValidators, requiredFieldArrayCheckbox } from '../../util/validators';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form, FieldTextInput } from '../../components';
@@ -68,7 +67,6 @@ const EditListingTravelFormComponent = props => (
               id={'available_transportaion'}
               name={'available_transportaion'}
               options={config.custom.available_transportaion}
-              validate={composeValidators(requiredFieldArrayCheckbox('required'))}
             />
             {travelSubFields.subway && <div>
               <FieldTextInput
@@ -76,7 +74,6 @@ const EditListingTravelFormComponent = props => (
                 name="traval_subway"
                 id="traval_subway"
                 placeholder={'Subway stations nearby(optional)'}
-                validate={composeValidators(requiredFieldArrayCheckbox('required'))}
               />
             </div>
             }
@@ -110,7 +107,6 @@ const EditListingTravelFormComponent = props => (
               id={'facilities_culture'}
               name={'facilities_culture'}
               options={config.custom.facilities_culture}
-              validate={composeValidators(requiredFieldArrayCheckbox('required'))}
             /><span>
               Nature
         </span>
@@ -119,7 +115,6 @@ const EditListingTravelFormComponent = props => (
               id={'facilities_nature'}
               name={'facilities_nature'}
               options={config.custom.facilities_nature}
-              validate={composeValidators(requiredFieldArrayCheckbox('required'))}
             />   <span>
               Convenience
         </span>
@@ -128,7 +123,6 @@ const EditListingTravelFormComponent = props => (
               id={'facilities_convenience'}
               name={'facilities_convenience'}
               options={config.custom.facilities_convenience}
-              validate={composeValidators(requiredFieldArrayCheckbox('required'))}
             /><span>
               Tour
       </span>
@@ -137,7 +131,6 @@ const EditListingTravelFormComponent = props => (
               id={'facilities_tour'}
               name={'facilities_tour'}
               options={config.custom.facilities_tour}
-              validate={composeValidators(requiredFieldArrayCheckbox('required'))}
             />
           </div>
           <Button

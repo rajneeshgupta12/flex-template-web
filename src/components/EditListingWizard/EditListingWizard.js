@@ -170,7 +170,6 @@ class EditListingWizard extends Component {
         couple_friendly: false,
         family_friendly: false,
         pet_friendly: false,
-        e_p_friendly: false,
         for_single_trip: false,
       },
       descriptionImages: []
@@ -238,7 +237,7 @@ class EditListingWizard extends Component {
 
   showTravelSubfield(field) {
     let temp = this.state.travelSubFields
-    temp[field] = true
+    temp[field] = !temp[field]
     this.setState({ travelSubFields: temp })
   }
 
