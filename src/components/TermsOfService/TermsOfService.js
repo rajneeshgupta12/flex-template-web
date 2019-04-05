@@ -192,7 +192,119 @@ const TermsOfService = props => {
       </p>
   
       <h2>USER REPRESENTATIONS</h2>
+      <p>
+        By using Glamp Oasis, you represent and warrant that: 
       </p>
+      <p>
+        (1) all registration information you submit will be true, accurate, current, and complete; 
+      </p>
+      <p>
+        (2) you will maintain the accuracy of such information and promptly update such registration information as necessary; 
+      </p>
+      <p>
+        (3) you have the legal capacity and you agree to comply with these Terms of Use; 
+      </p>
+      <p>
+        (4) you are not a minor in the jurisdiction in which you reside, or if a minor, you have received parental 
+        permission to use Glamp Oasis; 
+      </p>
+      <p>
+        (5) you will not access Glamp Oasis through automated or non-human means, whether through a bot, script or otherwise; 
+      </p>
+      <p>
+        (6) you will not use Glamp Oasis for any illegal or unauthorized purpose; 
+      </p>
+      <p>
+        (7) your use of Glamp Oasis will not violate any applicable law or regulation.
+      </p>
+      <p>
+        If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend 
+        or terminate your account and refuse any and all current or future use of Glamp Oasis (or any portion thereof). 
+      </p>
+ 
+      <h2>USER REGISTRATION</h2>
+      <p>
+        You may be required to register with Glamp Oasis. You agree to keep your password confidential and will 
+        be responsible for all use of your account and password. We reserve the right to remove, reclaim, or 
+        change a username you select if we determine, in our sole discretion, that such username is inappropriate, 
+        obscene, or otherwise objectionable.
+      </p>
+  
+      <h2>PRODUCTS</h2>
+      <p>
+        We make every effort to display as accurately as possible the colors, features, specifications, and details 
+        of the products available on Glamp Oasis. However, we do not guarantee that the colors, features, specifications, 
+        and details of the products will be accurate, complete, reliable, current, or free of other errors, and your 
+        electronic display may not accurately reflect the actual colors and details of the products.  
+      </p>
+      <p>
+        All products are subject to availability. We reserve the right to discontinue any products at any time for 
+        any reason. Prices for all products are subject to change.  
+      </p>
+  
+      <h2>PURCHASES AND PAYMENT</h2>
+      <p>
+        We accept the following forms of payment: Stripe. You agree to provide current, complete, and accurate 
+        purchase and account information for all purchases made via Glamp Oasis. You further agree to promptly 
+        update account and payment information, including email address, payment method, and payment card expiration 
+        date, so that we can complete your transactions and contact you as needed. Tax may be added to the price of 
+        purchases as deemed required by us. We may change prices at any time. All payments shall be in U.S. dollars. 
+      </p>
+      <p>
+        You agree to pay all charges at the prices then in effect for your purchases and any applicable service fees, 
+        and you authorize us to charge your chosen payment provider for any such amounts upon placing your order. 
+      </p>
+      <p>
+        We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or 
+        received payment.
+      </p>
+      <p>
+        We reserve the right to refuse any order placed through Glamp Oasis. We may, in our sole discretion, 
+        limit or cancel quantities purchased per person, per household, or per order. These restrictions may 
+        include orders placed by or under the same customer account, the same payment method, and/or orders that 
+        use the same billing or shipping address. We reserve the right to limit or prohibit orders that, in our 
+        sole judgment, appear to be placed by dealers, resellers, or distributors.
+      </p>
+  
+      <h2>CANCELLATION POLICY</h2>
+      <p>
+        In creating a Listing of any Property, Hosts have the right to select and enforce any of the following 
+        cancellation policies. All users of Glamp Oasis are deemed to have accepted the following cancellation 
+        policy by making any Listing, Posting, or Booking:
+      </p>
+      <p>
+        - Free Cancellation: If you cancel anytime before your check in day and time, you will receive a full 
+        refund (minus service fee).
+        <br>- Flexible Cancellation: If you cancel at least 7 days before your check in day and time, you will 
+        receive a full refund (minus service fee).
+        <br>- Moderate Cancellation: If you cancel at least 15 days before your check in day and time, you will 
+        receive a full refund (minus service fee). If you cancel between 7 to 15 days before your check in day 
+        and time, you will receive a 50% refund (minus service fee).
+        <br>- Strict Cancellation: There will be no refund after the booking is confirmed. 
+      </p>
+  
+      <h2>PROHIBITED ACTIVITIES</h2>
+      <p>
+        You may not access or use Glamp Oasis for any purpose other than that for which we make Glamp Oasis 
+        available. Glamp Oasis may not be used in connection with any commercial endeavors except those that 
+        are specifically endorsed or approved by us.
+      </p>
+      <p>
+        As a user of Glamp Oasis, you agree not to:
+      </p>
+      <p>
+        
+      </p>
+      <p>
+        
+      </p>
+      <p>
+        
+      </p>
+      <p>
+        
+      </p>
+      <p>
         
       </p>
     </div>
