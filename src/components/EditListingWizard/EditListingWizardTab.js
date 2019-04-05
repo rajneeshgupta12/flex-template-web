@@ -190,6 +190,7 @@ const EditListingWizardTab = props => {
           uploadDescriptionImages={uploadDescriptionImages}
           handlePlaceTheme={handlePlaceTheme}
           placeTheme={placeTheme}
+          onImageUpload={onImageUpload}
         />
       );
     }

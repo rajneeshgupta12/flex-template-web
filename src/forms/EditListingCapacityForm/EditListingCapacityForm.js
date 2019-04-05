@@ -54,7 +54,7 @@ const EditListingCapacityFormComponent = props => (
         guestNumber: {
           guestNumber,
           'minVal': 1,
-          'maxVal': 7
+          'maxVal': 99
         },
         bedsNumber: {
           bedsNumber,
@@ -73,8 +73,13 @@ const EditListingCapacityFormComponent = props => (
       const incrementButton = (name, preValues) => {
         return <button
           type="button"
-          name = {name}
-          onClick={(e) => { props.updateCapacityValues(name, 'increment', initialData) }}
+          name={name}
+          onClick={(e) => {
+            console.log('name', name, 'initialData', initialData, "increment button clicked","props",props)
+            props.updateCapacityValues(name, 'increment', initialData)
+            console.log('after updateCapacityValues increment props',props)
+
+          }}
         > +
       </button>
       }
@@ -82,8 +87,13 @@ const EditListingCapacityFormComponent = props => (
       const derementButton = (name) => {
         return <button
           type="button"
-          name = {name}
-          onClick={(e) => { props.updateCapacityValues(name, 'derement', initialData) }}
+          name={name}
+          onClick={(e) => {
+            console.log('name', name, 'initialData', initialData, "derement button clicked","props",props)
+            props.updateCapacityValues(name, 'derement', initialData)
+            console.log('after updateCapacityValues derement props',props)
+          }}
+
         >
           -
       </button>
@@ -147,7 +157,7 @@ const EditListingCapacityFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
-           <div onClick={()=>props.history.goBack()}>Back: Basic info</div>
+          <div onClick={() => props.history.goBack()}>Back: Basic info</div>
         </Form>
       );
     }}
