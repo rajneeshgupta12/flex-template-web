@@ -70,15 +70,12 @@ const EditListingCapacityFormComponent = props => (
           'maxVal': 99
         }
       }
-      const incrementButton = (name, preValues) => {
+      const incrementButton = (name) => {
         return <button
           type="button"
           name={name}
           onClick={(e) => {
-            console.log('name', name, 'initialData', initialData, "increment button clicked","props",props)
             props.updateCapacityValues(name, 'increment', initialData)
-            console.log('after updateCapacityValues increment props',props)
-
           }}
         > +
       </button>
@@ -89,11 +86,8 @@ const EditListingCapacityFormComponent = props => (
           type="button"
           name={name}
           onClick={(e) => {
-            console.log('name', name, 'initialData', initialData, "derement button clicked","props",props)
             props.updateCapacityValues(name, 'derement', initialData)
-            console.log('after updateCapacityValues derement props',props)
           }}
-
         >
           -
       </button>
@@ -106,10 +100,9 @@ const EditListingCapacityFormComponent = props => (
             <p>How many gusets can stay comfortably?</p>
             <div>
               <strong>Number of guests</strong>
-
-                {derementButton("guestNumber")}
-                {guestNumber || '    '}
-                {incrementButton("guestNumber")}
+              {derementButton("guestNumber")}
+              {guestNumber || '    '}
+              {incrementButton("guestNumber")}
 
             </div>
           </div>
@@ -117,32 +110,26 @@ const EditListingCapacityFormComponent = props => (
             <p>How many bedroom & bed can your guest use?</p>
             <div>
               <strong>Bedroom</strong>
-              <label>
-                {derementButton('bedroomsNumber')}
-                {bedroomsNumber || '    '}
-                {incrementButton('bedroomsNumber')}
-              </label>
+              {derementButton('bedroomsNumber')}
+              {bedroomsNumber || '    '}
+              {incrementButton('bedroomsNumber')}
             </div>
           </div>
           <div>
             <div>
               <strong>Bed</strong>
-              <label>
-                {derementButton('bedsNumber')}
-                {bedsNumber || '    '}
-                {incrementButton('bedsNumber')}
-              </label>
+              {derementButton('bedsNumber')}
+              {bedsNumber || '    '}
+              {incrementButton('bedsNumber')}
             </div>
           </div>
           <div>
             <p>How many bathroom can your guest use?</p>
             <div>
               <strong>Bathroom</strong>
-              <label>
-                {derementButton('bathroomsNumber')}
-                {bathroomsNumber || '    '}
-                {incrementButton('bathroomsNumber')}
-              </label>
+              {derementButton('bathroomsNumber')}
+              {bathroomsNumber || '    '}
+              {incrementButton('bathroomsNumber')}
             </div>
           </div>
           <div>

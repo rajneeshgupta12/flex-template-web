@@ -190,8 +190,7 @@ class EditListingWizard extends Component {
   }
 
   updateCapacityValues(name, type, defaultValues) {
-    console.log(' called updateCapacityValues with (name, type, defaultValues)', (name, type, defaultValues))
-    let value = this.state[name]
+     let value = this.state[name]
     if (type == 'increment') {
       value += 1
     }
@@ -199,7 +198,6 @@ class EditListingWizard extends Component {
       value -= 1
     }
     (value >= defaultValues[name].minVal && value <= defaultValues[name].maxVal) ? this.setState({ [name]: value }) : this.setState({ [name]: defaultValues[name][name] })
-    console.log("after function completed states are", this.state)
   }
 
   handleCreateFlowTabScrolling(shouldScroll) {
@@ -266,8 +264,7 @@ class EditListingWizard extends Component {
       onPayoutDetailsFormChange,
       ...rest
     } = this.props;
-    console.log('at render mmethod this.state', this.state)
-    const selectedTab = params.tab;
+   const selectedTab = params.tab;
     const isNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW, LISTING_PAGE_PARAM_TYPE_DRAFT].includes(
       params.type
     );
