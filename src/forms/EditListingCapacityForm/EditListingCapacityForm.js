@@ -106,11 +106,11 @@ const EditListingCapacityFormComponent = props => (
             <p>How many gusets can stay comfortably?</p>
             <div>
               <strong>Number of guests</strong>
-              <label>
+
                 {derementButton("guestNumber")}
                 {guestNumber || '    '}
                 {incrementButton("guestNumber")}
-              </label>
+
             </div>
           </div>
           <div>
