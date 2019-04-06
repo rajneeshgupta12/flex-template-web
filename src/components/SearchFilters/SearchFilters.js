@@ -38,23 +38,23 @@ const initialPriceRangeValue = (queryParams, paramName) => {
 
   return !!price && valuesFromParams.length === 2
     ? {
-        minPrice: valuesFromParams[0],
-        maxPrice: valuesFromParams[1],
-      }
+      minPrice: valuesFromParams[0],
+      maxPrice: valuesFromParams[1],
+    }
     : null;
 };
 
 const initialDateRangeValue = (queryParams, paramName) => {
-  const dates = queryParams[paramName];
-  const rawValuesFromParams = !!dates ? dates.split(',') : [];
+  const startDate = queryParams['startDate'];
+  const endDate = queryParams['endDate'];
+  const rawValuesFromParams = [startDate, endDate];
   const valuesFromParams = rawValuesFromParams.map(v => parseDateFromISO8601(v));
   const initialValues =
-    !!dates && valuesFromParams.length === 2
+    valuesFromParams.length === 2
       ? {
-          dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
-        }
+        dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
+      }
       : { dates: null };
-
   return initialValues;
 };
 

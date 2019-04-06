@@ -102,7 +102,6 @@ export const EditListingLocationFormComponent = props => (
               autocompletePlaceSelected(addressNotRecognizedMessage)
             )}
           />
-
           <FieldTextInput
             className={css.building}
             type="text"
@@ -110,34 +109,6 @@ export const EditListingLocationFormComponent = props => (
             id="building"
             label={buildingMessage}
             placeholder={buildingPlaceholderMessage}
-
-          />
-          <FieldTextInput
-            className={css.building}
-            type="text"
-            name="city"
-            id="city"
-            label={cityMessage}
-            placeholder={cityPlaceholderMessage}
-            required
-          />
-          <FieldTextInput
-            className={css.building}
-            type="text"
-            name="state"
-            id="state"
-            label={stateMessage}
-            placeholder={statePlaceholderMessage}
-            required
-          />
-          <FieldTextInput
-            className={css.building}
-            type="text"
-            name="zip"
-            id="zip"
-            label={zipMessage}
-            placeholder={zipPlaceholderMessage}
-            required
           />
           <Button
             className={css.submitButton}

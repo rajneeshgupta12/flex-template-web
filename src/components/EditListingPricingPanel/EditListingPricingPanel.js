@@ -32,7 +32,7 @@ const EditListingPricingPanel = props => {
   const currentListing = ensureOwnListing(listing);
   const { price } = currentListing.attributes;
 
-  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.displayName
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage

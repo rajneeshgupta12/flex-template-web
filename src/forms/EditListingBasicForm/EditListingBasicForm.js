@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
@@ -7,14 +7,116 @@ import { FormattedMessage } from 'react-intl';
 
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, Form, FieldRadioButton, FieldSelect } from '../../components';
+import { Button, Form, FieldRadioButton, FieldTextInput } from '../../components';
 import { maxLength, required, composeValidators, requiredSelectBox, requiredRadioBox } from '../../util/validators';
+import Icon from '@material-ui/core/Icon';
+
+import tentImage from '../../assets/Bell.png';
+import safariImage from '../../assets/Safari.png';
+import tipiImage from '../../assets/Tipi.png';
+import yurtImage from '../../assets/Yurt.png';
+import iglooImage from '../../assets/Igloo.png';
+import rvImage from '../../assets/RV.png';
+import treeImage from '../../assets/Tree.png';
+import tinyImage from '../../assets/Tiny.png';
+import cabinImage from '../../assets/Cabin.png';
+import hutImage from '../../assets/Hut.png';
+import shepherdImage from '../../assets/Shepherd.png';
+import podImage from '../../assets/Pod.png';
+import yachtImage from '../../assets/Yacht.png';
 
 import css from './EditListingBasicForm.css';
 
-const EditListingBasicFormComponent = props => (
-  <FinalForm
-    {...props}
+class Dropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listOpen: false,
+      headerTitle: this.props.title
+    }
+  }
+
+  handleClickOutside() {
+    this.setState({
+      listOpen: false
+    })
+  }
+
+  toggleList() {
+    this.setState(prev => ({
+      listOpen: !prev.listOpen
+    }))
+  }
+
+  render() {
+    const{list, toggleItem} = this.props;
+    const{listOpen, headerTitle} = this.state;
+
+    const {rootClassName, className } = this.props;
+    const classes = classNames(rootClassName || css.root, className);
+
+
+
+
+    return (
+      <div className={css.dropWrapper}>
+        <div className={css.dropHeader} onClick={() => this.toggleList()}>
+          <div className={css.dropHeaderTitle}>{headerTitle}</div>
+          {listOpen ? <Icon className={css.dropIcon}>expand_less</Icon> : <Icon className={css.dropIcon}>expand_more</Icon>}
+        </div>
+
+        {listOpen && <ul className={css.list}>
+          {list.map((item) => (
+            <li className={css.listItem} key={item.id} onClick={() => toggleItem(item.id, 'glampTypes')} >
+            <img src={item.image} className={item.selected ? css.listItemSelectedImage : css.listItemImage}/>
+            <span className={item.selected ? css.listItemTextSelected : css.listItemText}> {item.title}</span></li>))
+          }
+        </ul>}
+      </div>
+    )
+  }
+}
+
+
+class EditListingBasicFormComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+       glampTypes : [{
+          id: 0, title: 'Bell Tent', image: tentImage,  selected: false},
+        { id: 1, title: 'Safari Tent', image: safariImage, selected: false},
+        { id: 2, title: 'Tipi', image: tipiImage, selected: false},
+        { id: 3, title: 'Yurt', image: yurtImage, selected: false},
+        { id: 4, title: 'Igloo/Dome', image: iglooImage, selected: false},
+
+        { id: 5, title: 'RV Camper', image:rvImage, selected: false },
+        { id: 6, title: 'Treehouse', image: treeImage, selected: false},
+        { id: 7, title: 'Tiny House', image: tinyImage, selected: false},
+        { id: 8, title: 'Cabin', image: cabinImage, selected: false},
+        { id: 9, title: 'Hut', image: hutImage, selected: false},
+
+        { id: 10, title: 'Sheperd\'s Hut', image: shepherdImage, selected: false},
+        { id: 11, title: 'Glamping Pod', image: podImage, selected: false},
+        { id: 12, title: 'Boat/Yacht', image: yachtImage, selected: false},
+      ]
+    }
+  }
+
+
+  toggleSelected = (id, key) => {
+      let temp = this.state[key];
+      temp[id].selected = !temp[id].selected;
+      this.setState({
+        [key]: temp,
+      })
+  }
+
+
+  render() {
+    return(
+    <FinalForm
+    {...this.props}
     mutators={{ ...arrayMutators }}
     render={fieldRenderProps => {
       const {
@@ -47,28 +149,14 @@ const EditListingBasicFormComponent = props => (
           <FormattedMessage id="EditListingBasicForm.showListingFailed" />
         </p>
       ) : null;
-
+        this.props.updatePropertyType(this.state.glampTypes)
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
           <div>
             <label>Type of the property</label>
-            <FieldSelect name="property_type" component="select" validate={composeValidators(required(requiredSelectBox('required')))}>
-              <option value={null} >Choose the type</option>
-              <option value="bell_tent">Bell tent</option>
-              <option value="rv_camper"> RV/camper</option>
-              <option value="safari_tent"> Safari tent</option>
-              <option value="tree_house"> Tree house</option>
-              <option value="glamping_pod"> Glamping pod</option>
-              <option value="tipi"> Tipi</option>
-              <option value="Tiny house"> Tiny house</option>
-              <option value="Boat/Yacht"> Boat/Yacht</option>
-              <option value="Yurt"> Yurt</option>
-              <option value="Cabin"> Cabin</option>
-              <option value="Igloo/dome"> Igloo/dome</option>
-              <option value="Hut"> Hut</option>
-            </FieldSelect>
+            <Dropdown title="Choose the type" list={this.state.glampTypes} toggleItem={this.toggleSelected}/>
           </div>
           <div>
             <p>The guests can use the place</p>
@@ -117,8 +205,9 @@ const EditListingBasicFormComponent = props => (
         </Form>
       );
     }}
-  />
-);
+  />)
+  }
+}
 
 EditListingBasicFormComponent.defaultProps = {
   rootClassName: null,

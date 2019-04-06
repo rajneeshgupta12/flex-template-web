@@ -6,13 +6,14 @@ import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import config from '../../config';
-import { Button,FieldCheckboxGroup, ExternalLink, FieldRadioButton, FieldSelect, Form } from '../../components';
+import { Button, FieldCheckboxGroup, ExternalLink, FieldRadioButton, FieldSelect, Form } from '../../components';
 import { isStripeInvalidPostalCode } from '../../util/errors';
 import * as validators from '../../util/validators';
 
 import PayoutDetailsFormCompany from './PayoutDetailsFormCompany';
 import PayoutDetailsFormIndividual from './PayoutDetailsFormIndividual';
 import css from './PayoutDetailsForm.css';
+import { Link } from 'react-router-dom';
 
 const supportedCountries = config.stripe.supportedCountries.map(c => c.code);
 
@@ -102,6 +103,7 @@ const PayoutDetailsFormComponent = props => (
       );
 
       const options = [{ key: "accept_terms", label: 'I accept all the Terms and conditions' }]
+      const stripeOption = [{ key: "accept_stripe_terms", label: "" }]
       return config.stripe.publishableKey ? (
         <Form className={classes} onSubmit={handleSubmit}>
           {usesOldAPI ? (
@@ -183,20 +185,27 @@ const PayoutDetailsFormComponent = props => (
 
               {error}
 
-              <p className={css.termsText}>
+              <div className={css.termsText}>
+                <FieldCheckboxGroup
+                  className={css.features}
+                  id={'accept_stripe_terms'}
+                  name={'accept_stripe_terms'}
+                  options={stripeOption}
+                  validate={validators.composeValidators(validators.requiredFieldArrayCheckbox('Please agree to the Stripe Account Agreement'))}
+                />
                 <FormattedMessage
                   id="PayoutDetailsForm.stripeToSText"
                   values={{ stripeConnectedAccountTermsLink }}
                 />
-              </p>
+              </div>
               <FieldCheckboxGroup
                 className={css.features}
                 id={'accept_terms'}
                 name={'accept_terms'}
                 options={options}
-                validate={validators.composeValidators(validators.requiredFieldArrayCheckbox('required'))}
+                validate={validators.composeValidators(validators.requiredFieldArrayCheckbox('Please accept all the Terms and conditions'))}
               />
-              <a href="#">Terms and conditions</a>
+              <Link to="/terms-of-service" target={'black'} >Terms and conditions</Link>
               <Button
                 className={css.submitButton}
                 type="submit"

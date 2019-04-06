@@ -18,21 +18,24 @@ const SectionFeatures = props => {
       <h2 className={css.featuresTitle}>
         <FormattedMessage id="ListingPage.featuresTitle" />
       </h2>
-      <label>for glamping</label>
-      <PropertyGroup
-        id="ListingPage.hospitalityAmenities"
-        options={hospitalityAmenitiesConfig}
-        selectedOptions={amenities_hospitality}
-        twoColumns={true}
-      />
-      <br /> <label>for hospitality</label>
+      <div>
+        <label>for hospitality</label>
+        <PropertyGroup
+          id="ListingPage.glampingAmenities"
+          options={glampingAmenitiesConfig}
+          selectedOptions={amenities_glamping}
+          twoColumns={true}
+        />
+        <br />
+        <label>for glamping</label>
+        <PropertyGroup
+          id="ListingPage.hospitalityAmenities"
+          options={hospitalityAmenitiesConfig}
+          selectedOptions={amenities_hospitality}
+          twoColumns={true}
+        />
+      </div>
 
-      <PropertyGroup
-        id="ListingPage.glampingAmenities"
-        options={glampingAmenitiesConfig}
-        selectedOptions={amenities_glamping}
-        twoColumns={true}
-      />
       <br />
       <h3>Around the Oasis</h3>
       <label>Available transportaition</label>
@@ -43,37 +46,54 @@ const SectionFeatures = props => {
         selectedOptions={travel_info.available_transportaion}
         twoColumns={false}
       />
-      <br /><label>Culture</label>
+      <br />
 
-      <OnlyVisiblePropertyGroup
-        id="Culture"
-        options={cultureAmenitiesConfig}
-        selectedOptions={travel_info.facilities_culture}
-        fiveColumns={true}
-      />
-      <br /><label>Nature</label>
+      <div class={css.row}>
+        <div class={css.column} >
+          <label>Culture</label>
+          <OnlyVisiblePropertyGroup
+            id="Culture"
+            options={cultureAmenitiesConfig}
+            selectedOptions={travel_info.facilities_culture}
+            fiveColumns={true}
+          />
+        </div>
 
-      <OnlyVisiblePropertyGroup
-        id="Nature"
-        options={natureAmenitiesConfig}
-        selectedOptions={travel_info.facilities_nature}
-        fiveColumns={true}
-      />
-      <br /><label>Convenience</label>
+        <div class={css.column} >
+          <label>Nature</label>
 
-      <OnlyVisiblePropertyGroup
-        id="Convenience"
-        options={convenienceAmenitiesConfig}
-        selectedOptions={travel_info.facilities_convenience}
-        fiveColumns={true}
-      />
-      <br /><label>tour</label>
-      <OnlyVisiblePropertyGroup
-        id="tour"
-        options={tourAmenitiesConfig}
-        selectedOptions={travel_info.facilities_tour}
-        fiveColumns={true}
-      />
+          <OnlyVisiblePropertyGroup
+            id="Nature"
+            options={natureAmenitiesConfig}
+            selectedOptions={travel_info.facilities_nature}
+            fiveColumns={true}
+          />
+        </div>
+      </div>
+      <br />
+
+      <div class={css.row}>
+        <div class={css.column} >
+          <label>Convenience</label>
+
+          <OnlyVisiblePropertyGroup
+            id="Convenience"
+            options={convenienceAmenitiesConfig}
+            selectedOptions={travel_info.facilities_convenience}
+            fiveColumns={true}
+          />
+        </div>
+
+        <div class={css.column} >
+          <label>tour</label>
+          <OnlyVisiblePropertyGroup
+            id="tour"
+            options={tourAmenitiesConfig}
+            selectedOptions={travel_info.facilities_tour}
+            fiveColumns={true}
+          />
+        </div>
+      </div>
     </div>
   );
 };

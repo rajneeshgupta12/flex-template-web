@@ -27,12 +27,6 @@
   }
 }
 
-.fiveColumns {
-  @media (--viewportMedium) {
-    column-count: 5;
-  }
-}
-
 .item {
   display: flex;
   align-items: center;

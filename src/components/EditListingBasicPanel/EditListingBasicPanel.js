@@ -30,7 +30,7 @@ const EditListingBasicPanel = props => {
   const { publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
-  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.displayName
   const panelTitle = isPublished ? (
     <FormattedMessage
       id="EditListingBasicPanel.title"
@@ -41,10 +41,15 @@ const EditListingBasicPanel = props => {
     );
 
   const place = publicData && publicData.place;
-  const property_type = publicData && publicData.property_type;
-
-  const initialValues = { property_type, place };
-
+  const initialValues = {};
+  let property_type = []
+  const setpropertyTypes = (types) => {
+    property_type = []
+    types.forEach(type => {
+      if (type.selected)
+        property_type.push(type)
+    })
+  }
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -53,11 +58,10 @@ const EditListingBasicPanel = props => {
         name={BASIC_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { place = '', property_type = '' } = values;
-
+          const { place = '' } = values;
           const updatedValues = {
             publicData: { place, property_type },
-            title: Math.random().toString()
+            title: Date.now().toString()
           };
           onSubmit(updatedValues);
         }}
@@ -66,6 +70,7 @@ const EditListingBasicPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        updatePropertyType={(e) => { setpropertyTypes(e) }}
       />
     </div>
   );

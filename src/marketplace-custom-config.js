@@ -114,9 +114,7 @@ export const amenities_glamping = [
 ];
 
 export const available_transportaion = [
-  { key: 'lyft', label: 'Lyft' },
-  { key: 'uber', label: 'Uber' },
-  { key: 'taxi', label: 'Taxi' },
+  { key: 'ride_service', label: 'Ride Service' },
   { key: 'bus', label: 'Bus' },
   { key: 'subway', label: 'Subway' },
   { key: 'train', label: 'Train' },

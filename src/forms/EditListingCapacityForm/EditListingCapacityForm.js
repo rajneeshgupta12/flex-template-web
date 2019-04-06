@@ -58,15 +58,15 @@ const EditListingCapacityFormComponent = props => (
         },
         bedsNumber: {
           bedsNumber,
-          'minVal': 1,
+          'minVal': 0,
           'maxVal': 99
         }, bedroomsNumber: {
           bedroomsNumber,
-          'minVal': 1,
+          'minVal': 0,
           'maxVal': 99
         }, bathroomsNumber: {
           bathroomsNumber,
-          'minVal': 1,
+          'minVal': 0,
           'maxVal': 99
         }
       }

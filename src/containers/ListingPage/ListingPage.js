@@ -427,6 +427,7 @@ export class ListingPageComponent extends Component {
                     richTitle={richTitle}
                     category={category}
                     hostLink={hostLink}
+                    currentUser={currentUser}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />

@@ -42,9 +42,7 @@ const EditListingCapacityPanel = props => {
   ) : (
       <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
     );
-  const capacity = publicData && publicData.capacity;
-  const initialValues = { bathroomsNumber: capacity && capacity.bathroomsNumber, bedroomsNumber: capacity && capacity.bedroomsNumber, bedsNumber: capacity && capacity.bedsNumber, guestNumber: capacity && capacity.guestNumber };
-
+  const initialValues = {};
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -64,10 +62,10 @@ const EditListingCapacityPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        guestNumber={(guestNumber || capacity && capacity.guestNumber) || 2}
-        bedsNumber={(bedsNumber || capacity && capacity.bedsNumber) || 1}
-        bedroomsNumber={(bedroomsNumber || capacity && capacity.bedroomsNumber) || 1}
-        bathroomsNumber={(bathroomsNumber || capacity && capacity.bathroomsNumber) || 1}
+        guestNumber={(guestNumber) || 1}
+        bedsNumber={(bedsNumber) || 0}
+        bedroomsNumber={(bedroomsNumber ) || 0}
+        bathroomsNumber={(bathroomsNumber) || 0}
         updateCapacityValues={updateCapacityValues}
       />
     </div>

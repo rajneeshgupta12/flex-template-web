@@ -13,7 +13,7 @@ const getThemeButtons = (placeTheme) => {
     }
   });
   return activePlaceThemes.map(theme => {
-    return <button>{theme}</button>
+    return <button disabled >{theme}</button>
   })
 }
 

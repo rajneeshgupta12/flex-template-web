@@ -107,7 +107,10 @@ export class LandingPageComponent extends Component {
     // const listing = props.showListing('5c63bee0-e3d8-4d64-ac7a-3914ea0c914c')
 
     let userName = null
-    userName = props && props.result && props.result.user && props.result.user.currentUser && props.result.user.currentUser.attributes && props.result.user.currentUser.attributes.profile && props.result.user.currentUser.attributes.profile.firstName
+    userName = props && props.result && props.result.user && props.result.user.currentUser &&
+    props.result.user.currentUser.attributes &&
+    props.result.user.currentUser.attributes.profile &&
+    props.result.user.currentUser.attributes.profile.displayName
     return (
       <Page
         className={css.root}
