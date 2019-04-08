@@ -10,7 +10,22 @@ import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
 
+import { withStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';  
+
 import css from './EditListingCapacityForm.css';
+
+
+const StyledButton = withStyles({
+  root: {
+    width: '30px',
+    height  : '30px',
+    borderRadius: 0,
+    color: '#ffaa00',
+    border: ['solid 1px #ffaa00'],
+  },
+})(IconButton);
 
 const EditListingCapacityFormComponent = props => (
   <FinalForm
@@ -71,70 +86,73 @@ const EditListingCapacityFormComponent = props => (
         }
       }
       const incrementButton = (name) => {
-        return <button
+        return <StyledButton
           type="button"
           name={name}
+          className={css.incrementButton}
           onClick={(e) => {
             props.updateCapacityValues(name, 'increment', initialData)
           }}
-        > +
-      </button>
+        > <Icon>add</Icon>
+      </StyledButton>
       }
 
       const derementButton = (name) => {
-        return <button
+        return <StyledButton
           type="button"
           name={name}
+          className={css.decrementButton}
           onClick={(e) => {
             props.updateCapacityValues(name, 'derement', initialData)
           }}
         >
-          -
-      </button>
+          <Icon>remove</Icon>
+      </StyledButton>
       }
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-          <div>
-            <p>How many gusets can stay comfortably?</p>
+          <div className={css.gridLayout}>
             <div>
-              <strong>Number of guests</strong>
-              {derementButton("guestNumber")}
-              {guestNumber || '    '}
-              {incrementButton("guestNumber")}
+              <p>How many gusets can stay comfortably?</p>
+              <div>
+                <strong>Number of guests</strong>
+                {derementButton("guestNumber")}
+                {guestNumber || '    '}
+                {incrementButton("guestNumber")}
 
+              </div>
             </div>
-          </div>
-          <div>
-            <p>How many bedroom & bed can your guest use?</p>
             <div>
-              <strong>Bedroom</strong>
-              {derementButton('bedroomsNumber')}
-              {bedroomsNumber || '    '}
-              {incrementButton('bedroomsNumber')}
+              <p>How many bedroom & bed can your guest use?</p>
+              <div>
+                <strong>Bedroom</strong>
+                {derementButton('bedroomsNumber')}
+                {bedroomsNumber || '    '}
+                {incrementButton('bedroomsNumber')}
+              </div>
             </div>
-          </div>
-          <div>
             <div>
-              <strong>Bed</strong>
-              {derementButton('bedsNumber')}
-              {bedsNumber || '    '}
-              {incrementButton('bedsNumber')}
+              <div>
+                <strong>Bed</strong>
+                {derementButton('bedsNumber')}
+                {bedsNumber || '    '}
+                {incrementButton('bedsNumber')}
+              </div>
             </div>
-          </div>
-          <div>
-            <p>How many bathroom can your guest use?</p>
             <div>
-              <strong>Bathroom</strong>
-              {derementButton('bathroomsNumber')}
-              {bathroomsNumber || '    '}
-              {incrementButton('bathroomsNumber')}
+              <p>How many bathroom can your guest use?</p>
+              <div>
+                <strong>Bathroom</strong>
+                {derementButton('bathroomsNumber')}
+                {bathroomsNumber || '    '}
+                {incrementButton('bathroomsNumber')}
+              </div>
+            </div>
+            <div>
             </div>
           </div>
-          <div>
-          </div>
-
           <Button
             className={css.submitButton}
             type="submit"

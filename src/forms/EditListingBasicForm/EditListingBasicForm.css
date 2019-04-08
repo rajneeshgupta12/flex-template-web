@@ -48,9 +48,10 @@
 .dropHeader {
   padding: 15px;
   padding-left: 40px;
-   border: solid 1px #e6e6e6;
+  border: solid 1px #e6e6e6;
   border-radius: 4px;
   width: 250px;
+  height: 65px;
 }
 
 .dropHeaderTitle{
@@ -60,6 +61,23 @@
 .dropIcon {
   position: relative;
   top: 5px;
+}
+
+.dropHeaderItem {
+  position: relative;
+}
+
+.headerItemImage {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  top: -8px;
+  left: -20px;
+}
+
+.headerItemTitle {
+  left: 35px;
+  position: relative;
 }
 
 .list{
@@ -81,15 +99,6 @@
   align-items: flex-end;
   margin-bottom: 30px;
 
-}
-
-.listItems::after {
-    display: block;
-    content: attr(key);
-    font-weight: normal;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
 }
 
 .listItemImage{

@@ -48,28 +48,39 @@ class Dropdown extends Component {
     }))
   }
 
+ 
+
   render() {
-    const{list, toggleItem} = this.props;
+
+    const{list, selectedIndex, toggleItem} = this.props;
     const{listOpen, headerTitle} = this.state;
 
     const {rootClassName, className } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
-
+    const selectedItem = selectedIndex > -1 ? list[selectedIndex] : null;
+    let headerImage = selectedIndex > -1 ? (
+      '<img src={selectedItem.image} className={css.listItemSelectedImage}/>'+
+      '<span className=={css.listItemTextSelected}> {selectedItem.title}</span></li>'
+    ) : null;
 
 
     return (
       <div className={css.dropWrapper}>
         <div className={css.dropHeader} onClick={() => this.toggleList()}>
-          <div className={css.dropHeaderTitle}>{headerTitle}</div>
-          {listOpen ? <Icon className={css.dropIcon}>expand_less</Icon> : <Icon className={css.dropIcon}>expand_more</Icon>}
+          <div className={css.dropHeaderTitle}>
+          {selectedIndex == -1 || listOpen ? headerTitle : 
+            <div className={css.dropHeaderItem}>
+            <img src={selectedItem.image} className={css.headerItemImage}/>
+            <span className={css.headerItemTitle}> {selectedItem.title}</span></div>}</div>
+          {listOpen ? <Icon className={css.dropIcon} >expand_less</Icon> : <Icon className={css.dropIcon} style={{left: (selectedIndex == -1) ? 0 : 32}}>expand_more</Icon>}
         </div>
 
         {listOpen && <ul className={css.list}>
           {list.map((item) => (
-            <li className={css.listItem} key={item.id} onClick={() => toggleItem(item.id, 'glampTypes')} >
-            <img src={item.image} className={item.selected ? css.listItemSelectedImage : css.listItemImage}/>
-            <span className={item.selected ? css.listItemTextSelected : css.listItemText}> {item.title}</span></li>))
+            <li className={css.listItem} key={item.id} onClick={() => toggleItem(item.id)} >
+            <img src={item.image} className={item.id == selectedIndex ? css.listItemSelectedImage : css.listItemImage}/>
+            <span className={item.id == selectedIndex ? css.listItemTextSelected : css.listItemText}> {item.title}</span></li>))
           }
         </ul>}
       </div>
@@ -77,38 +88,39 @@ class Dropdown extends Component {
   }
 }
 
-
+//Only allowed to select one item now, determined by selectedIndex
 class EditListingBasicFormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
 
+      selectedIndex : (props.initialValues.savedType >= 0 ? props.initialValues.savedType : -1),
+
        glampTypes : [{
-          id: 0, title: 'Bell Tent', image: tentImage,  selected: false},
-        { id: 1, title: 'Safari Tent', image: safariImage, selected: false},
-        { id: 2, title: 'Tipi', image: tipiImage, selected: false},
-        { id: 3, title: 'Yurt', image: yurtImage, selected: false},
-        { id: 4, title: 'Igloo/Dome', image: iglooImage, selected: false},
+          id: 0, title: 'Bell Tent', image: tentImage},
+        { id: 1, title: 'Safari Tent', image: safariImage},
+        { id: 2, title: 'Tipi', image: tipiImage},
+        { id: 3, title: 'Yurt', image: yurtImage},
+        { id: 4, title: 'Igloo/Dome', image: iglooImage},
 
-        { id: 5, title: 'RV Camper', image:rvImage, selected: false },
-        { id: 6, title: 'Treehouse', image: treeImage, selected: false},
-        { id: 7, title: 'Tiny House', image: tinyImage, selected: false},
-        { id: 8, title: 'Cabin', image: cabinImage, selected: false},
-        { id: 9, title: 'Hut', image: hutImage, selected: false},
+        { id: 5, title: 'RV Camper', image:rvImage},
+        { id: 6, title: 'Treehouse', image: treeImage},
+        { id: 7, title: 'Tiny House', image: tinyImage},
+        { id: 8, title: 'Cabin', image: cabinImage},
+        { id: 9, title: 'Hut', image: hutImage},
 
-        { id: 10, title: 'Sheperd\'s Hut', image: shepherdImage, selected: false},
-        { id: 11, title: 'Glamping Pod', image: podImage, selected: false},
-        { id: 12, title: 'Boat/Yacht', image: yachtImage, selected: false},
+        { id: 10, title: 'Sheperd\'s Hut', image: shepherdImage},
+        { id: 11, title: 'Glamping Pod', image: podImage},
+        { id: 12, title: 'Boat/Yacht', image: yachtImage},
       ]
     }
+    console.log(props.initialValues.savedType);
   }
 
 
-  toggleSelected = (id, key) => {
-      let temp = this.state[key];
-      temp[id].selected = !temp[id].selected;
+  toggleSelected = id => {
       this.setState({
-        [key]: temp,
+        selectedIndex: id,
       })
   }
 
@@ -137,6 +149,9 @@ class EditListingBasicFormComponent extends Component {
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
+
+    //  console.log(this.props.initialValues.savedType);
+    //  console.log(this.state.selectedIndex);
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
         <p className={css.error}>
@@ -149,14 +164,16 @@ class EditListingBasicFormComponent extends Component {
           <FormattedMessage id="EditListingBasicForm.showListingFailed" />
         </p>
       ) : null;
-        this.props.updatePropertyType(this.state.glampTypes)
+
+        this.props.updatePropertyType(this.state.selectedIndex, this.state.glampTypes);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
           <div>
             <label>Type of the property</label>
-            <Dropdown title="Choose the type" list={this.state.glampTypes} toggleItem={this.toggleSelected}/>
+            <Dropdown title="Choose the type" list={this.state.glampTypes} 
+            selectedIndex={this.state.selectedIndex} toggleItem={this.toggleSelected}/>
           </div>
           <div>
             <p>The guests can use the place</p>
