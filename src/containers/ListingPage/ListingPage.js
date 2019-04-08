@@ -51,7 +51,7 @@ import SectionHost from './SectionHost';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-
+import convertMoneyToNumber from '../../util/currency'
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
 const { UUID } = sdkTypes;
@@ -232,7 +232,7 @@ export class ListingPageComponent extends Component {
     if (shouldShowPublicListingPage) {
       return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
     }
-
+console.log("---2-2---",this.props)
     const {
       description = '',
       geolocation = null,
@@ -412,8 +412,8 @@ export class ListingPageComponent extends Component {
                   type: listingType,
                   tab: listingTab,
                 }}
-                // imageCarouselOpen={this.state.imageCarouselOpen}
-                // onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
+                imageCarouselOpen={this.state.imageCarouselOpen}
+                onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
                 handleViewPhotosClick={handleViewPhotosClick}
                 onManageDisableScrolling={onManageDisableScrolling}
               />
@@ -465,6 +465,7 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
+                {console.log('---price----',price)}
                 <BookingPanel
                   className={css.bookingPanel}
                   listing={currentListing}

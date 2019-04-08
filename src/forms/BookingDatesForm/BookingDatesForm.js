@@ -34,16 +34,17 @@ export class BookingDatesFormComponent extends Component {
   // focus on that input, otherwise continue with the
   // default handleSubmit function.
   handleFormSubmit(e) {
-    const { startDate, endDate } = e.bookingDates || {};
-    if (!startDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: START_DATE });
-    } else if (!endDate) {
-      e.preventDefault();
-      this.setState({ focusedInput: END_DATE });
-    } else {
-      this.props.onSubmit(e);
-    }
+    console.log('requesting...')
+    // const { startDate, endDate } = e.bookingDates || {};
+    // if (!startDate) {
+    //   e.preventDefault();
+    //   this.setState({ focusedInput: START_DATE });
+    // } else if (!endDate) {
+    //   e.preventDefault();
+    //   this.setState({ focusedInput: END_DATE });
+    // } else {
+    //   this.props.onSubmit(e);
+    // }
   }
 
   render() {
@@ -199,18 +200,26 @@ export class BookingDatesFormComponent extends Component {
                 />
               </p>
               <div>
-                <FieldTextInput
-                  id="total_glampers"
-                  name="total_glampers"
-                  onChange={(e) => { this.setState({ totalPrice: (Number(e.target.value) * (this.props.price && this.props.price.amount)) }) }}
-                  label={"Number of people"}
-                  placeholder={"2"}
-                  validate={composeValidators(required("Required"))}
-                />
+                <div
+                  onChange={(e) => {
+                    this.setState({
+                      totalPrice:
+                        (Number(e.target.value) * (this.props.price && this.props.price.amount))
+                    })
+                  }}
+                >
+                  <FieldTextInput
+                    id="total_glampers"
+                    name="total_glampers"
+                    type="number"
+                    label={"Number of people"}
+                    placeholder={"2"}
+                    validate={composeValidators(required("Required"))}
+                  />
+                </div>
               </div>
               {totalPrice && totalPrice === NaN ? <div></div> : <div>
-                Price per Night  $ {this.props && this.props.price && this.props.price.amount}
-                {totalPrice}
+                Price per Night  ${totalPrice}
               </div>}
               <div className={submitButtonClasses}>
                 <Button

@@ -26,7 +26,8 @@ const EditListingDescriptionPanel = props => {
     history,
     uploadDescriptionImages,
     handlePlaceTheme,
-    placeTheme
+    placeTheme,
+    images
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -67,7 +68,7 @@ const EditListingDescriptionPanel = props => {
         history={history}
         handlePlaceTheme={handlePlaceTheme}
         placeTheme={placeTheme}
-
+        images={images}
         onImageUpload={onImageUpload}
       />
     </div>

@@ -16,9 +16,8 @@ const SectionImages = props => {
     onImageCarouselClose,
     onManageDisableScrolling,
   } = props;
-
-  const hasImages = listing.images && listing.images.length > 0;
-  const firstImage = hasImages ? listing.images[0] : null;
+  const hasImages = listing.includedRelationships && listing.includedRelationships[1].type === 'image';
+  const firstImage = hasImages ? listing.includedRelationships[1] : null;
 
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel
@@ -32,7 +31,7 @@ const SectionImages = props => {
     <button className={css.viewPhotos} onClick={handleViewPhotosClick}>
       <FormattedMessage
         id="ListingPage.viewImagesButton"
-        values={{ count: listing.images.length }}
+        values={{ count: listing.includedRelationships[1].length }}
       />
     </button>
   ) : null;
@@ -65,7 +64,7 @@ const SectionImages = props => {
         onClose={onImageCarouselClose}
         onManageDisableScrolling={onManageDisableScrolling}
       >
-        <ImageCarousel images={listing.images} />
+        <ImageCarousel images={listing.relationships.images.data} />
       </Modal>
     </div>
   );

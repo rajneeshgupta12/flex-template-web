@@ -335,6 +335,7 @@ export default function reducer(state = initialState, action = {}) {
       const { id, imageId } = payload;
       const file = state.images[id].file;
       const images = { ...state.images, [id]: { id, imageId, file } };
+      console.log('UPLOAD_IMAGE_SUCCESS-------',images,payload)
       return { ...state, images };
     }
     case UPLOAD_IMAGE_ERROR: {
@@ -510,7 +511,7 @@ export function requestImageUpload(actionPayload) {
     const id = actionPayload.id;
     dispatch(uploadImage(actionPayload));
     return sdk.images
-      .upload({ image: actionPayload.file })
+      .upload({ image: actionPayload.file },{expand:true})
       .then(resp => dispatch(uploadImageSuccess({ data: { id, imageId: resp.data.data.id } })))
       .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
   };

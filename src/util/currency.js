@@ -244,7 +244,9 @@ export const formatMoney = (intl, value) => {
   if (!(value instanceof Money)) {
     throw new Error('Value must be a Money type');
   }
+  console.log('----------1--------',value)
   const valueAsNumber = convertMoneyToNumber(value);
+  console.log('----------2--------',valueAsNumber)
 
   // See: https://github.com/yahoo/react-intl/wiki/API#formatnumber
   const numberFormatOptions = {

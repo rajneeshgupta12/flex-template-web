@@ -45,7 +45,7 @@ const initialState = {
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
-  listing:null
+  listing: null
 };
 
 const listingPageReducer = (state = initialState, action = {}) => {
@@ -79,10 +79,12 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, sendEnquiryInProgress: true, sendEnquiryError: null };
     case SEND_ENQUIRY_SUCCESS:
       return { ...state, sendEnquiryInProgress: false };
-      case SEND_ENQUIRY_ERROR:
+    case SEND_ENQUIRY_ERROR:
       return { ...state, sendEnquiryInProgress: false, sendEnquiryError: payload };
-      case SHOW_LISTING_REQUEST:
-      return { ...state,  listing: payload };
+    case SHOW_LISTING_REQUEST:
+      payload.data.data['includedRelationships'] = payload.data.included
+      console.log('payload.data--------',payload.data)
+      return { ...state, listing: payload.data };
 
     default:
       return state;
@@ -134,7 +136,7 @@ export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, p
 
 // ================ Thunks ================ //
 
-export const showListing = (listingId, isOwn = false) =>async (dispatch, getState, sdk) => {
+export const showListing = (listingId, isOwn = false) => async (dispatch, getState, sdk) => {
   // dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
@@ -163,16 +165,16 @@ export const showListing = (listingId, isOwn = false) =>async (dispatch, getStat
     ],
   };
 
-  const show = isOwn ? sdk.ownListings.show(params) :await sdk.ownListings.show(params);
+  const show = isOwn ? sdk.ownListings.show(params, { expand: true }) : await sdk.ownListings.show(params, { expand: true });
   return dispatch({
     type: SHOW_LISTING_REQUEST,
-    payload: show.data,
+    payload: show,
   })
   //dispatch(addMarketplaceEntities(show.data));
-    // })
-    // .catch(e => {
-    //   dispatch(showListingError(storableError(e)));
-    // });
+  // })
+  // .catch(e => {
+  //   dispatch(showListingError(storableError(e)));
+  // });
 };
 
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {

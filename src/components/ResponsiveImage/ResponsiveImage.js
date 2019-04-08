@@ -64,8 +64,7 @@ const ResponsiveImage = props => {
     /* eslint-enable jsx-a11y/img-redundant-alt */
   }
 
-  const imageVariants = image.attributes.variants;
-
+  const imageVariants = image.attributes && image.attributes.variants || {};
   const srcSet = variants
     .map(variantName => {
       const variant = imageVariants[variantName];

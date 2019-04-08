@@ -109,6 +109,7 @@ const EditListingDescriptionFormComponent = props => (
         postUrl: 'no-url',
         showFiletypeIcon: true,
       };
+      let isDisabled = props.images.length === 0;
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -213,6 +214,7 @@ const EditListingDescriptionFormComponent = props => (
             inProgress={submitInProgress}
             disabled={submitDisabled}
             ready={submitReady}
+            disabled={isDisabled}
           >
             {saveActionMsg}
           </Button>
