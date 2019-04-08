@@ -61,9 +61,16 @@ export class LandingPageComponent extends Component {
   }
 
   componentDidMount() {
-    // this.props.getAllListings()
     this.props.loadData()
+    let startDate, endDate, startday,
+      sDate = new Date(), eDate = new Date(),
+      lastday = sDate.getDate() - (sDate.getDay() - 1) + 6;
+    endDate = new Date(sDate.setDate(lastday));
+    startday = eDate.getDate() - (eDate.getDay() - 1) + 5;
+    startDate = new Date(eDate.setDate(startday));
+    this.setState({ endDate, startDate })
   }
+
 
   componentWillReceiveProps(newProps) {
     this.setState({ props: newProps });
@@ -87,7 +94,6 @@ export class LandingPageComponent extends Component {
         searchParams = {}
       }
     }
-
     if (searchParams || endDate) {
       searchParams['endDate'] = Date.parse(endDate)
       searchParams['startDate'] = Date.parse(startDate)
@@ -108,9 +114,9 @@ export class LandingPageComponent extends Component {
 
     let userName = null
     userName = props && props.result && props.result.user && props.result.user.currentUser &&
-    props.result.user.currentUser.attributes &&
-    props.result.user.currentUser.attributes.profile &&
-    props.result.user.currentUser.attributes.profile.displayName
+      props.result.user.currentUser.attributes &&
+      props.result.user.currentUser.attributes.profile &&
+      props.result.user.currentUser.attributes.profile.displayName
     return (
       <Page
         className={css.root}
@@ -208,7 +214,7 @@ const mapStateToProps = (state, landingPageReducer) => {
 
 const mapDispatchToProps = dispatch => ({
   // getAllListings: () => dispatch(getAllListings()),
-  loadData:()=>dispatch(loadData())
+  loadData: () => dispatch(loadData())
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
