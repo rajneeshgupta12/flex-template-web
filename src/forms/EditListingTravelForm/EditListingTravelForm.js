@@ -68,21 +68,21 @@ const EditListingTravelFormComponent = props => (
               name={'available_transportaion'}
               options={config.custom.available_transportaion}
             />
-            {travelSubFields.subway && <div>
-              <FieldTextInput
-                type="text"
-                name="traval_subway"
-                id="traval_subway"
-                placeholder={'Subway stations nearby(optional)'}
-              />
-            </div>
-            }
             {travelSubFields.bus && <div>
               <FieldTextInput
                 type="text"
                 name="traval_bus"
                 id="traval_bus"
                 placeholder={'Bus stops nearby(optional)'}
+              />
+            </div>
+            }
+            {travelSubFields.subway && <div>
+              <FieldTextInput
+                type="text"
+                name="traval_subway"
+                id="traval_subway"
+                placeholder={'Subway stations nearby(optional)'}
               />
             </div>
             }
@@ -99,39 +99,52 @@ const EditListingTravelFormComponent = props => (
             <label>
               Facilities and Landmarks
           </label>
+          <div className={css.facilitiesLayout}>
+            <div className={css.box}>
             <span>
               Culture
-          </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_culture'}
               name={'facilities_culture'}
               options={config.custom.facilities_culture}
-            /><span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Nature
-        </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_nature'}
               name={'facilities_nature'}
               options={config.custom.facilities_nature}
-            />   <span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Convenience
-        </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_convenience'}
               name={'facilities_convenience'}
               options={config.custom.facilities_convenience}
-            /><span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Tour
-      </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_tour'}
               name={'facilities_tour'}
               options={config.custom.facilities_tour}
             />
+            </div>
+            </div>
           </div>
           <Button
             className={css.submitButton}

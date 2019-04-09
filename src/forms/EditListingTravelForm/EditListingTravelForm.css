@@ -40,3 +40,14 @@
     margin-top: 100px;
   }
 }
+
+.facilitiesLayout {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.box {
+  width: 370px;
+  margin-bottom: 20px;
+}

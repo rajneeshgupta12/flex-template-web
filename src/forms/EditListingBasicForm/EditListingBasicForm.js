@@ -101,17 +101,17 @@ class EditListingBasicFormComponent extends Component {
         { id: 1, title: 'Safari Tent', image: safariImage},
         { id: 2, title: 'Tipi', image: tipiImage},
         { id: 3, title: 'Yurt', image: yurtImage},
-        { id: 4, title: 'Igloo/Dome', image: iglooImage},
+        { id: 4, title: 'Dome', image: iglooImage},
 
-        { id: 5, title: 'RV Camper', image:rvImage},
+        { id: 5, title: 'RV', image:rvImage},
         { id: 6, title: 'Treehouse', image: treeImage},
         { id: 7, title: 'Tiny House', image: tinyImage},
         { id: 8, title: 'Cabin', image: cabinImage},
         { id: 9, title: 'Hut', image: hutImage},
 
         { id: 10, title: 'Sheperd\'s Hut', image: shepherdImage},
-        { id: 11, title: 'Glamping Pod', image: podImage},
-        { id: 12, title: 'Boat/Yacht', image: yachtImage},
+        { id: 11, title: 'Pod', image: podImage},
+        { id: 12, title: 'Boat', image: yachtImage},
       ]
     }
     console.log(props.initialValues.savedType);

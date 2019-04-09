@@ -40,3 +40,109 @@
     margin-top: 100px;
   }
 }
+
+
+.gridLayout {
+  display: grid;
+  grid-template-columns: 360px 30px 90px 30px;
+
+}
+
+.itemGuestsQ {
+  @apply --marketplaceH4FontStyles;
+  grid-row-start: 1;
+
+}
+
+.itemGuestsA {
+  grid-row-start: 2;
+  margin-bottom: 35px;
+}
+
+.itemGuestsD {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+.itemGuestsN {
+  grid-row-start: 2;
+  grid-column-start: 3;
+  text-align: center;
+}
+
+.itemGuestsI {
+  grid-row-start: 2;
+  grid-column-start: 4;
+}
+
+.itemBedQ {
+  @apply --marketplaceH4FontStyles;
+  grid-row-start: 3;
+}
+
+.itemBedroomA{
+  grid-row-start: 4;
+  margin-bottom: 20px;
+}
+
+.itemBedroomD{
+  grid-row-start: 4;
+  grid-column-start: 2;
+}
+
+.itemBedroomN{
+  grid-row-start: 4;
+  grid-column-start: 3;
+  text-align: center;
+}
+
+.itemBedroomI{
+  grid-row-start: 4;
+  grid-column-start: 4;
+}
+
+.itemBedA{
+  grid-row-start: 5;
+  margin-bottom: 35px;
+}
+
+.itemBedD {
+  grid-row-start: 5;
+  grid-column-start: 2;
+}
+
+.itemBedN {
+  grid-row-start: 5;
+  grid-column-start: 3;
+  text-align: center;
+}
+
+.itemBedI {
+  grid-row-start: 5;
+  grid-column-start: 4;
+}
+
+.itemBathroomQ{
+  @apply --marketplaceH4FontStyles;
+  grid-row-start: 6;
+}
+
+.itemBathroomA{
+  grid-row-start: 7;
+}
+
+.itemBathroomD{
+  grid-row-start: 7;
+  grid-column-start: 2;
+}
+
+.itemBathroomN{
+  grid-row-start: 7;
+  grid-column-start: 3;
+  text-align: center;
+}
+
+.itemBathroomI{
+  grid-row-start: 7;
+  grid-column-start: 4;
+}
