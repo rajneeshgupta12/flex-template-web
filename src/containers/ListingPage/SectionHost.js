@@ -17,6 +17,7 @@ const SectionHost = props => {
     sendEnquiryInProgress,
     onSubmitEnquiry,
     currentUser,
+    author,
     onManageDisableScrolling,
   } = props;
   return (
@@ -24,7 +25,7 @@ const SectionHost = props => {
       <h2 className={css.yourHostHeading}>
         <FormattedMessage id="ListingPage.yourHostHeading" />
       </h2>
-      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} />
+      <UserCard user={listing.author} author ={author}currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
         id="ListingPage.enquiry"
         contentClassName={css.enquiryModalContent}

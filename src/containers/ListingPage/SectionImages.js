@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ResponsiveImage, Modal, ImageCarousel } from '../../components';
 import ActionBarMaybe from './ActionBarMaybe';
+import _ from "lodash"
 
 import css from './ListingPage.css';
 
@@ -18,7 +19,7 @@ const SectionImages = props => {
   } = props;
   const hasImages = listing.includedRelationships && listing.includedRelationships[1].type === 'image';
   const firstImage = hasImages ? listing.includedRelationships[1] : null;
-
+  let allImages = hasImages && _.partition(listing.includedRelationships, function (relationship) { return relationship.type === 'image'; });
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel
   const actionBar = listing.id ? (
@@ -35,7 +36,6 @@ const SectionImages = props => {
       />
     </button>
   ) : null;
-
   return (
     <div className={css.sectionImages}>
       <div className={css.threeToTwoWrapper}>
@@ -64,7 +64,8 @@ const SectionImages = props => {
         onClose={onImageCarouselClose}
         onManageDisableScrolling={onManageDisableScrolling}
       >
-        <ImageCarousel images={listing.relationships.images.data} />
+        {hasImages &&
+          <ImageCarousel images={allImages && allImages[0] || []} />}
       </Modal>
     </div>
   );

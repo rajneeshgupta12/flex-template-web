@@ -56,6 +56,7 @@ export class CheckoutPageComponent extends Component {
 
     this.loadInitialData = this.loadInitialData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log('checkout pAGE  rendered')
   }
 
   componentWillMount() {

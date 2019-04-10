@@ -12,8 +12,9 @@ const getThemeButtons = (placeTheme) => {
       activePlaceThemes.push(key)
     }
   });
-  return activePlaceThemes.map(theme => {
-    return <button disabled >{theme}</button>
+  return activePlaceThemes.map((theme) => {
+    return <button id={Math.random().toString()
+    } disabled >{theme}</button>
   })
 }
 

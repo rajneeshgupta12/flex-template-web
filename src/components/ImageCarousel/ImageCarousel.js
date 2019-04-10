@@ -96,7 +96,6 @@ class ImageCarousel extends Component {
     const imageClasses = classNames(css.image, {
       [css.imageLoading]: !currentImageIsLoaded,
     });
-
     return (
 
         <div className={classes}><div className={css.imageWrapper}>

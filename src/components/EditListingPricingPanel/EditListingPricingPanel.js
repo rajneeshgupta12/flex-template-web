@@ -30,9 +30,8 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price } = currentListing.attributes;
-
-  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.displayName
+  const { price ,publicData} = currentListing.attributes;
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -44,12 +43,12 @@ const EditListingPricingPanel = props => {
         values={{ name: userName }}
       />
     );
-
+    let cancellation_or_refund= publicData.cancellation_or_refund
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price }}
+      initialValues={{ price ,cancellation_or_refund }}
       onSubmit={values => {
         const { cancellation_or_refund = '', price = '' } = values;
 

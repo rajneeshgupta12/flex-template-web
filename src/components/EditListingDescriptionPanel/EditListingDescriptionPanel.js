@@ -27,7 +27,9 @@ const EditListingDescriptionPanel = props => {
     uploadDescriptionImages,
     handlePlaceTheme,
     placeTheme,
-    images
+    images,
+    IsImageUploaded,
+    validateImageUploaded
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -42,11 +44,12 @@ const EditListingDescriptionPanel = props => {
   ) : (
       <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" values={{ name: "you" }} />
     );
-
+  let glamping_rules = publicData && publicData.glamping_rules
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
+        initialValues={{ title, description, glamping_rules }}
         className={css.form}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
@@ -54,7 +57,7 @@ const EditListingDescriptionPanel = props => {
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { place_theme:placeTheme, glamping_rules },
+            publicData: { place_theme: placeTheme, glamping_rules },
           };
           onSubmit(updateValues);
         }}
@@ -70,7 +73,9 @@ const EditListingDescriptionPanel = props => {
         placeTheme={placeTheme}
         images={images}
         onImageUpload={onImageUpload}
-      />
+        IsImageUploaded={IsImageUploaded}
+        validateImageUploaded={validateImageUploaded}
+        />
     </div>
   );
 };

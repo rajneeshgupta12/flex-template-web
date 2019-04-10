@@ -165,14 +165,19 @@ class EditListingWizard extends Component {
       travelSubFields: {
         bus: false,
         train: false,
-        subway: false
-      }, placeTheme: {
+        subway: false,
+        ride_service: false,
+        parking_available: false
+      },
+      IstravelsfieldInitialized: false,
+      placeTheme: {
         couple_friendly: false,
         family_friendly: false,
         pet_friendly: false,
         for_single_trip: false,
       },
-      descriptionImages: []
+      descriptionImages: [],
+      IsImageUploaded: false
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
@@ -182,6 +187,12 @@ class EditListingWizard extends Component {
     this.showTravelSubfield = this.showTravelSubfield.bind(this);
     this.uploadDescriptionImages = this.uploadDescriptionImages.bind(this);
     this.handlePlaceTheme = this.handlePlaceTheme.bind(this);
+    this.validateImageUploaded = this.validateImageUploaded.bind(this);
+    this.mangeIstravelsfieldInitialized = this.mangeIstravelsfieldInitialized.bind(this);
+
+  }
+  validateImageUploaded() {
+    this.setState({ IsImageUploaded: true })
   }
 
   uploadDescriptionImages(files) {
@@ -189,7 +200,7 @@ class EditListingWizard extends Component {
   }
 
   updateCapacityValues(name, type, defaultValues) {
-     let value = this.state[name]
+    let value = this.state[name]
     if (type == 'increment') {
       value += 1
     }
@@ -248,6 +259,10 @@ class EditListingWizard extends Component {
     this.setState(placeTheme)
   }
 
+  mangeIstravelsfieldInitialized() {
+    this.setState({ IstravelsfieldInitialized: true })
+  }
+
   render() {
     const {
       id,
@@ -263,7 +278,7 @@ class EditListingWizard extends Component {
       onPayoutDetailsFormChange,
       ...rest
     } = this.props;
-   const selectedTab = params.tab;
+    const selectedTab = params.tab;
     const isNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW, LISTING_PAGE_PARAM_TYPE_DRAFT].includes(
       params.type
     );
@@ -301,7 +316,7 @@ class EditListingWizard extends Component {
     const tabLink = tab => {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
-    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages, placeTheme } = this.state
+    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages, placeTheme ,IstravelsfieldInitialized} = this.state
     return (
       <div className={classes}>
         <Tabs
@@ -340,6 +355,10 @@ class EditListingWizard extends Component {
                 uploadDescriptionImages={this.uploadDescriptionImages}
                 handlePlaceTheme={this.handlePlaceTheme}
                 placeTheme={placeTheme}
+                IsImageUploaded={this.state.IsImageUploaded}
+                validateImageUploaded={this.validateImageUploaded}
+                IstravelsfieldInitialized={IstravelsfieldInitialized}
+                mangeIstravelsfieldInitialized={this.mangeIstravelsfieldInitialized}
               />
             );
           })}

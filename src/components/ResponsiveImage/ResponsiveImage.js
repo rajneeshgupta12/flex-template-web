@@ -84,7 +84,6 @@ const ResponsiveImage = props => {
     srcSet,
     ...rest,
   };
-
   // alt prop already defined above
   // eslint-disable-next-line jsx-a11y/alt-text
   return <img {...imgProps} />;

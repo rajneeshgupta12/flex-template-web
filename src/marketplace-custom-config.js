@@ -114,11 +114,11 @@ export const amenities_glamping = [
 ];
 
 export const available_transportaion = [
-  { key: 'ride_service', label: 'Ride Service' },
-  { key: 'bus', label: 'Bus' },
-  { key: 'subway', label: 'Subway' },
-  { key: 'train', label: 'Train' },
-  { key: 'parking_available', label: 'Parking available' },
+  { key: 'ride_service', label: 'Ride Service', hasInput: true, inputKeyName: "ride_service_text" },
+  { key: 'bus', label: 'Bus',  hasInput: true, inputKeyName: "bus_text" },
+  { key: 'subway', label: 'Subway' , hasInput: true, inputKeyName: "subway_text" },
+  { key: 'train', label: 'Train' ,hasInput: true, inputKeyName: "train_text" },
+  { key: 'parking_available', label: 'Parking available', hasInput: true, inputKeyName: "parking_available_text" },
 ];
 
 export const facilities_culture = [

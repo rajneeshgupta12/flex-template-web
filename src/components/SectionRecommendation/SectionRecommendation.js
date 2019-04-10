@@ -42,11 +42,13 @@ const RecItem = props => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-      </div>
-      <div className={css.textWrapper}>
+      </div>{
+        console.log(listing)
+      }
+     {listing && <div className={css.textWrapper}>
         <div className={css.typeInfo}>
           <i className={icon} /> {
-            listing.type
+           listing && listing.type
           }
         </div>
         <div className={css.titleInfo}>
@@ -57,16 +59,16 @@ const RecItem = props => {
         </div>
         <div className={css.reviewInfo}>
           <div className={css.stars}>
-            <i class="material-icons">star</i>
-            <i class="material-icons">star</i>
-            <i class="material-icons">star</i>
-            <i class="material-icons">star</i>
-            <i class="material-icons">star</i>
+            <i className="material-icons">star</i>
+            <i className="material-icons">star</i>
+            <i className="material-icons">star</i>
+            <i className="material-icons">star</i>
+            <i className="material-icons">star</i>
           </div>
           with 10 reviews
         </div>
       </div>
-    </div>
+   } </div>
   );
 }
 
@@ -120,6 +122,6 @@ export default SectionRecommendation;
       >
 
      <FormattedMessage id="SectionRecommendation.findButton" />
-    </NamedLink> 
+    </NamedLink>
 
     */

@@ -124,6 +124,7 @@ export const ManageListingCardComponent = props => {
     onToggleMenu,
     renderSizes,
     availabilityEnabled,
+    onDeleteListing,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
@@ -218,7 +219,7 @@ export const ManageListingCardComponent = props => {
               </MenuLabel>
               <MenuContent rootClassName={css.menuContent}>
                 <MenuItem key="close-listing">
-                  <InlineTextButton
+                <InlineTextButton
                     rootClassName={menuItemClasses}
                     onClick={event => {
                       event.preventDefault();
@@ -245,6 +246,19 @@ export const ManageListingCardComponent = props => {
                 { listingTitle: title }
               )}
             >
+            <InlineTextButton
+                    rootClassName={menuItemClasses}
+                    onClick={event => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      if (!actionsInProgressListingId) {
+                        onToggleMenu(null);
+                        onDeleteListing(currentListing.id);
+                      }
+                    }}
+                  >
+                    <FormattedMessage id="ManageListingCard.deleteListing" />
+                  </InlineTextButton>
               <NamedLink
                 className={css.finishListingDraftLink}
                 name="EditListingPage"

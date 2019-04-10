@@ -86,7 +86,7 @@ class DateRangeController extends Component {
     this.state = {
       startDate: props.value && props.value.startDate ? moment(props.value.startDate) : null,
       endDate: props.value && props.value.endDate ? moment(props.value.endDate) : null,
-      focusedInput: START_DATE,
+      focusedInput: false,
     };
 
     this.onDatesChange = this.onDatesChange.bind(this);
@@ -169,6 +169,7 @@ class DateRangeController extends Component {
           endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
           onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
           focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+          numberOfMonths={1}
           onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
         />
 

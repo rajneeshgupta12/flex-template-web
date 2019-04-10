@@ -21,6 +21,7 @@ import { TopbarContainer } from '../../containers';
 
 import {
   closeListing,
+  deleteListing,
   openListing,
   getOwnListingsById,
   queryOwnListings,
@@ -50,7 +51,9 @@ export class ManageListingsPageComponent extends Component {
       closingListingError,
       listings,
       onCloseListing,
+      deleteListing,
       onOpenListing,
+      onDeleteListing,
       openingListing,
       openingListingError,
       pagination,
@@ -142,6 +145,7 @@ export class ManageListingsPageComponent extends Component {
                     actionsInProgressListingId={openingListing || closingListing}
                     onToggleMenu={this.onToggleMenu}
                     onCloseListing={onCloseListing}
+                    onDeleteListing={onDeleteListing}
                     onOpenListing={onOpenListing}
                     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
                     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
@@ -228,6 +232,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onCloseListing: listingId => dispatch(closeListing(listingId)),
+  onDeleteListing: listingId => dispatch(deleteListing(listingId)),
   onOpenListing: listingId => dispatch(openListing(listingId)),
 });
 

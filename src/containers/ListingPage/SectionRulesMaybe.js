@@ -9,13 +9,13 @@ const SectionRulesMaybe = props => {
   const getCancellationPolicy = (cancellationPolicy) => {
     switch (cancellationPolicy) {
       case 'free':
-        return <p> If cancel anytime before the check in day and time, the guest will receive a full refund (minus service fee).</p>
+        return <p> <strong> Free Policy </strong> If cancel anytime before the check in day and time, the guest will receive a full refund (minus service fee).</p>
       case 'flexible':
-        return <p> If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).</p>
+        return <p> <strong> Flexible Policy </strong>  If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).</p>
       case 'moderate':
-        return <p> If cancel at least 15 days before the check in day and time, the guest will receive a full refund (minus service fee). Cancelation between 7 to 15 days before the check in day and time, the guest will receive a 50% refund (minus service fee).</p>
+        return <p>  <strong> Moderate Policy </strong> If cancel at least 15 days before the check in day and time, the guest will receive a full refund (minus service fee). Cancelation between 7 to 15 days before the check in day and time, the guest will receive a 50% refund (minus service fee).</p>
       case 'strict':
-        return <p> There will be no refund after the booking is confirmed.</p>
+        return <p> <strong> Strict Policy  </strong> There will be no refund after the booking is confirmed.</p>
       default:
         return <p></p>
     }

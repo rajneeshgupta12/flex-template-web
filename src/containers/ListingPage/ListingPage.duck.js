@@ -83,7 +83,6 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, sendEnquiryInProgress: false, sendEnquiryError: payload };
     case SHOW_LISTING_REQUEST:
       payload.data.data['includedRelationships'] = payload.data.included
-      console.log('payload.data--------',payload.data)
       return { ...state, listing: payload.data };
 
     default:
@@ -165,12 +164,14 @@ export const showListing = (listingId, isOwn = false) => async (dispatch, getSta
     ],
   };
 
-  const show = isOwn ? sdk.ownListings.show(params, { expand: true }) : await sdk.ownListings.show(params, { expand: true });
+  // const show = isOwn ? sdk.ownListings.show(params, { expand: true }) : await sdk.ownListings.show(params, { expand: true });
+
+  const show = isOwn ? await sdk.ownListings.show(params, { expand: true }) :await sdk.listings.show(params, { expand: true })
+  dispatch(addMarketplaceEntities(show));
   return dispatch({
     type: SHOW_LISTING_REQUEST,
     payload: show,
   })
-  //dispatch(addMarketplaceEntities(show.data));
   // })
   // .catch(e => {
   //   dispatch(showListingError(storableError(e)));

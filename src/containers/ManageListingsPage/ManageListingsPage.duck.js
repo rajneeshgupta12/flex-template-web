@@ -11,8 +11,11 @@ export const OPEN_LISTING_REQUEST = 'app/ManageListingsPage/OPEN_LISTING_REQUEST
 export const OPEN_LISTING_SUCCESS = 'app/ManageListingsPage/OPEN_LISTING_SUCCESS';
 export const OPEN_LISTING_ERROR = 'app/ManageListingsPage/OPEN_LISTING_ERROR';
 
+export const DELETE_LISTING_REQUEST = 'app/ManageListingsPage/DELETE_LISTING_REQUEST';
 export const CLOSE_LISTING_REQUEST = 'app/ManageListingsPage/CLOSE_LISTING_REQUEST';
 export const CLOSE_LISTING_SUCCESS = 'app/ManageListingsPage/CLOSE_LISTING_SUCCESS';
+export const DELETE_LISTING_ERROR = 'app/ManageListingsPage/DELETE_LISTING_ERROR';
+export const DELETE_LISTING_SUCCESS = 'app/ManageListingsPage/DELETE_LISTING_SUCCESS';
 export const CLOSE_LISTING_ERROR = 'app/ManageListingsPage/CLOSE_LISTING_ERROR';
 
 export const ADD_OWN_ENTITIES = 'app/ManageListingsPage/ADD_OWN_ENTITIES';
@@ -108,6 +111,18 @@ const manageListingsPageReducer = (state = initialState, action = {}) => {
         closingListing: payload.listingId,
         closingListingError: null,
       };
+
+    case DELETE_LISTING_REQUEST:
+      return {
+        ...state,
+        deletingListing: payload.listingId,
+        closingListingError: null,
+      };
+    case DELETE_LISTING_SUCCESS:
+      return {
+        ...updateListingAttributes(state, payload.data),
+        closingListing: null,
+      };
     case CLOSE_LISTING_SUCCESS:
       return {
         ...updateListingAttributes(state, payload.data),
@@ -185,11 +200,29 @@ export const closeListingRequest = listingId => ({
   payload: { listingId },
 });
 
+export const deleteListingRequest = listingId => ({
+  type: DELETE_LISTING_REQUEST,
+  payload: { listingId },
+});
 export const closeListingSuccess = response => ({
   type: CLOSE_LISTING_SUCCESS,
   payload: response.data,
 });
 
+export const deleteListingSuccess = response => (
+  {
+    type: DELETE_LISTING_SUCCESS,
+    payload: response.data,
+  }
+);
+
+export const deleteListingError = e => (
+  {
+    type: DELETE_LISTING_ERROR,
+    error: true,
+    payload: e,
+  }
+);
 export const closeListingError = e => ({
   type: CLOSE_LISTING_ERROR,
   error: true,
@@ -229,6 +262,21 @@ export const queryOwnListings = queryParams => (dispatch, getState, sdk) => {
     .catch(e => {
       dispatch(queryListingsError(storableError(e)));
       throw e;
+    });
+};
+
+export const deleteListing = (listingId) => (dispatch, getState, sdk) => {
+  dispatch(deleteListingRequest(listingId));
+
+  return sdk.ownListings
+    .discardDraft({ id: listingId }, { expand: true })
+    .then(response => {
+      response.data.data.attributes.title = "This listing was deleted"
+      dispatch(deleteListingSuccess(response));
+      return response;
+    })
+    .catch(e => {
+      dispatch(deleteListingError(storableError(e)));
     });
 };
 

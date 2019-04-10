@@ -113,7 +113,11 @@ const EditListingWizardTab = props => {
     descriptionImages,
     uploadDescriptionImages,
     handlePlaceTheme,
-    placeTheme
+    placeTheme,
+    IsImageUploaded,
+    validateImageUploaded,
+    IstravelsfieldInitialized,
+    mangeIstravelsfieldInitialized
   } = props;
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
@@ -191,6 +195,8 @@ const EditListingWizardTab = props => {
           placeTheme={placeTheme}
           onImageUpload={onImageUpload}
           images={images}
+          validateImageUploaded={validateImageUploaded}
+          IsImageUploaded={IsImageUploaded}
         />
       );
     }
@@ -348,6 +354,8 @@ const EditListingWizardTab = props => {
           currentUser={currentUser}
           showTravelSubfield={showTravelSubfield}
           travelSubFields={travelSubFields}
+          IstravelsfieldInitialized={IstravelsfieldInitialized}
+          mangeIstravelsfieldInitialized={mangeIstravelsfieldInitialized}
         />
       );
     }

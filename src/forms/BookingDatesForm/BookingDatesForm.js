@@ -10,6 +10,12 @@ import { required, bookingDatesRequired, composeValidators } from '../../util/va
 import { START_DATE, END_DATE } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
+import {
+  DayPickerRangeController,
+  isInclusivelyAfterDay,
+  DateRangePicker,
+  isInclusivelyBeforeDay,
+} from 'react-dates';
 import { Form, Button, PrimaryButton, FieldDateRangeInput, FieldTextInput } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 
@@ -34,17 +40,10 @@ export class BookingDatesFormComponent extends Component {
   // focus on that input, otherwise continue with the
   // default handleSubmit function.
   handleFormSubmit(e) {
-    console.log('requesting...')
-    // const { startDate, endDate } = e.bookingDates || {};
-    // if (!startDate) {
-    //   e.preventDefault();
-    //   this.setState({ focusedInput: START_DATE });
-    // } else if (!endDate) {
-    //   e.preventDefault();
-    //   this.setState({ focusedInput: END_DATE });
-    // } else {
-    //   this.props.onSubmit(e);
-    // }
+    if (e) {
+      const { startDate, endDate, total_glampers, totalPrice } = this.state;
+      this.props.onSubmit({ startDate, endDate, total_glampers, totalPrice });
+    }
   }
 
   render() {
@@ -166,9 +165,19 @@ export class BookingDatesFormComponent extends Component {
           return (
             <Form onSubmit={handleSubmit} className={classes}>
               {timeSlotsError}
-              <Calendar onChange={(e) => {
+              <DateRangePicker
+                startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                numberOfMonths={1}
+                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+              />
+              {/* <Calendar onChange={(e) => {
                 console.log('dtses------', e)
-              }} />
+              }} /> */}
               {/* <FieldDateRangeInput
                 className={css.bookingDates}
                 name="bookingDates"
@@ -204,18 +213,21 @@ export class BookingDatesFormComponent extends Component {
                   onChange={(e) => {
                     this.setState({
                       totalPrice:
-                        (Number(e.target.value) * (this.props.price && this.props.price.amount))
+                        (Number(e.target.value) * (this.props.price && (this.props.price.amount / 100)))
                     })
                   }}
+                ><div
+                  onChange={(e) => { this.setState({ total_glampers: e.target.value }) }}
                 >
-                  <FieldTextInput
-                    id="total_glampers"
-                    name="total_glampers"
-                    type="number"
-                    label={"Number of people"}
-                    placeholder={"2"}
-                    validate={composeValidators(required("Required"))}
-                  />
+                    <FieldTextInput
+                      id="total_glampers"
+                      name="total_glampers"
+                      type="number"
+                      label={"Number of people"}
+                      placeholder={"2"}
+                      validate={composeValidators(required("Required"))}
+                    />
+                  </div>
                 </div>
               </div>
               {totalPrice && totalPrice === NaN ? <div></div> : <div>
@@ -224,8 +236,9 @@ export class BookingDatesFormComponent extends Component {
               <div className={submitButtonClasses}>
                 <Button
                   className={css.submitButton}
-                  type="submit"
+                  type="button"
                   inProgress={submitInProgress}
+                  onClick={(e) => { this.handleFormSubmit(e) }}
                   disabled={submitDisabled}
                   ready={submitReady}
                 >

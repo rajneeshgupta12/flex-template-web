@@ -48,8 +48,8 @@ const SectionFeatures = props => {
       />
       <br />
 
-      <div class={css.row}>
-        <div class={css.column} >
+      <div className={css.row}>
+        <div className={css.column} >
           <label>Culture</label>
           <OnlyVisiblePropertyGroup
             id="Culture"
@@ -59,7 +59,7 @@ const SectionFeatures = props => {
           />
         </div>
 
-        <div class={css.column} >
+        <div className={css.column} >
           <label>Nature</label>
 
           <OnlyVisiblePropertyGroup
@@ -72,8 +72,8 @@ const SectionFeatures = props => {
       </div>
       <br />
 
-      <div class={css.row}>
-        <div class={css.column} >
+      <div className={css.row}>
+        <div className={css.column} >
           <label>Convenience</label>
 
           <OnlyVisiblePropertyGroup
@@ -84,7 +84,7 @@ const SectionFeatures = props => {
           />
         </div>
 
-        <div class={css.column} >
+        <div className={css.column} >
           <label>tour</label>
           <OnlyVisiblePropertyGroup
             id="tour"

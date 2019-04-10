@@ -33,7 +33,9 @@ const EditListingDescriptionFormComponent = props => (
         updateInProgress,
         fetchErrors,
         handlePlaceTheme,
-        placeTheme
+        placeTheme,
+        validateImageUploaded,
+        IsImageUploaded
       } = fieldRenderProps;
 
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
@@ -83,7 +85,7 @@ const EditListingDescriptionFormComponent = props => (
       const classes = classNames(css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress;
+      let submitDisabled = invalid || disabled || submitInProgress;
 
       const djsConfig = {
         previewTemplate: ReactDOMServer.renderToStaticMarkup(
@@ -99,7 +101,8 @@ const EditListingDescriptionFormComponent = props => (
       }
       const eventHandlers = {
         addedfile: (file) => {
-          props.onImageUpload({ id: Date.now(), file })
+          validateImageUploaded()
+         props.onImageUpload({ id: Date.now(), file })
         }
 
       }
@@ -109,7 +112,15 @@ const EditListingDescriptionFormComponent = props => (
         postUrl: 'no-url',
         showFiletypeIcon: true,
       };
-      let isDisabled = props.images.length === 0;
+
+      let placeThemeKeys = Object.keys(placeTheme);
+
+      let filteredplaceThemeKeys = placeThemeKeys.filter(function (key) {
+        return placeTheme[key]
+      });
+     if (filteredplaceThemeKeys.length < 1 || !IsImageUploaded) {
+        submitDisabled = true
+      }
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -206,7 +217,7 @@ const EditListingDescriptionFormComponent = props => (
 
             <span >
               Tip: Choose 5-10 best photos of your place from different angles in a good light that really show the space.
-                  </span>
+            </span>
           </div>
           <Button
             className={css.submitButton}
@@ -214,7 +225,6 @@ const EditListingDescriptionFormComponent = props => (
             inProgress={submitInProgress}
             disabled={submitDisabled}
             ready={submitReady}
-            disabled={isDisabled}
           >
             {saveActionMsg}
           </Button>

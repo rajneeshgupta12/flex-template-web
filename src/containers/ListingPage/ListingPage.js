@@ -51,7 +51,7 @@ import SectionHost from './SectionHost';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-import convertMoneyToNumber from '../../util/currency'
+import { convertMoneyToNumber } from '../../util/currency'
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
 const { UUID } = sdkTypes;
@@ -91,18 +91,23 @@ export class ListingPageComponent extends Component {
   }
 
   handleSubmit(values) {
-    const { history, getListing, params, useInitialValues } = this.props;
-    const listingId = new UUID(params.id);
-    const listing = getListing(listingId);
-
-    const { bookingDates, ...bookingData } = values;
+    let { history, getListing, params, useInitialValues,listing } = this.props;
+    listing= listing.data
+    // const listingId = new UUID(params.id);
+    // console.log('props',this.props)
+    // const listing = getListing(listingId);
+    // console.log('getListing(listingId)', getListing(listingId))
+    const { startDate, endDate, total_glampers, totalPrice } = values;
 
     const initialValues = {
       listing,
-      bookingData,
+      bookingData: {
+        total_glampers,
+        totalPrice
+      },
       bookingDates: {
-        bookingStart: bookingDates.startDate,
-        bookingEnd: bookingDates.endDate,
+        bookingStart: startDate,
+        bookingEnd: endDate,
       },
     };
 
@@ -110,16 +115,17 @@ export class ListingPageComponent extends Component {
     // Customize checkout page state with current listing and selected bookingDates
     const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
     useInitialValues(setInitialValues, initialValues);
-
-    // Redirect to CheckoutPage
-    history.push(
-      createResourceLocatorString(
-        'CheckoutPage',
-        routes,
-        { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
-        {}
-      )
-    );
+    if (listing) {
+      // Redirect to CheckoutPage
+      history.push(
+        createResourceLocatorString(
+          'CheckoutPage',
+          routes,
+          { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
+          {}
+        )
+      );
+    }
   }
 
   onContactUser() {
@@ -160,11 +166,14 @@ export class ListingPageComponent extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    // if (newProps && newProps.listing && newProps.listing.data && newProps.listing.data.attributes && newProps.listing.data.attributes.price && newProps.listing.data.attributes.price.amount) {
+    //   let price = newProps.listing.data.attributes.price.amount;
+    //   newProps.listing.data.attributes.price.amount = (price / 100);
+    // }
     this.setState({ props: newProps })
   }
 
   render() {
-
     const {
       unitType,
       isAuthenticated,
@@ -232,7 +241,6 @@ export class ListingPageComponent extends Component {
     if (shouldShowPublicListingPage) {
       return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
     }
-console.log("---2-2---",this.props)
     const {
       description = '',
       geolocation = null,
@@ -240,6 +248,9 @@ console.log("---2-2---",this.props)
       title = '',
       publicData,
     } = currentListing.attributes;
+    const {
+      author
+    } = currentListing.relationships;
     const richTitle = (
       <span>
         {richText(title, {
@@ -250,7 +261,7 @@ console.log("---2-2---",this.props)
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && price.amount }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.amount / 100) }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
     // const bookingSubTitle =
@@ -311,7 +322,7 @@ console.log("---2-2---",this.props)
       // trying to open the carousel as well.
       e.stopPropagation();
       this.setState({
-        // imageCarouselOpen: true,
+        imageCarouselOpen: true,
       });
     };
     const authorAvailable = currentListing && currentListing.author;
@@ -328,7 +339,6 @@ console.log("---2-2---",this.props)
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
     const { formattedPrice, priceTitle } = priceData(price, intl);
-
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
@@ -418,7 +428,6 @@ console.log("---2-2---",this.props)
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}
@@ -429,6 +438,7 @@ console.log("---2-2---",this.props)
                     hostLink={hostLink}
                     currentUser={currentUser}
                     showContactUser={showContactUser}
+                    author= {author}
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} publicData={publicData} />
@@ -462,10 +472,10 @@ console.log("---2-2---",this.props)
                     sendEnquiryInProgress={sendEnquiryInProgress}
                     onSubmitEnquiry={this.onSubmitEnquiry}
                     currentUser={currentUser}
+                    author= {author}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
-                {console.log('---price----',price)}
                 <BookingPanel
                   className={css.bookingPanel}
                   listing={currentListing}

@@ -28,14 +28,16 @@ const EditListingTravelFormComponent = props => (
         updateInProgress,
         fetchErrors,
         showTravelSubfield,
-        travelSubFields
+        travelSubFields,
+        IstravelsfieldInitialized,
+        mangeIstravelsfieldInitialized
       } = fieldRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
 
-        const submitDisabled =invalid|| disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
@@ -43,58 +45,34 @@ const EditListingTravelFormComponent = props => (
           <FormattedMessage id="EditListingTravelForm.updateFailed" />
         </p>
       ) : null;
-
+      props.initialValues.available_transportaion.length > 0 && props.initialValues && !IstravelsfieldInitialized && props.initialValues.available_transportaion.forEach(at => {
+        showTravelSubfield(at)
+      }, mangeIstravelsfieldInitialized())
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
           <FormattedMessage id="EditListingTravelForm.showListingFailed" />
         </p>
       ) : null;
       return (
-        <Form onChange={(e) => {
-          e.target.value === 'subway' && showTravelSubfield('subway');
-          e.target.value === 'train' && showTravelSubfield('train');
-          e.target.value === 'bus' && showTravelSubfield('bus');
-        }} className={classes} onSubmit={handleSubmit}>
+        <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
           <div>
             <label>
               Available transportaion
           </label>
-            <FieldCheckboxGroup
-
-              className={css.features}
-              id={'available_transportaion'}
-              name={'available_transportaion'}
-              options={config.custom.available_transportaion}
-            />
-            {travelSubFields.subway && <div>
-              <FieldTextInput
-                type="text"
-                name="traval_subway"
-                id="traval_subway"
-                placeholder={'Subway stations nearby(optional)'}
+            <div onClick={(e) => {
+              e.target.value && showTravelSubfield(e.target.value, false)
+            }}>
+              <FieldCheckboxGroup
+                className={css.features}
+                id={'available_transportaion'}
+                name={'available_transportaion'}
+                travelSubFields={travelSubFields}
+                options={config.custom.available_transportaion}
               />
             </div>
-            }
-            {travelSubFields.bus && <div>
-              <FieldTextInput
-                type="text"
-                name="traval_bus"
-                id="traval_bus"
-                placeholder={'Bus stops nearby(optional)'}
-              />
-            </div>
-            }
-            {travelSubFields.train && <div>
-              <FieldTextInput
-                type="text"
-                name="traval_train"
-                id="traval_train"
-                placeholder={'Train stations nearby(optional)'}
-              />
-            </div>
-            }</div>
+          </div>
           <div>
             <label>
               Facilities and Landmarks
@@ -142,7 +120,7 @@ const EditListingTravelFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
-          <div onClick={()=>props.history.goBack()}>Back: Location</div>
+          <div onClick={() => props.history.goBack()}>Back: Location</div>
         </Form>
       );
     }}
