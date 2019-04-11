@@ -75,7 +75,7 @@ export class ProfilePageComponent extends Component {
     const profileUser = ensureUser(user);
     const isCurrentUser =
       ensuredCurrentUser.id && profileUser.id && ensuredCurrentUser.id.uuid === profileUser.id.uuid;
-    const displayName = profileUser.attributes.profile.displayName;
+    const displayName = profileUser.attributes.profile.firstName;
     const bio = profileUser.attributes.profile.bio;
     const hasBio = !!bio;
     const hasListings = listings.length > 0;

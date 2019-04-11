@@ -27,7 +27,7 @@ const SectionHeading = props => {
     })
   }
   let hostId = author && author.data && author.data.id && author.data.id.uuid
-  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.displayName
+  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   let name = <Link to={`/u/${hostId}`}> {userName} </Link>
   return (
     <div className={css.sectionHeading}>

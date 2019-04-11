@@ -439,7 +439,7 @@ export class CheckoutPageComponent extends Component {
               <div className={css.author}>
                 <FormattedMessage
                   id="CheckoutPage.hostedBy"
-                  values={{ name: currentAuthor.attributes.profile.displayName }}
+                  values={{ name: currentAuthor.attributes.profile.firstName }}
                 />
               </div>
             </div>
@@ -463,7 +463,7 @@ export class CheckoutPageComponent extends Component {
                   inProgress={this.state.submitting}
                   formId="CheckoutPagePaymentForm"
                   paymentInfo={intl.formatMessage({ id: 'CheckoutPage.paymentInfo' })}
-                  authorDisplayName={currentAuthor.attributes.profile.displayName}
+                  authorDisplayName={currentAuthor.attributes.profile.firstName}
                   showInitialMessageInput={showInitialMessageInput}
                 />
               ) : null}
