@@ -40,48 +40,13 @@ export default landingPageReducer;
 
 
 export const getAllListings = () => (dispatch, getState, sdk) => {
-  let dummyData = {
 
-    "data": {
-      "id": "c6ff7190-bdf7-47a0-8a2b-e3136e74334f",
-      "type": "listing",
-      "attributes": {
-        "description": "7-speed Hybrid",
-        "deleted": false,
-        "geolocation": {
-          "lat": 40.64542,
-          "lng": -74.08508
-        },
-        "createdAt": "2018-03-23T08:40:24.443Z",
-        "state": "published",
-        "title": "Peugeot eT101",
-        "publicData": {
-          "address": {
-            "city": "New York",
-            "country": "USA",
-            "state": "NY",
-            "street": "230 Hamilton Ave"
-          },
-          "metadata": {
-            "promoted": true
-          },
-          "category": "road",
-          "gears": 22,
-          "rules": "This is a nice, bike! Please, be careful with it."
-        },
-        "price": {
-          "amount": 1590,
-          "currency": "USD"
-        }
-      }
-    }
-  }
-
-  return sdk.listings.query()
+  return sdk.listings.query({
+    ['fields.image']: ["variants.landscape-crop", "variants.landscape-crop2x"],
+    include: ["images", { expand: true }],
+    expand: true
+  }, { expand: true })
     .then(response => {
-      // Send the message to the created transaction
-      response.data.data.push(dummyData)//to insert dummy data
-      response.data.data.push(dummyData)//to insert dummy data
       return dispatch(getAllListingsSuccess(response))
     })
     .catch(e => {

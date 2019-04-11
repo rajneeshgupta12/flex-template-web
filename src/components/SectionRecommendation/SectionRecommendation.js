@@ -12,7 +12,6 @@ import css from './SectionRecommendation.css'
 
 const RecItem = props => {
   let { rootClassName, className, icon, listing } = props;
-  listing = listing.data
   const n = null;
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
@@ -42,9 +41,8 @@ const RecItem = props => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-      </div>{
-        console.log(listing)
-      }
+      </div>
+
      {listing && <div className={css.textWrapper}>
         <div className={css.typeInfo}>
           <i className={icon} /> {
@@ -55,17 +53,17 @@ const RecItem = props => {
           {listing.attributes && listing.attributes.price && listing.attributes.title}
         </div>
         <div className={css.costInfo}>
-          ${listing.attributes && listing.attributes.price && listing.attributes.price.amount}
+          ${listing.attributes && listing.attributes.price && (listing.attributes.price.amount)/100}
         </div>
         <div className={css.reviewInfo}>
           <div className={css.stars}>
-            <i className="material-icons">star</i>
-            <i className="material-icons">star</i>
-            <i className="material-icons">star</i>
-            <i className="material-icons">star</i>
-            <i className="material-icons">star</i>
+            <i className="material-icons">star_border</i>
+            <i className="material-icons">star_border</i>
+            <i className="material-icons">star_border</i>
+            <i className="material-icons">star_border</i>
+            <i className="material-icons">star_border</i>
           </div>
-          with 10 reviews
+         No reviews
         </div>
       </div>
    } </div>
@@ -80,7 +78,6 @@ const SectionRecommendation = props => {
   const classes = classNames(rootClassName || css.root, className);
   const listings = result && result.LandingPage && result.LandingPage.listings && result.LandingPage.listings.data && result.LandingPage.listings.data.data
   return (
-
     <div className={classes}>
       {listings && listings.length > 0 &&
         <div>
