@@ -23,7 +23,7 @@ const run = () => {
       process.on('exit', code => {
         console.log(`
 
-${chalk.bold.red(`You don't have required .env file!`)} 
+${chalk.bold.red(`You don't have required .env file!`)}
 
 Some environment variables are required before starting Flex template for web. You can create the .env file and configure the variables by running ${chalk.cyan.bold(
           'yarn run config'
@@ -35,7 +35,7 @@ Some environment variables are required before starting Flex template for web. Y
     }
   } else if (hasEnvFile) {
     console.log(`
-${chalk.bold.green('.env file already exists!')} 
+${chalk.bold.green('.env file already exists!')}
 Remember to restart the application after editing the environment variables! You can also edit environment variables by editing the .env file directly in your text editor.
     `);
 
@@ -106,10 +106,14 @@ const mandatoryVariables = settings => {
     settings && settings.REACT_APP_STRIPE_PUBLISHABLE_KEY !== ''
       ? { default: settings.REACT_APP_STRIPE_PUBLISHABLE_KEY }
       : {};
-  const mapBoxDefaultMaybe =
-    settings && settings.REACT_APP_MAPBOX_ACCESS_TOKEN !== ''
-      ? { default: settings.REACT_APP_MAPBOX_ACCESS_TOKEN }
-      : {};
+      // const mapBoxDefaultMaybe =
+      // settings && settings.REACT_APP_MAPBOX_ACCESS_TOKEN !== ''
+      //   ? { default: settings.REACT_APP_MAPBOX_ACCESS_TOKEN }
+      //   : {};
+      const googleMapDefaultMaybe =
+      settings && settings.REACT_APP_GOOGLE_MAP_KEY !== ''
+        ? { default: settings.REACT_APP_GOOGLE_MAP_KEY }
+        : {};
   const currencyDefault =
     settings && settings.REACT_APP_SHARETRIBE_MARKETPLACE_CURRENCY !== ''
       ? settings.REACT_APP_SHARETRIBE_MARKETPLACE_CURRENCY
@@ -149,16 +153,25 @@ If you don't set the Stripe key, payments won't work in the application.`
       },
       ...stripeDefaultMaybe,
     },
+//     {
+//       type: 'input',
+//       name: 'REACT_APP_MAPBOX_ACCESS_TOKEN',
+//       message: `What is your Mapbox access token?
+// ${chalk.dim(
+//         `Mapbox is the default map provider of the application. Sign up for Mapbox and go the to account page. Then click Create access token. For more information see the: Integrating to map providers documentation.
+// If you don't set the Mapbox key, the map components won't work in the application.`
+//       )}
+// `,
+//       ...mapBoxDefaultMaybe,
+//     },
     {
       type: 'input',
-      name: 'REACT_APP_MAPBOX_ACCESS_TOKEN',
-      message: `What is your Mapbox access token?
-${chalk.dim(
-        `Mapbox is the default map provider of the application. Sign up for Mapbox and go the to account page. Then click Create access token. For more information see the: Integrating to map providers documentation.
-If you don't set the Mapbox key, the map components won't work in the application.`
+      name: 'REACT_APP_GOOGLE_MAP_KEY',
+      message: `What is your Google map Access key?
+${chalk.dim(`Please Enter your google map access key`
       )}
 `,
-      ...mapBoxDefaultMaybe,
+      ...googleMapDefaultMaybe,
     },
     {
       type: 'input',
@@ -166,7 +179,7 @@ If you don't set the Mapbox key, the map components won't work in the applicatio
       message: `What is your marketplace currency?
 ${chalk.dim(
         'The currency used in the Marketplace must be in ISO 4217 currency code. For example USD, EUR, CAD, AUD, etc. The default value is USD.'
-      )} 
+      )}
 `,
       default: function() {
         return currencyDefault;
@@ -211,7 +224,7 @@ const advancedSettings = settings => {
     {
       type: 'input',
       name: 'REACT_APP_CANONICAL_ROOT_URL',
-      message: `What is your canonical root URL? 
+      message: `What is your canonical root URL?
 ${chalk.dim(
         'Canonical root URL of the marketplace is needed for social media sharing and SEO optimization. When developing the template application locally URL is usually http://localhost:3000'
       )}
@@ -242,7 +255,7 @@ ${chalk.dim(
       message: `Do you want to enable default search suggestions?
 ${chalk.dim(
         'This setting enables the Default Search Suggestions in location autocomplete search input. The default value for this setting is true.'
-      )}    
+      )}
 `,
       default: searchesDefault,
       when: function(answers) {
@@ -292,13 +305,13 @@ const askQuestions = settings => {
  */
 const showSuccessMessage = () => {
   console.log(`
-${chalk.green.bold('.env file saved succesfully!')} 
+${chalk.green.bold('.env file saved succesfully!')}
 
 Start the Flex template application by running ${chalk.bold.cyan('yarn run dev')}
 
 Note that the .env file is a hidden file so it might not be visible directly in directory listing. If you want to update the environment variables run ${chalk.cyan.bold(
     'yarn run config'
-  )} again or edit the .env file directly. Remember to restart the application after editing the environment variables! 
+  )} again or edit the .env file directly. Remember to restart the application after editing the environment variables!
 `);
 };
 

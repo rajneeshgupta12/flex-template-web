@@ -114,8 +114,8 @@ const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
 const facebookAppId = null;
 
 const maps = {
-  mapboxAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
-  googleMapsAPIKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  // mapboxAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
+  googleMapsAPIKey: process.env.REACT_APP_GOOGLE_MAP_KEY,
 
   // The location search input can be configured to show default
   // searches when the user focuses on the input and hasn't yet typed

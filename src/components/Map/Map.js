@@ -3,13 +3,14 @@ import { bool, number, object, string } from 'prop-types';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { StaticMap, DynamicMap, isMapsLibLoaded } from './MapboxMap';
-// import { StaticMap, DynamicMap, isMapsLibLoaded } from './GoogleMap';
+// import { StaticMap, DynamicMap, isMapsLibLoaded } from './MapboxMap';
+import { StaticMap, DynamicMap, isMapsLibLoaded } from './GoogleMap';
 
 import css from './Map.css';
 
 export class Map extends Component {
   render() {
+
     const {
       className,
       rootClassName,
@@ -34,23 +35,21 @@ export class Map extends Component {
     }
 
     const location = mapsConfig.fuzzy.enabled ? obfuscatedCenter : center;
-
     return !isMapsLibLoaded() ? (
       <div className={classes} />
     ) : useStaticMap ? (
-      <StaticMap center={location} zoom={zoom} address={address} mapsConfig={mapsConfig} />
-    ) : (
-      <DynamicMap
-        containerElement={<div className={classes} />}
-        mapElement={<div className={mapClasses} />}
-        containerClassName={classes}
-        mapClassName={mapClasses}
-        center={location}
-        zoom={zoom}
-        address={address}
-        mapsConfig={mapsConfig}
-      />
-    );
+      <StaticMap center={location} zoom={zoom} address={address} mapsConfig={mapsConfig} />) : (
+          <DynamicMap
+            containerElement={<div className={classes} />}
+            mapElement={<div className={mapClasses} />}
+            containerClassName={classes}
+            mapClassName={mapClasses}
+            center={location}
+            zoom={zoom}
+            address={address}
+            mapsConfig={mapsConfig}
+          />
+        );
   }
 }
 
