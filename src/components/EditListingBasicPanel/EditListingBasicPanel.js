@@ -72,19 +72,14 @@ const EditListingBasicPanel = props => {
       { id: 12, title: 'Boat/Yacht', image: yachtImage, selected: false },
     ];
   const place = publicData && publicData.place;
-  const initialValues = { place, property_type: propertType };
-  let property_type = []
+  const initialValues = {place: place};
+  let property_type = {};
 
-
-  const setpropertyTypes = (types) => {
-    propertType = []
-    property_type = []
-    types.forEach(type => {
-      if (type.selected)
-        property_type.push(type)
-    })
-    propertType = types
+  //Currently saves the 'selectedIndex' and the type itself into property_type
+  const setpropertyType = (typeIndex, types) => {
+    property_type = {id: typeIndex, type: types[typeIndex]}
   }
+
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -111,8 +106,7 @@ const EditListingBasicPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        updatePropertyType={(e) => { setpropertyTypes(e) }}
-        all_property_type={propertType}
+        updatePropertyType={(i, e) => { setpropertyType(i, e) }}
       />
     </div>
   );

@@ -64,7 +64,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser,author } = props;
+  const { rootClassName, className, user, currentUser, onContactUser,author,listingAuthorName } = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
@@ -118,7 +118,7 @@ const UserCard = props => {
 
   let hostId = author && author.data && author.data.id && author.data.id.uuid
   let displayHostName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
-  displayHostName = <Link to={`/u/${hostId}`} >{displayHostName}</Link>
+  displayHostName = <Link to={`/u/${hostId}`} >{listingAuthorName}</Link>
   return (
     <div className={classes}>
       <div className={css.content}>

@@ -45,7 +45,7 @@ const EditListingTravelFormComponent = props => (
           <FormattedMessage id="EditListingTravelForm.updateFailed" />
         </p>
       ) : null;
-      props.initialValues.available_transportaion.length > 0 && props.initialValues && !IstravelsfieldInitialized && props.initialValues.available_transportaion.forEach(at => {
+      props.initialValues.available_transportaion && props.initialValues.available_transportaion.length > 0 && props.initialValues && !IstravelsfieldInitialized && props.initialValues.available_transportaion.forEach(at => {
         showTravelSubfield(at)
       }, mangeIstravelsfieldInitialized())
       const errorMessageShowListing = showListingsError ? (
@@ -77,39 +77,52 @@ const EditListingTravelFormComponent = props => (
             <label>
               Facilities and Landmarks
           </label>
+          <div className={css.facilitiesLayout}>
+            <div className={css.box}>
             <span>
               Culture
-          </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_culture'}
               name={'facilities_culture'}
               options={config.custom.facilities_culture}
-            /><span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Nature
-        </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_nature'}
               name={'facilities_nature'}
               options={config.custom.facilities_nature}
-            />   <span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Convenience
-        </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_convenience'}
               name={'facilities_convenience'}
               options={config.custom.facilities_convenience}
-            /><span>
+            />
+            </div>
+            <div className={css.box}>
+            <span>
               Tour
-      </span>
+            </span>
             <FieldCheckboxGroup
               className={css.features}
               id={'facilities_tour'}
               name={'facilities_tour'}
               options={config.custom.facilities_tour}
             />
+            </div>
+            </div>
           </div>
           <Button
             className={css.submitButton}

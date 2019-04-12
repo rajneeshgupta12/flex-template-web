@@ -19,13 +19,14 @@ const SectionHost = props => {
     currentUser,
     author,
     onManageDisableScrolling,
+    listingAuthorName
   } = props;
   return (
     <div id="host" className={css.sectionHost}>
       <h2 className={css.yourHostHeading}>
         <FormattedMessage id="ListingPage.yourHostHeading" />
       </h2>
-      <UserCard user={listing.author} author ={author}currentUser={currentUser} onContactUser={onContactUser} />
+      <UserCard user={listing.author}listingAuthorName={listingAuthorName} author ={author}currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
         id="ListingPage.enquiry"
         contentClassName={css.enquiryModalContent}

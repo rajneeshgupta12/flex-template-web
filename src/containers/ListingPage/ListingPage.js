@@ -91,8 +91,8 @@ export class ListingPageComponent extends Component {
   }
 
   handleSubmit(values) {
-    let { history, getListing, params, useInitialValues,listing } = this.props;
-    listing= listing.data
+    let { history, getListing, params, useInitialValues, listing } = this.props;
+    listing = listing.data
     // const listingId = new UUID(params.id);
     // console.log('props',this.props)
     // const listing = getListing(listingId);
@@ -172,7 +172,6 @@ export class ListingPageComponent extends Component {
     // }
     this.setState({ props: newProps })
   }
-
   render() {
     const {
       unitType,
@@ -219,27 +218,27 @@ export class ListingPageComponent extends Component {
     const params = { slug: listingSlug, ...rawParams };
 
     const listingType = isDraftVariant
-      ? LISTING_PAGE_PARAM_TYPE_DRAFT
+    ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 
-    const pendingIsApproved = isPendingApprovalVariant && isApproved;
+      const pendingIsApproved = isPendingApprovalVariant && isApproved;
 
-    // If a /pending-approval URL is shared, the UI requires
-    // authentication and attempts to fetch the listing from own
-    // listings. This will fail with 403 Forbidden if the author is
+      // If a /pending-approval URL is shared, the UI requires
+      // authentication and attempts to fetch the listing from own
+      // listings. This will fail with 403 Forbidden if the author is
     // another user. We use this information to try to fetch the
     // public listing.
     const pendingOtherUsersListing =
-      (isPendingApprovalVariant || isDraftVariant) &&
+    (isPendingApprovalVariant || isDraftVariant) &&
       showListingError &&
       showListingError.status === 403;
-    const shouldShowPublicListingPage = pendingIsApproved || pendingOtherUsersListing;
+      const shouldShowPublicListingPage = pendingIsApproved || pendingOtherUsersListing;
 
-    if (shouldShowPublicListingPage) {
-      return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
+      if (shouldShowPublicListingPage) {
+        return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
     }
     const {
       description = '',
@@ -277,7 +276,6 @@ export class ListingPageComponent extends Component {
       const errorTitle = intl.formatMessage({
         id: 'ListingPage.errorLoadingListingTitle',
       });
-
       return (
         <Page title={errorTitle} scrollingDisabled={scrollingDisabled}>
           <LayoutSingleColumn className={css.pageRoot}>
@@ -328,7 +326,7 @@ export class ListingPageComponent extends Component {
     const authorAvailable = currentListing && currentListing.author;
     const userAndListingAuthorAvailable = !!(currentUser && authorAvailable);
     const isOwnListing =
-      userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
+    userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
     const showContactUser = !currentUser || (currentUser && !isOwnListing);
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
@@ -342,6 +340,7 @@ export class ListingPageComponent extends Component {
     const handleBookingSubmit = values => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
+        console.log('')
         window.scrollTo(0, 0);
       } else {
         this.handleSubmit(values);
@@ -390,7 +389,12 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
         </span>
       ) : null;
-
+    let listingAuthor = {}
+    listing && listing.included.forEach(item => {
+      if (item.type == 'user')
+        listingAuthor = item
+    });
+   let listingAuthorName=  listingAuthor.attributes && listingAuthor.attributes.profile && listingAuthor.attributes.profile.displayName
     return (
       <Page
         title={schemaTitle}
@@ -438,7 +442,8 @@ export class ListingPageComponent extends Component {
                     hostLink={hostLink}
                     currentUser={currentUser}
                     showContactUser={showContactUser}
-                    author= {author}
+                    author={author}
+                    listingAuthor={listingAuthorName}
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} publicData={publicData} />
@@ -472,7 +477,8 @@ export class ListingPageComponent extends Component {
                     sendEnquiryInProgress={sendEnquiryInProgress}
                     onSubmitEnquiry={this.onSubmitEnquiry}
                     currentUser={currentUser}
-                    author= {author}
+                    author={author}
+                    listingAuthorName={listingAuthorName}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>

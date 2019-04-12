@@ -158,32 +158,31 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required("You need to add a rules."))}
           />
           <div>
-            <label>Choose the theme of your place</label>
-            <div onClick={(e) => {
+            <label >Choose the theme of your place</label>
+            <div className={css.buttonLayout} onClick={(e) => {
               handlePlaceTheme(e.target.value)
             }}>
-              <div>
+              
                 <Button
+                  className={css.themeButton}
                   name="place_theme"
                   type="button"
                   value='couple_friendly'
                 >
                   {'couple friendly'}
                 </Button>
-                <br />
-              </div>
-              <div>
+                
                 <Button
+                className={css.themeButton}
                   name="place_theme"
                   type="button"
                   value='family_friendly'
                 >
                   {'family-friendly'}
                 </Button>
-                <br />
-              </div>
-              <div>
+                
                 <Button
+                className={css.themeButton}
                   name="place_theme"
                   type="button"
                   value='pet_friendly'
@@ -191,19 +190,24 @@ const EditListingDescriptionFormComponent = props => (
                   {'pet-friendly'}
                 </Button>
 
-                <br />
-              </div>
-              <div>
                 <Button
+                className={css.themeButton}
+                  name="place_theme"
+                  type="button"
+                  value='event/party_friendly'
+                >
+                  {'event/party-friendly'}
+                </Button>
+
+                <Button
+                className={css.themeButton}
                   name="place_theme"
                   type="button"
                   value='for_single_trip'
                 >
                   {'for single trip'}
                 </Button>
-              </div>
-              <div>
-              </div>
+             
             </div>
             <label>
               Photos

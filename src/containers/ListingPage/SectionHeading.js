@@ -15,20 +15,18 @@ const SectionHeading = props => {
     onContactUser,
     publicData,
     currentUser,
+    listingAuthor,
     author
   } = props;
 
-  const getPropertyTypes = (propertyTypes) => {
-    return propertyTypes.map((propertyType) => {
-      return <div id={Math.random().toString()}>
-        <img src={propertyType.image} height="42" width="42" />
-        {propertyType.title}
-      </div>
-    })
+  const getPropertyTypes = (propertyType) => {
+    return <div id={Math.random().toString()}>
+      <img src={propertyType.type.image} height="42" width="42" />
+      {propertyType.type.title}
+    </div>
   }
   let hostId = author && author.data && author.data.id && author.data.id.uuid
-  let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
-  let name = <Link to={`/u/${hostId}`}> {userName} </Link>
+  let name = <Link to={`/u/${hostId}`}> {listingAuthor} </Link>
   return (
     <div className={css.sectionHeading}>
       <div className={css.desktopPriceContainer}>

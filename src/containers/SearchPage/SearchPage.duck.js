@@ -160,7 +160,7 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     ...datesMaybe,
     per_page: perPage,
   };
-
+console.log("thisis running with",params)
   return sdk.listings
     .query(params)
     .then(response => {

@@ -52,16 +52,16 @@ export class SearchPageComponent extends Component {
   }
 
   filters() {
-    const { categories, amenities, priceFilterConfig, dateRangeFilterConfig } = this.props;
+    const { categories, place, priceFilterConfig, dateRangeFilterConfig } = this.props;
 
     return {
       categoryFilter: {
         paramName: 'pub_category',
         options: categories,
       },
-      amenitiesFilter: {
-        paramName: 'pub_amenities',
-        options: amenities,
+      placeFilter: {
+        paramName: 'pub_place',
+        options: place,
       },
       priceFilter: {
         paramName: 'price',
@@ -212,7 +212,7 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
               categoryFilter: filters.categoryFilter,
-              amenitiesFilter: filters.amenitiesFilter,
+              placeFilter: filters.placeFilter,
               priceFilter: filters.priceFilter,
               dateRangeFilter: filters.dateRangeFilter,
             }}

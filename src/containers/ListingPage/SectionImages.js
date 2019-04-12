@@ -17,12 +17,18 @@ const SectionImages = props => {
     onImageCarouselClose,
     onManageDisableScrolling,
   } = props;
-  const hasImages = listing.includedRelationships && listing.includedRelationships[1].type === 'image';
-  const firstImage = hasImages ? listing.includedRelationships[1] : null;
-  let allImages = hasImages && _.partition(listing.includedRelationships, function (relationship) { return relationship.type === 'image'; });
+  let listingAuthor = listing && listing.includedRelationships.map(item => {
+    if (item.type == 'image')
+      return item
+  });
+  const hasImages = listingAuthor.length > 0
+  let allImages = hasImages && _.partition(listing.includedRelationships, function (relationship) {
+    return relationship.type === 'image';
+  });
+  const firstImage = allImages[0][0] || null;
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel
-  const actionBar = listing.id ? (
+ const actionBar = listing.id ? (
     <div onClick={e => e.stopPropagation()}>
       <ActionBarMaybe isOwnListing={isOwnListing} listing={listing} editParams={editParams} />
     </div>

@@ -182,7 +182,7 @@ class SearchFiltersMobileComponent extends Component {
       onManageDisableScrolling,
       selectedFiltersCount,
       categoryFilter,
-      amenitiesFilter,
+      placeFilter,
       priceFilter,
       dateRangeFilter,
       intl,
@@ -225,17 +225,17 @@ class SearchFiltersMobileComponent extends Component {
 
     const amenitiesLabel = intl.formatMessage({ id: 'SearchFiltersMobile.amenitiesLabel' });
 
-    const initialAmenities = this.initialValues(amenitiesFilter.paramName);
+    const initialAmenities = this.initialValues(placeFilter.paramName);
 
-    const amenitiesFilterElement = amenitiesFilter ? (
+    const placeFilterElement = placeFilter ? (
       <SelectMultipleFilter
-        id="SearchFiltersMobile.amenitiesFilter"
+        id="SearchFiltersMobile.placeFilter"
         name="amenities"
-        urlParam={amenitiesFilter.paramName}
+        urlParam={placeFilter.paramName}
         label={amenitiesLabel}
         onSubmit={this.handleSelectMultiple}
         liveEdit
-        options={amenitiesFilter.options}
+        options={placeFilter.options}
         initialValues={initialAmenities}
       />
     ) : null;
@@ -300,7 +300,7 @@ class SearchFiltersMobileComponent extends Component {
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
               {categoryFilterElement}
-              {amenitiesFilterElement}
+              {placeFilterElement}
               {priceFilterElement}
               {dateRangeFilterElement}
             </div>
@@ -325,7 +325,7 @@ SearchFiltersMobileComponent.defaultProps = {
   selectedFiltersCount: 0,
   filterParamNames: [],
   categoryFilter: null,
-  amenitiesFilter: null,
+  placeFilter: null,
   priceFilter: null,
   dateRangeFilter: null,
 };
@@ -345,7 +345,7 @@ SearchFiltersMobileComponent.propTypes = {
   selectedFiltersCount: number,
   filterParamNames: array,
   categoriesFilter: propTypes.filterConfig,
-  amenitiesFilter: propTypes.filterConfig,
+  placeFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
   dateRangeFilter: propTypes.filterConfig,
 
