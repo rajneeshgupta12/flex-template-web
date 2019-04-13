@@ -72,7 +72,7 @@ const EditListingBasicPanel = props => {
       { id: 12, title: 'Boat/Yacht', image: yachtImage, selected: false },
     ];
   const place = publicData && publicData.place;
-  const initialValues = {place: place};
+  const initialValues = {place: place, index: (publicData && publicData.property_type && publicData.property_type.id)};
   let property_type = {};
 
   //Currently saves the 'selectedIndex' and the type itself into property_type

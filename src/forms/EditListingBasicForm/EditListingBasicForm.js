@@ -114,7 +114,7 @@ class EditListingBasicFormComponent extends Component {
     super(props);
     this.state = {
 
-      selectedIndex: (props.initialValues.savedType >= 0 ? props.initialValues.savedType : -1),
+      selectedIndex: (props.initialValues.index >= 0 ? props.initialValues.index : -1),
 
       glampTypes: [{
         id: 0, title: 'Bell Tent', image: tentImage

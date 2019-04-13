@@ -42,7 +42,8 @@
 }
 
 .dropWrapper {
-
+  position: relative;
+  margin-top: 5px;
 }
 
 .dropHeader {
@@ -83,12 +84,16 @@
 
 .listWrapper{
   width: 670px;
+  position: absolute;
+  z-index: 10;
+
 }
 .list{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   flex-basis: auto 0 0 ;
+    background-color: white;
 
   height: 430px;
   width: 670px;
@@ -131,7 +136,16 @@
   color: transparent;
   font-weight: bold;
   bottom: 5px;
+
   left: 3px;
+
+   -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
 }
 .listItemText {
   position: absolute;
