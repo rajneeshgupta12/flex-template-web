@@ -60,6 +60,7 @@
 
 .dropIcon {
   position: relative;
+  float: right;
   top: 5px;
 }
 
@@ -80,6 +81,9 @@
   position: relative;
 }
 
+.listWrapper{
+  width: 670px;
+}
 .list{
   display: flex;
   flex-direction: column;
@@ -101,11 +105,16 @@
 
 }
 
+.listItem:hover .listItemImage{
+    -webkit-filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+  filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+
+}
+
 .listItemImage{
   width: 46px;
   height: 46px;
 }
-
 
 .listItemSelectedImage {
   composes: listItemImage;
@@ -113,8 +122,20 @@
   filter: brightness(3.5) hue-rotate(205deg) saturate(10);
 }
 
-.listItemText {
+.itemText{
   position: relative;
+}
+
+.itemGhostText {
+  position: relative;
+  color: transparent;
+  font-weight: bold;
+  bottom: 5px;
+  left: 3px;
+}
+.listItemText {
+  position: absolute;
+  text-align: center;
   bottom: 5px;
   left: 3px;
 }

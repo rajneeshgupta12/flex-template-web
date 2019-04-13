@@ -25,6 +25,10 @@ const StyledButton = withStyles({
     color: '#ffaa00',
     border: ['solid 1px #ffaa00'],
   },
+  label: {
+    height: '4px',
+    width: '4px'
+  }
 })(IconButton);
 
 const EditListingCapacityFormComponent = props => (
