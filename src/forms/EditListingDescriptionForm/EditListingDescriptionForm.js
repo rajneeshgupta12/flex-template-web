@@ -162,7 +162,7 @@ const EditListingDescriptionFormComponent = props => (
             <div className={css.buttonLayout} onClick={(e) => {
               handlePlaceTheme(e.target.value)
             }}>
-              
+
                 <Button
                   className={css.themeButton}
                   name="place_theme"
@@ -171,7 +171,7 @@ const EditListingDescriptionFormComponent = props => (
                 >
                   {'couple friendly'}
                 </Button>
-                
+
                 <Button
                 className={css.themeButton}
                   name="place_theme"
@@ -180,7 +180,7 @@ const EditListingDescriptionFormComponent = props => (
                 >
                   {'family-friendly'}
                 </Button>
-                
+
                 <Button
                 className={css.themeButton}
                   name="place_theme"
@@ -189,16 +189,6 @@ const EditListingDescriptionFormComponent = props => (
                 >
                   {'pet-friendly'}
                 </Button>
-
-                <Button
-                className={css.themeButton}
-                  name="place_theme"
-                  type="button"
-                  value='event/party_friendly'
-                >
-                  {'event/party-friendly'}
-                </Button>
-
                 <Button
                 className={css.themeButton}
                   name="place_theme"
@@ -207,7 +197,7 @@ const EditListingDescriptionFormComponent = props => (
                 >
                   {'for single trip'}
                 </Button>
-             
+
             </div>
             <label>
               Photos

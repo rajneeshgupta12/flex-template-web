@@ -165,6 +165,7 @@ export { default as SectionDiscover } from './SectionDiscover/SectionDiscover';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';
 export { default as SectionLocations } from './SectionLocations/SectionLocations';
+export { default as SectionHistory } from './SectionHistory/SectionHistory';
 export { default as SectionRecommendation } from './SectionRecommendation/SectionRecommendation';
 export { default as SectionThumbnailLinks } from './SectionThumbnailLinks/SectionThumbnailLinks';
 export { default as SectionType } from './SectionType/SectionType';

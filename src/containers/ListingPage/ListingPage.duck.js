@@ -135,7 +135,17 @@ export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, p
 
 // ================ Thunks ================ //
 
-export const showListing = (listingId, isOwn = false) => async (dispatch, getState, sdk) => {
+export const showListing = (listingUrl, listingId, isOwn = false) => async (dispatch, getState, sdk) => {
+  sdk.currentUser.show()
+    .then(async user => {
+      let userHistory = user.data.data.attributes.profile.publicData.visitedOasisHistory || []
+      userHistory.length > 3 && userHistory.shift();
+      const isalreadyExist = userHistory.map((x) => { return x.id; }).indexOf(listingUrl.id);
+      isalreadyExist === -1 && userHistory.push(listingUrl);
+      let publicData = { visitedOasisHistory: userHistory }
+      sdk.currentUser.updateProfile({ publicData: publicData })
+    })
+
   // dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
@@ -166,7 +176,7 @@ export const showListing = (listingId, isOwn = false) => async (dispatch, getSta
 
   // const show = isOwn ? sdk.ownListings.show(params, { expand: true }) : await sdk.ownListings.show(params, { expand: true });
 
-  const show = isOwn ? await sdk.ownListings.show(params, { expand: true }) :await sdk.listings.show(params, { expand: true })
+  const show = isOwn ? await sdk.ownListings.show(params, { expand: true }) : await sdk.listings.show(params, { expand: true })
   dispatch(addMarketplaceEntities(show));
   return dispatch({
     type: SHOW_LISTING_REQUEST,
@@ -281,16 +291,17 @@ export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
-    return dispatch(showListing(listingId, true));
+    return dispatch(showListing(params, listingId, true));
   }
 
   if (config.enableAvailability) {
+
     return Promise.all([
-      dispatch(showListing(listingId)),
+      dispatch(showListing(params, listingId)),
       dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
     ]);
   } else {
-    return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]);
+    return Promise.all([dispatch(showListing(params, listingId)), dispatch(fetchReviews(listingId))]);
   }
 };

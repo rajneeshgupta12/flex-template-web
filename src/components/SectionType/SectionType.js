@@ -48,12 +48,12 @@ const locationLink = (name, image, searchQuery, title, topMargin, grey) => {
     <NamedLink name="SearchPage" to={{ search: searchQuery }} className={css.location}>
       <div className={css.circleImage}>
         <div className={css.imageContainer} style={imageStyle}>
-     
+
         <div className={css.imageWrapper}>
           <div className={css.aspectWrapper}>
             <LazyImage src={image} alt={name} className={css.locationImage} />
-          </div>          
-        </div> 
+          </div>
+        </div>
         </div>
       </div>
       <div className={css.linkText}>
@@ -75,7 +75,7 @@ class SectionType extends React.Component {
       left: 0
     };
   }
-  
+
   click(direction) {
     console.log(this.state.currentStartIndex);
     if (direction === "right" && this.state.left >= -390) {
@@ -84,15 +84,15 @@ class SectionType extends React.Component {
 
     } else if (direction === "right" && this.state.left <-390) {
       this.setState({left: 0});
-      
 
-      
+
+
     } else if (direction === "left" && this.state.left < 0){
       this.setState({left: this.state.left + 390});
       this.state.currentStartIndex--;
     }
   }
-  
+
   render() {
     var moveStyle = {
       left: this.state.left
@@ -107,54 +107,54 @@ class SectionType extends React.Component {
         <button onClick={() => this.click("left")} className={css.leftArrow}>&lt;-</button>
           <button onClick={() => this.click("right")} className={css.rightArrow}>-&gt;</button>
         <div className={css.rowWrapper}>
-        
-          
+
+
 
         <div style={moveStyle} className={css.images}>
-        
-              {locationLink('Bell Tent', tentImage, '?address=romantic', 'Romantic', 3, false)
+
+              {locationLink('Bell Tent', tentImage, '?pub_property_type=id_0', 'Romantic', 3, false)
             }
-            
-              {locationLink('Safari Tent', safariImage, '?address=romantic', 'Calm', 3, false)
-              }
-            
-              {locationLink('Tipi', tipiImage, '?address=romantic', 'Convienent', 2, false)
-              }
-            
-              {locationLink('Yurt', yurtImage, '?address=romantic', 'Great View', 3, false)
-              }
-            
-              {locationLink('Igloo/Dome', iglooImage, '?address=romantic', 'Isolated', 3, false)
+
+              {locationLink('Safari Tent', safariImage, '?pub_property_type=id_1', 'Calm', 3, false)
               }
 
-              {locationLink('RV/Camper', rvImage, '?address=romantic', 'Isolated', 7, false)
+              {locationLink('Tipi', tipiImage, '?pub_property_type=id_2', 'Convienent', 2, false)
               }
 
-              {locationLink('Treehouse', treeImage, '?address=romantic', 'Isolated', 10, true)
+              {locationLink('Yurt', yurtImage, '?pub_property_type=id_3', 'Great View', 3, false)
               }
 
-              {locationLink('Tiny house', tinyImage, '?address=romantic', 'Isolated', 0, true)
-              } 
-
-              {locationLink('Cabin', cabinImage, '?address=romantic', 'Isolated', 5, true)
-              } 
-
-              {locationLink('Hut', hutImage, '?address=romantic', 'Isolated', 7, true)
+              {locationLink('Igloo/Dome', iglooImage, '?pub_property_type=id_4', 'Isolated', 3, false)
               }
 
-              {locationLink('Shepherd', shepherdImage, '?address=romantic', 'Isolated', 7, true)
-              }  
+              {locationLink('RV/Camper', rvImage, '?pub_property_type=id_5', 'Isolated', 7, false)
+              }
 
-              {locationLink('Pod', podImage, '?address=romantic', 'Isolated', 7, true)
-              } 
+              {locationLink('Treehouse', treeImage, '?pub_property_type=id_6', 'Isolated', 10, true)
+              }
 
-              {locationLink('Yacht', yachtImage, '?address=romantic', 'Isolated', 7, true)
-              } 
-            
-            
+              {locationLink('Tiny house', tinyImage, '?pub_property_type=id_7', 'Isolated', 0, true)
+              }
+
+              {locationLink('Cabin', cabinImage, '?pub_property_type=id_8', 'Isolated', 5, true)
+              }
+
+              {locationLink('Hut', hutImage, '?pub_property_type=id_9', 'Isolated', 7, true)
+              }
+
+              {locationLink('Shepherd', shepherdImage, '?pub_property_type=id_10', 'Isolated', 7, true)
+              }
+
+              {locationLink('Pod', podImage, '?pub_property_type=id_11', 'Isolated', 7, true)
+              }
+
+              {locationLink('Yacht', yachtImage, '?pub_property_type=id_12', 'Isolated', 7, true)
+              }
+
+
         </div>
 
-        
+
 
         </div>
       </div>

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { loadData, getAllListings } from './LandingPage.duck';
+import { loadData, getAllListings,getQueryListing } from './LandingPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -16,6 +16,7 @@ import {
   SectionLocations,
   SectionHost,
   SectionDiscover,
+  SectionHistory,
   SectionRecommendation,
   SectionInterview,
   SectionType,
@@ -113,6 +114,7 @@ export class LandingPageComponent extends Component {
     // const listing = props.showListing('5c63bee0-e3d8-4d64-ac7a-3914ea0c914c')
 
     let userName = null
+    let isloggedin = props && props.result && props.result.user && props.result.user.currentUser
     userName = props && props.result && props.result.user && props.result.user.currentUser &&
       props.result.user.currentUser.attributes &&
       props.result.user.currentUser.attributes.profile &&
@@ -157,7 +159,19 @@ export class LandingPageComponent extends Component {
                 <div className={css.sectionContentFirstChild}>
                   <SectionDiscover />
                 </div>
-              </li>
+              </li>{
+                isloggedin &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionHistory user={isloggedin} {...props}
+                    getQueryListingCalled={()=>{
+                      {this.setState({isGetQueryListingCalled:true})}
+                    }}
+                    isGetQueryListingCalled={this.state.isGetQueryListingCalled}
+                    />
+
+                  </div>
+                </li>}
               <li className={css.section}>
                 <div className={css.sectionContent}>
                   <SectionRecommendation {...props} />
@@ -214,7 +228,8 @@ const mapStateToProps = (state, landingPageReducer) => {
 
 const mapDispatchToProps = dispatch => ({
   // getAllListings: () => dispatch(getAllListings()),
-  loadData: () => dispatch(loadData())
+  loadData: () => dispatch(loadData()),
+  getQueryListing: ( values) => dispatch(getQueryListing(values))
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
