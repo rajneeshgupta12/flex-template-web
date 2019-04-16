@@ -183,8 +183,21 @@ export class LandingPageComponent extends Component {
                 </div>
               </li>
               <li className={css.section}>
+              <div className={css.sectionText}>
+                <hr className={css.dash} />
+                We are preparing for 
+                a variety of interesting listings!
+                <hr className={css.dash} />
+              </div>
+            </li>
+              <li className={css.section}>
                 <div className={css.sectionContent}>
                   <SectionInterview />
+                </div>
+              </li>
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionHost />
                 </div>
               </li>
 

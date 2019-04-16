@@ -48,6 +48,20 @@ class Dropdown extends Component {
     }))
   }
 
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+   componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleClick = (e) => {
+    if (this.node1.contains(e.target) || (!this.node2 || this.node2.contains(e.target))) {
+      return;
+    }
+    this.handleClickOutside();
+  }
 
 
   render() {
@@ -66,23 +80,29 @@ class Dropdown extends Component {
 
 
     return (
-      <div className={css.dropWrapper}>
-        <div className={css.dropHeader} onClick={() => this.toggleList()}>
+      <div className={css.dropWrapper} >
+        <div className={css.dropHeader} ref={node => this.node1 = node} onClick={() => this.toggleList()}>
           <div className={css.dropHeaderTitle}>
             {selectedIndex == -1 || listOpen ? headerTitle :
               <div className={css.dropHeaderItem}>
                 <img src={selectedItem.image} className={css.headerItemImage} />
-                <span className={css.headerItemTitle}> {selectedItem.title}</span></div>}</div>
-          {listOpen ? <Icon className={css.dropIcon} >expand_less</Icon> : <Icon className={css.dropIcon} style={{ left: (selectedIndex == -1) ? 0 : 32 }}>expand_more</Icon>}
+                <span className={css.headerItemTitle}> {selectedItem.title}</span>
+              </div>}
+          </div>
+          {listOpen ? <Icon className={css.dropIcon} >expand_less</Icon> : <Icon className={css.dropIcon} >expand_more</Icon>}
         </div>
 
-        {listOpen && <ul className={css.list}>
+        {listOpen && <div className={css.listWrapper} ref={node => this.node2 = node}><ul className={css.list} >
           {list.map((item) => (
             <li className={css.listItem} key={item.id} onClick={() => toggleItem(item.id)} >
               <img src={item.image} className={item.id == selectedIndex ? css.listItemSelectedImage : css.listItemImage} />
-              <span className={item.id == selectedIndex ? css.listItemTextSelected : css.listItemText}> {item.title}</span></li>))
+              <div className={css.itemText}>
+                <span className={css.itemGhostText}> {item.title}k</span>
+                <span className={item.id == selectedIndex ? css.listItemTextSelected : css.listItemText}> {item.title}</span>
+              </div>
+              </li>))
           }
-        </ul>}
+        </ul></div>}
       </div>
     )
   }
@@ -94,7 +114,7 @@ class EditListingBasicFormComponent extends Component {
     super(props);
     this.state = {
 
-      selectedIndex: (props.initialValues.savedType >= 0 ? props.initialValues.savedType : -1),
+      selectedIndex: (props.initialValues.index >= 0 ? props.initialValues.index : -1),
 
       glampTypes: [{
         id: 0, title: 'Bell Tent', image: tentImage
@@ -168,19 +188,19 @@ class EditListingBasicFormComponent extends Component {
               {errorMessage}
               {errorMessageShowListing}
               <div>
-                <label>Type of the property</label>
+                <p>Type of the property</p>
                 <Dropdown title="Choose the type" list={this.state.glampTypes}
                   selectedIndex={this.state.selectedIndex} toggleItem={this.toggleSelected} />
               </div>
               <div>
-                <p>The guests can use the place</p>
+                <p style={{marginBottom: '0px', marginTop: '30px'}}>The guests can use:</p>
                 <div>
                   <label>
                     <FieldRadioButton
                       name="place"
                       value="entire_place"
                       id="entire_place"
-                      label={"Entire place:"}
+                      label={"Entire place"}
                       validate={composeValidators(required('required'))}
                     />
                     <span className="small">  The guests can use the whole place: Bedrooms, kitchens and toilets are available for guests only.</span>
