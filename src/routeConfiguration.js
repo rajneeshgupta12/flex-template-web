@@ -250,7 +250,7 @@ const routeConfiguration = () => {
       loadData: PayoutPreferencesPage.loadData,
     },
     {
-      path: '/terms-of-service',
+      path: '/terms-of-use',
       name: 'TermsOfServicePage',
       component: props => <TermsOfServicePage {...props} />,
     },

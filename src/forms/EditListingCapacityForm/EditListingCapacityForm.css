@@ -29,6 +29,11 @@
   color: var(--failColor);
 }
 
+.incrementButton {
+
+}
+
+
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;

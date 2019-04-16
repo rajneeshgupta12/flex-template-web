@@ -5,111 +5,95 @@
 
 export const amenities_hospitality = [
   {
-    key: 'beddings',
-    label: 'Beddings',
+    key: 'blanket_pillow',
+    label: 'Extra Blankets / Pillows',
   },
   {
     key: 'towel',
-    label: 'Towel',
+    label: 'Towels',
   },
   {
-    key: 'body_cleaneser_shampoo',
-    label: 'Shampoo &amp; body cleanser',
+    key: 'shampoo_conditioner',
+    label: 'Shampoo / Conditioner',
+  },
+  {
+    key: 'body_wash',
+    label: 'Body Wash',
   },
   {
     key: 'hair_dryer',
     label: 'Hair dryer',
   },
   {
-    key: 'bathtub',
-    label: 'Bathtub',
-  },
-  {
-    key: 'refrigerator',
-    label: 'Refrigerator',
-  },
-  {
-    key: 'kitchenware',
-    label: 'Kitchenware',
-  },
-  {
-    key: 'heat',
-    label: 'Heat',
+    key: 'heating',
+    label: 'Heating',
   },
   {
     key: 'air_conditioning',
-    label: 'Air conditioning',
+    label: 'Air Conditioning',
   },
   {
     key: 'tv',
     label: 'TV / Projector',
   },
   {
-    key: 'wifi',
-    label: 'Wifi',
+    key: 'wifi_internet',
+    label: 'Wifi / Internet',
   },
 ];
 
 export const amenities_glamping = [
   {
     key: 'firepit',
-    label: 'firepit',
-  },
-  {
-    key: 'stove',
-    label: 'stove',
-  },
-  {
-    key: 'kichenette',
-    label: 'kichenette',
-  },
-  {
-    key: 'pot_pen',
-    label: 'pot/pen',
-  },
-  {
-    key: 'utensils',
-    label: 'utensils',
-  },
-  {
-    key: 'silverware',
-    label: 'silverware',
-  },
-  {
-    key: 'picnic_table_bench',
-    label: 'picnic table with bench',
-  },
-  {
-    key: 'picnic_blanket',
-    label: 'picnic blanket',
+    label: 'Firepit',
   },
   {
     key: 'camping_chair',
-    label: 'camping chair',
+    label: 'Camping Chairs',
   },
   {
-    key: 'shower',
-    label: 'shower',
+    key: 'camping_table',
+    label: 'Camping Table',
+  },
+  {
+    key: 'hammock',
+    label: 'Hammock',
+  },
+  {
+    key: 'stove',
+    label: 'Stove',
+  },
+  {
+    key: 'refrigerator',
+    label: 'Refigerator',
+  },
+  {
+    key: 'kitchenware',
+    label: 'Kitchenware',
+  },
+  {
+    key: 'silverware',
+    label: 'Silverware',
   },
   {
     key: 'toilet',
-    label: 'toilet',
+    label: 'Toilet',
   },
   {
-    key: 'electrical_outlet',
-    label: 'electrical outlet',
+    key: 'shower',
+    label: 'Shower',
+  },
+  {
+    key: 'bathtub',
+    label: 'Bathtub',
   },
   {
     key: 'hot_tub',
-    label: 'hot tub',
+    label: 'Hot Tub',
   },
   {
-    key: 'BBQ_grill',
-    label: 'BBQ grill',
-  },
-  {
-    key: 'campfire',
-    label: 'Campfire',
+    key: 'power_outlet',
+    label: 'Power Outlet',
   },
 ];
 

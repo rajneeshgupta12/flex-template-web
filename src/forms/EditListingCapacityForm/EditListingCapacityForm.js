@@ -29,7 +29,8 @@ const StyledButton = withStyles({
     height: '4px',
     width: '4px'
   }
-})(IconButton);
+})(IconButton)
+;
 
 const EditListingCapacityFormComponent = props => (
   <FinalForm
@@ -89,10 +90,17 @@ const EditListingCapacityFormComponent = props => (
           'maxVal': 99
         }
       }
+      
       const incrementButton = (name) => {
+        const disable = ((name === "guestNumber" && guestNumber === initialData.guestNumber.maxVal)
+          || (name === "bedroomsNumber" && bedroomsNumber === initialData.bedroomsNumber.maxVal)
+          || (name === "bedsNumber" && bedsNumber === initialData.bedsNumber.maxVal)
+          || (name === "bathroomsNumber" && bathroomsNumber === initialData.bathroomsNumber.maxVal));
         return <StyledButton
           type="button"
           name={name}
+          disabled={disable}
+          style={ disable ? {borderColor: '#b2b2b2'} : {}}
           className={css.incrementButton}
           onClick={(e) => {
             props.updateCapacityValues(name, 'increment', initialData)
@@ -102,9 +110,15 @@ const EditListingCapacityFormComponent = props => (
       }
 
       const derementButton = (name) => {
+        const disable = ((name === "guestNumber" && guestNumber === initialData.guestNumber.minVal)
+          || (name === "bedroomsNumber" && bedroomsNumber === initialData.bedroomsNumber.minVal)
+          || (name === "bedsNumber" && bedsNumber === initialData.bedsNumber.minVal)
+          || (name === "bathroomsNumber" && bathroomsNumber === initialData.bathroomsNumber.minVal));
         return <StyledButton
           type="button"
           name={name}
+          disabled={disable}
+          style={disable ? {borderColor: '#b2b2b2'} : {}}
           className={css.decrementButton}
           onClick={(e) => {
             props.updateCapacityValues(name, 'derement', initialData)
@@ -118,36 +132,36 @@ const EditListingCapacityFormComponent = props => (
           {errorMessage}
           {errorMessageShowListing}
           <div className={css.gridLayout}>
-              <span className={css.itemGuestsQ}>How many gusets can stay comfortably?</span>
+              <span className={css.itemGuestsQ}>How many glampers can stay comfortably?</span>
               <div className={css.itemGuestsA}>
-                <strong>Number of guests</strong>
+                <strong>Number of glampers</strong>
               </div>
               
                 <span className={css.itemGuestsD}>{derementButton("guestNumber")}</span>
                 <span className={css.itemGuestsN}>{guestNumber || '    '}</span>
                 <span className={css.itemGuestsI}>{incrementButton("guestNumber")}</span>      
                   
-              <span className={css.itemBedQ}>How many bedroom & bed can your guest use?</span>
+              <span className={css.itemBedQ}>How many bedrooms & beds can your glampers use?</span>
               <div className={css.itemBedroomA}>
-                <strong>Bedroom</strong>
+                <strong>Bedroom(s)</strong>
               </div>
                 <span className={css.itemBedroomD}>{derementButton('bedroomsNumber')}</span>
-                <span className={css.itemBedroomN}>{bedroomsNumber || '    '}</span>
+                <span className={css.itemBedroomN}>{bedroomsNumber}</span>
                 <span className={css.itemBedroomI}>{incrementButton('bedroomsNumber')}</span>
             
               <div className={css.itemBedA}>
-                <strong>Bed</strong>
+                <strong>Bed(s)</strong>
               </div>
                 <span className={css.itemBedD}>{derementButton('bedsNumber')}</span>
-                <span className={css.itemBedN}>{bedsNumber || '    '}</span>
+                <span className={css.itemBedN}>{bedsNumber}</span>
                 <span className={css.itemBedI}>{incrementButton('bedsNumber')}</span>            
             
-              <span className={css.itemBathroomQ}>How many bathroom can your guest use?</span>
+              <span className={css.itemBathroomQ}>How many bathrooms can your guest use?</span>
               <div className={css.itemBathroomA}>
-                <strong>Bathroom</strong>
+                <strong>Bathroom(s)</strong>
               </div>
                 <span className={css.itemBathroomD}>{derementButton('bathroomsNumber')}</span>
-                <span className={css.itemBathroomN}>{bathroomsNumber || '    '}</span>
+                <span className={css.itemBathroomN}>{bathroomsNumber}</span>
                 <span className={css.itemBathroomI}>{incrementButton('bathroomsNumber')}</span>
             
             

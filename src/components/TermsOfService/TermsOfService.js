@@ -55,12 +55,12 @@ const TermsOfService = props => {
 
       <h2>TERMS APPLICABLE TO GUESTS</h2>
       <p>
-        <bold>Booking.</bold>
+        <b>Booking.</b>
         These Terms and Conditions shall govern any Booking, in addition to any terms and conditions
         applicable to Hosts and Property.
       </p>
       <p>
-        <bold>Bookings.</bold>
+        <b>Bookings.</b>
         Glamp Oasis acts solely as an online service that facilitates communication between Guests and Hosts
         and shall not be construed as a party to any transaction.
       </p>
@@ -76,7 +76,7 @@ const TermsOfService = props => {
         for the damage, as described below.
       </p>
       <p>
-        <bold>Property.</bold>
+        <b>Property.</b>
         You acknowledge and agree that you will comply with all applicable policies that are created by
         the Host (“Glamping Rules”), federal or state laws, rules, regulations, and local ordinances. Use of any
         Property will be subject to: (i) availability of the Property as provided by the Host; (ii) payment of all
@@ -88,7 +88,7 @@ const TermsOfService = props => {
         for such Booking(s), rescission of access to any Property, and/or termination of your Account.
       </p>
       <p>
-        <bold>Damage to Property.</bold>
+        <b>Damage to Property.</b>
         As a Guest, you are responsible for leaving the Property in the initial condition
         it was provided to you. You acknowledge and agree that you are responsible for any damages arising from
         your Booking for the length of your occupancy at the applicable Property. You agree that Glamp Oasis is
@@ -102,7 +102,7 @@ const TermsOfService = props => {
         your Account. If a response is received, Glamp Oasis will investigate the claim and response.
       </p>
       <p>
-        <bold>Promotions.</bold>
+        <b>Promotions.</b>
         Glamp Oasis, at its sole discretion, may provide promotional offers, deals and/or codes in
         connection with Booking(s). We reserve the right to modify the terms of such offers, suspend such
         offers with or without notice, and reject or refuse to honor any promotions with or without cause.
@@ -110,7 +110,7 @@ const TermsOfService = props => {
 
       <h2>TERMS APPLICABLE TO HOSTS</h2>
       <p>
-        <bold>Listings.</bold>
+        <b>Listings.</b>
         By making your Property available to Guests for Booking and occupancy, you may create a
         listing of your Property on our Website (“Listing”). Before any Listing is made available to Guests,
         you are required to verify your identity, provide information about your Property, describe Glamping Rules,
@@ -124,14 +124,14 @@ const TermsOfService = props => {
         said policies do not conflict or violate any terms of this Agreement and any federal, state, or local laws.
       </p>
       <p>
-        <bold>Compliance with Laws.</bold>
+        <b>Compliance with Laws.</b>
         IT IS YOUR RESPONSIBILITY AS A HOST TO UNDERSTAND AND COMPLY WITH ALL FEDERAL
         OR STATE LAWS, RULES, REGULATIONS, AND LOCAL ORDINANCES IN THE JURISDICTION OF YOUR PROPERTY, AS WELL
         AS ANY THIRD-PARTY AGREEMENTS YOU MAY HAVE WITH RESPECT TO YOUR PROPERTY (E.G. LEASE OR RENTAL AGREEMENTS),
         TAX REQUIREMENTS, ZONING REQUIREMENTS, PERMITS, LICENSES, AND REGISTRATIONS.
       </p>
       <p>
-        <bold>Availability.</bold>
+        <b>Availability.</b>
         The availability and pricing of your Property is in your discretion. You have the right
         to accept or reject Booking requests. You are not allowed to retroactively request a higher price or
         charge additional or supplemental fees for any Booking after you have accepted a Booking request or
@@ -143,7 +143,7 @@ const TermsOfService = props => {
         described in your Listing.
       </p>
       <p>
-        <bold>Relationship with Glamp Oasis.</bold>
+        <b>Relationship with Glamp Oasis.</b>
         Hosts are not employees or agents of Glamp Oasis in any way. Nothing in this Agreement is intended
         or should be construed to create a partnership, joint venture, or employer-employee relationship
         between Glamp Oasis and you. You are not entitled to or eligible for any benefits that Glamp Oasis may
@@ -151,7 +151,7 @@ const TermsOfService = props => {
         401(k) benefits, bonus, or profit-sharing benefits.
       </p>
       <p>
-        <bold>Tax.</bold> You are solely responsible for filing all tax returns and submitting all payments as required
+        <b>Tax.</b> You are solely responsible for filing all tax returns and submitting all payments as required
         by any federal, state, local, or foreign tax laws for any income you may accrue from your Listing(s).
       </p>
 

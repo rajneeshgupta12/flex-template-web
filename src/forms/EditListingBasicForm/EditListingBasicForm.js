@@ -188,19 +188,19 @@ class EditListingBasicFormComponent extends Component {
               {errorMessage}
               {errorMessageShowListing}
               <div>
-                <label>Type of the property</label>
+                <p>Type of the property</p>
                 <Dropdown title="Choose the type" list={this.state.glampTypes}
                   selectedIndex={this.state.selectedIndex} toggleItem={this.toggleSelected} />
               </div>
               <div>
-                <p>The guests can use the place</p>
+                <p style={{marginBottom: '0px', marginTop: '30px'}}>The guests can use:</p>
                 <div>
                   <label>
                     <FieldRadioButton
                       name="place"
                       value="entire_place"
                       id="entire_place"
-                      label={"Entire place:"}
+                      label={"Entire place"}
                       validate={composeValidators(required('required'))}
                     />
                     <span className="small">  The guests can use the whole place: Bedrooms, kitchens and toilets are available for guests only.</span>
