@@ -223,7 +223,7 @@ export class EditListingPricingFormComponent extends Component {
               />
               <label>
                 If cancel at least 7 days before the check in day and time, the guest will receive a full refund (minus service fee).
-            </label>
+             </label>
               <FieldRadioButton
                 validate={validators.composeValidators(validators.requiredRadioBox('required'))}
                 name="cancellation_or_refund"
