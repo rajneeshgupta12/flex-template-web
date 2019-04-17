@@ -56,12 +56,12 @@ const TermsOfService = props => {
       <h2>TERMS APPLICABLE TO GUESTS</h2>
       <p>
         <b>Booking.</b>
-        These Terms and Conditions shall govern any Booking, in addition to any terms and conditions
+         These Terms and Conditions shall govern any Booking, in addition to any terms and conditions
         applicable to Hosts and Property.
       </p>
       <p>
         <b>Bookings.</b>
-        Glamp Oasis acts solely as an online service that facilitates communication between Guests and Hosts
+         Glamp Oasis acts solely as an online service that facilitates communication between Guests and Hosts
         and shall not be construed as a party to any transaction.
       </p>
       <p>
@@ -77,7 +77,7 @@ const TermsOfService = props => {
       </p>
       <p>
         <b>Property.</b>
-        You acknowledge and agree that you will comply with all applicable policies that are created by
+         You acknowledge and agree that you will comply with all applicable policies that are created by
         the Host (“Glamping Rules”), federal or state laws, rules, regulations, and local ordinances. Use of any
         Property will be subject to: (i) availability of the Property as provided by the Host; (ii) payment of all
         fees and charges associated with Booking prior to the first day of the reservation; and (iii) compliance
@@ -89,7 +89,7 @@ const TermsOfService = props => {
       </p>
       <p>
         <b>Damage to Property.</b>
-        As a Guest, you are responsible for leaving the Property in the initial condition
+         As a Guest, you are responsible for leaving the Property in the initial condition
         it was provided to you. You acknowledge and agree that you are responsible for any damages arising from
         your Booking for the length of your occupancy at the applicable Property. You agree that Glamp Oasis is
         authorized to charge your Account for all fees and charges due and payable to Glamp Oasis for the
@@ -103,7 +103,7 @@ const TermsOfService = props => {
       </p>
       <p>
         <b>Promotions.</b>
-        Glamp Oasis, at its sole discretion, may provide promotional offers, deals and/or codes in
+         Glamp Oasis, at its sole discretion, may provide promotional offers, deals and/or codes in
         connection with Booking(s). We reserve the right to modify the terms of such offers, suspend such
         offers with or without notice, and reject or refuse to honor any promotions with or without cause.
       </p>
@@ -111,7 +111,7 @@ const TermsOfService = props => {
       <h2>TERMS APPLICABLE TO HOSTS</h2>
       <p>
         <b>Listings.</b>
-        By making your Property available to Guests for Booking and occupancy, you may create a
+         By making your Property available to Guests for Booking and occupancy, you may create a
         listing of your Property on our Website (“Listing”). Before any Listing is made available to Guests,
         you are required to verify your identity, provide information about your Property, describe Glamping Rules,
         and set fees associated with Booking. By making any Listing you acknowledge and agree that: (1) your
@@ -125,14 +125,14 @@ const TermsOfService = props => {
       </p>
       <p>
         <b>Compliance with Laws.</b>
-        IT IS YOUR RESPONSIBILITY AS A HOST TO UNDERSTAND AND COMPLY WITH ALL FEDERAL
+         IT IS YOUR RESPONSIBILITY AS A HOST TO UNDERSTAND AND COMPLY WITH ALL FEDERAL
         OR STATE LAWS, RULES, REGULATIONS, AND LOCAL ORDINANCES IN THE JURISDICTION OF YOUR PROPERTY, AS WELL
         AS ANY THIRD-PARTY AGREEMENTS YOU MAY HAVE WITH RESPECT TO YOUR PROPERTY (E.G. LEASE OR RENTAL AGREEMENTS),
         TAX REQUIREMENTS, ZONING REQUIREMENTS, PERMITS, LICENSES, AND REGISTRATIONS.
       </p>
       <p>
         <b>Availability.</b>
-        The availability and pricing of your Property is in your discretion. You have the right
+         The availability and pricing of your Property is in your discretion. You have the right
         to accept or reject Booking requests. You are not allowed to retroactively request a higher price or
         charge additional or supplemental fees for any Booking after you have accepted a Booking request or
         after a Booking is confirmed through Instant Book.
@@ -144,7 +144,7 @@ const TermsOfService = props => {
       </p>
       <p>
         <b>Relationship with Glamp Oasis.</b>
-        Hosts are not employees or agents of Glamp Oasis in any way. Nothing in this Agreement is intended
+         Hosts are not employees or agents of Glamp Oasis in any way. Nothing in this Agreement is intended
         or should be construed to create a partnership, joint venture, or employer-employee relationship
         between Glamp Oasis and you. You are not entitled to or eligible for any benefits that Glamp Oasis may
         provide to its employees, such as health insurance, life insurance, disability benefits, pension or
