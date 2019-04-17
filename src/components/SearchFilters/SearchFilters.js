@@ -45,6 +45,7 @@ const initialPriceRangeValue = (queryParams, paramName) => {
 };
 
 const initialDateRangeValue = (queryParams, paramName) => {
+  if(queryParams.endDate && queryParams.startDate){
   const startDate = queryParams['startDate'];
   const endDate = queryParams['endDate'];
   const rawValuesFromParams = [startDate, endDate];
@@ -55,7 +56,7 @@ const initialDateRangeValue = (queryParams, paramName) => {
         dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
       }
       : { dates: null };
-  return initialValues;
+  return initialValues;}
 };
 
 const SearchFiltersComponent = props => {

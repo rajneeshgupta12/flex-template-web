@@ -199,7 +199,8 @@ export class BookingDatesFormComponent extends Component {
                       name="total_glampers"
                       type="number"
                       min={0}
-                      max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.guestNumber}
+                      max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
+                      }
                       label={"Number of people"}
                       placeholder={"2"}
                       validate={composeValidators(required("Required"))}

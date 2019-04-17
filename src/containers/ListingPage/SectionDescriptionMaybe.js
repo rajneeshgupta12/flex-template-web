@@ -20,8 +20,8 @@ const getThemeButtons = (placeTheme) => {
 
 const SectionDescriptionMaybe = props => {
   const { description, publicData } = props;
-  const { capacity, place_theme } = publicData
-  getThemeButtons(place_theme)
+  const { capacity, place_themes } = publicData
+  getThemeButtons(place_themes)
   return description ? (
     <div className={css.sectionDescription}>
       <h2 className={css.descriptionTitle}>
@@ -32,6 +32,7 @@ const SectionDescriptionMaybe = props => {
       </label>
       <div>
         <span>{capacity && capacity.guestNumber} glampers</span>
+        <span>{capacity && capacity.maxGuestNumber} Max glampers</span>
         <span>{capacity && capacity.bedroomsNumber} bedroom</span>
         <span>{capacity && capacity.bedsNumber} beds</span>
         <span>{capacity && capacity.bathroomsNumber} bathroom</span>
@@ -45,10 +46,10 @@ const SectionDescriptionMaybe = props => {
           longWordClass: css.longWord,
         })}
       </p>
-      {place_theme &&
+      {place_themes &&
         <div>
           <label>Theme</label>
-          {getThemeButtons(place_theme)}
+          {getThemeButtons(place_themes)}
         </div>
       }
     </div>

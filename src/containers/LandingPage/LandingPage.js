@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { loadData, getAllListings,getQueryListing } from './LandingPage.duck';
+import { loadData, getAllListings, getQueryListing } from './LandingPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -154,24 +154,24 @@ export class LandingPageComponent extends Component {
               />
             </div>
             <ul className={css.sections}>
-
-              <li className={css.sectionOverflow}>
-                <div className={css.sectionContentFirstChild}>
-                  <SectionDiscover />
-                </div>
-              </li>{
+              {
                 isloggedin &&
                 <li className={css.section}>
                   <div className={css.sectionContent}>
                     <SectionHistory user={isloggedin} {...props}
-                    getQueryListingCalled={()=>{
-                      {this.setState({isGetQueryListingCalled:true})}
-                    }}
-                    isGetQueryListingCalled={this.state.isGetQueryListingCalled}
+                      getQueryListingCalled={() => {
+                        { this.setState({ isGetQueryListingCalled: true }) }
+                      }}
+                      isGetQueryListingCalled={this.state.isGetQueryListingCalled}
                     />
 
                   </div>
                 </li>}
+              <li className={css.sectionOverflow}>
+                <div className={css.sectionContentFirstChild}>
+                  <SectionDiscover />
+                </div>
+              </li>
               <li className={css.section}>
                 <div className={css.sectionContent}>
                   <SectionRecommendation {...props} />
@@ -179,17 +179,17 @@ export class LandingPageComponent extends Component {
               </li>
               <li className={css.sectionOverflow}>
                 <div className={css.sectionContent}>
-                  <SectionType />
+                  <SectionType   {...props} />
                 </div>
               </li>
               <li className={css.section}>
-              <div className={css.sectionText}>
+                <div className={css.sectionText}>
+                  <hr className={css.dash} />
+                  We are preparing for
+                  a variety of interesting listings!
                 <hr className={css.dash} />
-                We are preparing for 
-                a variety of interesting listings!
-                <hr className={css.dash} />
-              </div>
-            </li>
+                </div>
+              </li>
               <li className={css.section}>
                 <div className={css.sectionContent}>
                   <SectionInterview />
@@ -242,7 +242,7 @@ const mapStateToProps = (state, landingPageReducer) => {
 const mapDispatchToProps = dispatch => ({
   // getAllListings: () => dispatch(getAllListings()),
   loadData: () => dispatch(loadData()),
-  getQueryListing: ( values) => dispatch(getQueryListing(values))
+  getQueryListing: (values) => dispatch(getQueryListing(values))
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

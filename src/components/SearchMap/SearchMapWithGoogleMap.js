@@ -330,7 +330,7 @@ const MapWithGoogleMap = withGoogleMap(props => {
   return (
     <GoogleMap
       defaultZoom={zoom}
-      defaultCenter={center}
+      defaultCenter={{ lat: -34.397, lng: 150.644 }}
       options={{
         // Disable all controls except zoom
         mapTypeControl: false,

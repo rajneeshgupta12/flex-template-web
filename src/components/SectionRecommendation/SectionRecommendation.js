@@ -124,7 +124,7 @@ const RecItem = props => {
   let { rootClassName, className, icon, listing } = props;
   const n = null;
   let imeges = []
-  listing.included&&listing.included.forEach(item => {
+  listing.included && listing.included.forEach(item => {
     if (item.type == 'image')
       imeges.push(item)
   })
@@ -159,7 +159,7 @@ const RecItem = props => {
               listing.attributes.publicData.property_type.type.image}
               height="25" width="25"
             />
-            }&nbsp;&nbsp;&nbsp;{listing.attributes.publicData.property_type.type &&
+          }&nbsp;&nbsp;&nbsp;{listing.attributes.publicData.property_type.type &&
             listing.attributes.publicData.property_type.type.title}
         </div>
         <div className={css.titleInfo}>
@@ -167,14 +167,10 @@ const RecItem = props => {
             {listing.attributes && listing.attributes.title}
           </strong>
         </div>
-        <br />
-        <p>
-          {listing.attributes && listing.attributes.description}
-        </p>
         <div className={css.costInfo}>
           ${listing.attributes && listing.attributes.price && (listing.attributes.price.amount) / 100}/night
         </div>
-        <div className={css.reviewInfo}>
+        {/* <div className={css.reviewInfo}>
           <div className={css.stars}>
             <i className="material-icons">star_border</i>
             <i className="material-icons">star_border</i>
@@ -183,7 +179,7 @@ const RecItem = props => {
             <i className="material-icons">star_border</i>
           </div>
           No reviews
-        </div>
+        </div> */}
       </div>
       } </div>
   );
@@ -191,11 +187,11 @@ const RecItem = props => {
 
 const SectionRecommendation = props => {
   const { rootClassName, className, result, user } = props;
-
+console.log('-------',result)
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   // let listings = result && result.LandingPage && result.LandingPage.visitedOasises
-  const listings = result && result.LandingPage && result.LandingPage.listings && result.LandingPage.listings.data &&  result.LandingPage.listings.data.data
+  const listings = result && result.LandingPage && result.LandingPage.listings && result.LandingPage.listings.data && result.LandingPage.listings.data.data
   return (
     <div className={classes}>
       {listings && listings.length > 0 &&
@@ -205,13 +201,17 @@ const SectionRecommendation = props => {
           </div>
           <div className={css.allContainer}>
             <div className={css.rowContainer}>
-              {listings.map(listing => {
-                 return <Link to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
-                  <RecItem listing={listing} icon={css.tentIcon} />
-                </Link>
+              {listings.map((listing, idx) => {
+                if (idx < 3)
+                  return <Link to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
+                    <RecItem listing={listing} icon={css.tentIcon} />
+                  </Link>
               })}
             </div>
           </div>
+          <button>
+            <Link to={'/s'}>Find More</Link>
+          </button>
         </div>
       }
     </div>

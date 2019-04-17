@@ -161,7 +161,7 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
-      guestNumber: 2, bedsNumber: 1, bedroomsNumber: 1, bathroomsNumber: 1,
+      guestNumber: 2,maxGuestNumber:2, bedsNumber: 1, bedroomsNumber: 1, bathroomsNumber: 1,
       travelSubFields: {
         bus: false,
         train: false,
@@ -316,7 +316,7 @@ class EditListingWizard extends Component {
     const tabLink = tab => {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
-    const { guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages, placeTheme ,IstravelsfieldInitialized} = this.state
+    const { guestNumber,maxGuestNumber, bedsNumber, bedroomsNumber, bathroomsNumber, travelSubFields, descriptionImages, placeTheme ,IstravelsfieldInitialized} = this.state
     return (
       <div className={classes}>
         <Tabs
@@ -345,6 +345,7 @@ class EditListingWizard extends Component {
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
                 guestNumber={guestNumber}
+                maxGuestNumber={maxGuestNumber}
                 bedsNumber={bedsNumber}
                 bedroomsNumber={bedroomsNumber}
                 bathroomsNumber={bathroomsNumber}

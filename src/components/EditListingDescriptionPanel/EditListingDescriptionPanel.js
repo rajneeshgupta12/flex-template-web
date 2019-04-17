@@ -45,6 +45,15 @@ const EditListingDescriptionPanel = props => {
       <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" values={{ name: "you" }} />
     );
   let glamping_rules = publicData && publicData.glamping_rules
+  let selectedThemes = [];
+
+  for (let key in placeTheme) {
+    if (placeTheme.hasOwnProperty(key)) {
+      if (placeTheme[key])
+        selectedThemes.push(key)
+    }
+  }
+
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
@@ -54,10 +63,11 @@ const EditListingDescriptionPanel = props => {
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, description, glamping_rules } = values;
+
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { place_theme: placeTheme, glamping_rules },
+            publicData: { place_themes: placeTheme, place_theme: selectedThemes, glamping_rules },
           };
           onSubmit(updateValues);
         }}
@@ -75,7 +85,7 @@ const EditListingDescriptionPanel = props => {
         onImageUpload={onImageUpload}
         IsImageUploaded={IsImageUploaded}
         validateImageUploaded={validateImageUploaded}
-        />
+      />
     </div>
   );
 };

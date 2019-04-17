@@ -14,6 +14,7 @@ import { getQueryListing } from '../../containers/LandingPage/LandingPage.duck';
 
 const RecItem = props => {
   let { rootClassName, className, icon, listing } = props;
+  console.log("at history-----", listing)
   const n = null;
   let imeges = []
   listing.included.forEach(item => {
@@ -51,7 +52,7 @@ const RecItem = props => {
               listing.data.attributes.publicData.property_type.type.image}
               height="25" width="25"
             />
-            }&nbsp;&nbsp;&nbsp;{listing.data.attributes.publicData.property_type.type &&
+          }&nbsp;&nbsp;&nbsp;{listing.data.attributes.publicData.property_type.type &&
             listing.data.attributes.publicData.property_type.type.title}
         </div>
         <div className={css.titleInfo}>
@@ -59,14 +60,10 @@ const RecItem = props => {
             {listing.data.attributes && listing.data.attributes.title}
           </strong>
         </div>
-        <br />
-        <p>
-          {listing.data.attributes && listing.data.attributes.description}
-        </p>
         <div className={css.costInfo}>
           ${listing.data.attributes && listing.data.attributes.price && (listing.data.attributes.price.amount) / 100}/night
         </div>
-        <div className={css.reviewInfo}>
+        {/* <div className={css.reviewInfo}>
           <div className={css.stars}>
             <i className="material-icons">star_border</i>
             <i className="material-icons">star_border</i>
@@ -75,7 +72,7 @@ const RecItem = props => {
             <i className="material-icons">star_border</i>
           </div>
           No reviews
-        </div>
+        </div> */}
       </div>
       } </div>
   );
@@ -102,7 +99,7 @@ const SectionHistory = props => {
           <div className={css.allContainer}>
             <div className={css.rowContainer}>
               {listings.map(listing => {
-                 return <Link to={`/l/${listing.data.data.attributes.title}/${listing.data.data.id.uuid.toString()}`}>
+                return <Link to={`/l/${listing.data.data.attributes.title}/${listing.data.data.id.uuid.toString()}`}>
                   <RecItem listing={listing.data} icon={css.tentIcon} />
                 </Link>
               })}

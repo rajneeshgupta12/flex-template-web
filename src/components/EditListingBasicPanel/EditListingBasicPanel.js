@@ -72,12 +72,12 @@ const EditListingBasicPanel = props => {
       { id: 12, title: 'Boat/Yacht', image: yachtImage, selected: false },
     ];
   const place = publicData && publicData.place;
-  const initialValues = {place: place, index: (publicData && publicData.property_type && publicData.property_type.id)};
+  const initialValues = { place: place, index: (publicData && publicData.property_type && publicData.property_type.id) };
   let property_type = {};
 
   //Currently saves the 'selectedIndex' and the type itself into property_type
   const setpropertyType = (typeIndex, types) => {
-    property_type = {id: typeIndex, type: types[typeIndex]}
+    property_type = { id: typeIndex, type: types[typeIndex] }
   }
 
   return (
@@ -91,13 +91,14 @@ const EditListingBasicPanel = props => {
           const { place = '' } = values;
           const updatedValues = {
             publicData: {
-              place,
+              place: [place],
               property_type,
+              property_type_id: property_type.id.toString(),
               metaData: {
                 all_property_type: propertType
               }
             },
-            title: title|| Date.now().toString()
+            title: title || Date.now().toString()
           };
           onSubmit(updatedValues);
         }}

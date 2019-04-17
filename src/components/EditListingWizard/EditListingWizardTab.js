@@ -107,6 +107,7 @@ const EditListingWizardTab = props => {
     intl,
     currentUser,
     guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber,
+    maxGuestNumber,
     updateCapacityValues,
     showTravelSubfield,
     travelSubFields,
@@ -332,6 +333,7 @@ const EditListingWizardTab = props => {
           }}
           updateCapacityValues={updateCapacityValues}
           guestNumber={guestNumber}
+          maxGuestNumber={maxGuestNumber}
           bedsNumber={bedsNumber}
           bedroomsNumber={bedroomsNumber}
           bathroomsNumber={bathroomsNumber}

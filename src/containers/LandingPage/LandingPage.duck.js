@@ -24,24 +24,17 @@ const landingPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case GET_ALL_LISTINGS_SUCCESS: {
-      if (payload.data.data.length) {
-        return { ...state, listings: payload };
-        // return { ...state };
+      console.log('-----payload--------',payload,);
+      if(payload.data.include){}
+       return { ...state, listings: payload };
       }
-      else {
-        let oasises = state.visitedOasises || []
-        oasises = oasises.length > 2 ? [] : oasises
-        oasises.push(payload)
-        return { ...state, visitedOasises: oasises };
-      }
-    }
 
     case GET_ALL_LISTINGS_ERROR:
       return { ...state, fetchTimeSlotsError: payload };
 
     case GET_QUERY_LISTINGS_SUCCESS: {
       if (payload.data.data.length) {
-        return { ...state };
+        return { ...state, listings: payload };
       }
       else {
         let oasises = state.visitedOasises || []
@@ -67,7 +60,7 @@ export default landingPageReducer;
 
 export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
   return sdk.listings.query({
-    authorId: listingId,
+    authorId: undefined,
     include: ["images"],
     'fields.image': [
       // Listing page
@@ -91,6 +84,7 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
       'variants.square-small2x',
       "url"
     ],
+    expand:true
 
   })
     .then(response => {
@@ -141,7 +135,7 @@ export const getQueryListingError = error => ({
 });
 
 export const getQueryListingSuccess = listings => ({
-  type: GET_ALL_LISTINGS_SUCCESS,
+  type: GET_QUERY_LISTINGS_SUCCESS,
   payload: listings,
 });
 

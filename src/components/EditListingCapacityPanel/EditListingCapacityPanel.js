@@ -24,6 +24,7 @@ const EditListingCapacityPanel = props => {
     updateInProgress,
     errors,
     guestNumber,
+    maxGuestNumber,
     bedsNumber,
     bedroomsNumber,
     bathroomsNumber,
@@ -53,7 +54,7 @@ const EditListingCapacityPanel = props => {
         initialValues={initialValues}
         onSubmit={() => {
           const updatedValues = {
-            publicData: { capacity: { bedsNumber, guestNumber, bathroomsNumber, bedroomsNumber } },
+            publicData: { capacity: { bedsNumber, guestNumber, maxGuestNumber,bathroomsNumber, bedroomsNumber } },
           };
           onSubmit(updatedValues);
         }}
@@ -63,6 +64,7 @@ const EditListingCapacityPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         guestNumber={(guestNumber) || 1}
+        maxGuestNumber={(maxGuestNumber) || 1}
         bedsNumber={(bedsNumber) || 0}
         bedroomsNumber={(bedroomsNumber ) || 0}
         bathroomsNumber={(bathroomsNumber) || 0}
