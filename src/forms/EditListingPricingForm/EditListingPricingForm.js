@@ -6,7 +6,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput, FieldRadioButton } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldRadioButton, FieldTextInput } from '../../components';
 import css from './EditListingPricingForm.css';
 import React, { Component } from 'react';
 import { compose } from 'redux';
@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import {
   DateRangePicker,
 } from 'react-dates';
+import { updateLocale } from 'moment';
 
 const { Money } = sdkTypes;
 
@@ -136,8 +137,8 @@ export class EditListingPricingFormComponent extends Component {
               label={"Cleaning fee"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
-              validate={priceValidators}
             /><label> $ per night</label>
+
             <FieldCurrencyInput
               id="weekend_price"
               name="weekend_price"
@@ -146,8 +147,21 @@ export class EditListingPricingFormComponent extends Component {
               label={"Weekend price"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
-              validate={priceValidators}
             /><label> $ per night</label>
+            <span>This is for Friday and Saturday</span>
+
+            <FieldTextInput
+              id="tax"
+              name="tax"
+              className={css.tax}
+              type="number"
+              label={"Tax"}
+              placeholder={"Enter Tax %"}
+
+            />
+            <label> %</label>
+            <span>This is percentage of total price, except for Glam Oasis's service fee</span>
+
             <FieldCurrencyInput
               id="extra_guest_fee"
               name="extra_guest_fee"
@@ -155,7 +169,6 @@ export class EditListingPricingFormComponent extends Component {
               label={"Extra guest fee"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
-              validate={priceValidators}
             /><label> $ per night</label>
             <FieldCurrencyInput
               id="seasonal_price"
@@ -165,7 +178,6 @@ export class EditListingPricingFormComponent extends Component {
               label={"Seasonal price"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
-              validate={priceValidators}
             /><label> $ per night</label>
             <DateRangePicker
               startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
@@ -185,7 +197,6 @@ export class EditListingPricingFormComponent extends Component {
               label={"Special price"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
-              validate={priceValidators}
             /><label> $ per night</label>
             <DateRangePicker
               startDate={this.state.startDateSpecial} // momentPropTypes.momentObj or null,
@@ -249,15 +260,19 @@ export class EditListingPricingFormComponent extends Component {
                 There will be no refund after the booking is confirmed.
             </label>
             </div>
-            <Button
-              className={css.submitButton}
-              type="submit"
-              inProgress={submitInProgress}
-              disabled={submitDisabled}
-              ready={submitReady}
-            >
-              {saveActionMsg}
-            </Button>
+            <div onClick={() => {
+              this.props.updateCal(this.state)
+            }}>
+              <Button
+                className={css.submitButton}
+                type="submit"
+                inProgress={submitInProgress}
+                disabled={submitDisabled}
+                ready={submitReady}
+              >
+                {saveActionMsg}
+              </Button>
+            </div>
             <div onClick={() => this.props.history.goBack()}>Back: Description</div>
           </Form>
         );

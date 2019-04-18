@@ -131,6 +131,7 @@ const EditListingWizardTab = props => {
 
 
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
+    console.log('tab, updateValues-[',tab, updateValues)
     let { ...otherValues } = updateValues;
     let updatedImages = props.images
     const imageProperty =

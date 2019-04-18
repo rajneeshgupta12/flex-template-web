@@ -187,7 +187,6 @@ const RecItem = props => {
 
 const SectionRecommendation = props => {
   const { rootClassName, className, result, user } = props;
-console.log('-------',result)
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   // let listings = result && result.LandingPage && result.LandingPage.visitedOasises

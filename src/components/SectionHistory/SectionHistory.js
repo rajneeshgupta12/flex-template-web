@@ -14,7 +14,6 @@ import { getQueryListing } from '../../containers/LandingPage/LandingPage.duck';
 
 const RecItem = props => {
   let { rootClassName, className, icon, listing } = props;
-  console.log("at history-----", listing)
   const n = null;
   let imeges = []
   listing.included.forEach(item => {

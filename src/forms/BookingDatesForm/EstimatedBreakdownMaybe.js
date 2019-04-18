@@ -39,9 +39,12 @@ import css from './BookingDatesForm.css';
 
 const { Money, UUID } = sdkTypes;
 
-const estimatedTotalPrice = (unitPrice, unitCount) => {
+const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges) => {
   const numericPrice = convertMoneyToNumber(unitPrice);
-  const numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
+  let numericTotalPrice = new Decimal(numericPrice).times(unitCount).times(totalGlampers).toNumber();
+  numericTotalPrice += Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount / 100)
+  numericTotalPrice += numericTotalPrice * Number(otherCharges && otherCharges.tax) / 100
+  // numericTotalPrice
   return new Money(
     convertUnitToSubUnit(numericTotalPrice, unitDivisor(unitPrice.currency)),
     unitPrice.currency
@@ -51,7 +54,7 @@ const estimatedTotalPrice = (unitPrice, unitCount) => {
 // When we cannot speculatively initiate a transaction (i.e. logged
 // out), we must estimate the booking breakdown. This function creates
 // an estimated transaction object for that use case.
-const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity) => {
+const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, totalGlampers, otherCharges = {}) => {
   const now = new Date();
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
@@ -59,11 +62,10 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   const unitCount = isNightly
     ? nightsBetween(bookingStart, bookingEnd)
     : isDaily
-    ? daysBetween(bookingStart, bookingEnd)
-    : quantity;
+      ? daysBetween(bookingStart, bookingEnd)
+      : quantity;
 
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount);
-
+  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges);
   // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
   // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
   // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)
@@ -119,15 +121,15 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 };
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers, otherCharges } = props.bookingData;
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
-  const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits;
+  const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;
   if (!canEstimatePrice) {
     return null;
   }
 
-  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity);
+  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity, totalGlampers, otherCharges);
 
   return (
     <BookingBreakdown
@@ -136,6 +138,7 @@ const EstimatedBreakdownMaybe = props => {
       unitType={unitType}
       transaction={tx}
       booking={tx.booking}
+      otherCharges={otherCharges}
     />
   );
 };

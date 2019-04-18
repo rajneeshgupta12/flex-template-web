@@ -25,7 +25,7 @@ import LineItemTotalPrice from './LineItemTotalPrice';
 import css from './BookingBreakdown.css';
 
 export const BookingBreakdownComponent = props => {
-  const { rootClassName, className, userRole, unitType, transaction, booking, intl } = props;
+  const { rootClassName, className, userRole, unitType, transaction, booking, intl,otherCharges } = props;
 
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
@@ -37,10 +37,9 @@ export const BookingBreakdownComponent = props => {
   });
 
   const classes = classNames(rootClassName || css.root, className);
-
   return (
     <div className={classes}>
-      <LineItemUnitPrice transaction={transaction} unitType={unitType} intl={intl} />
+      <LineItemUnitPrice transaction={transaction} otherCharges={otherCharges} unitType={unitType} intl={intl} />
       <LineItemBookingPeriod transaction={transaction} booking={booking} unitType={unitType} />
       <LineItemUnitsMaybe transaction={transaction} unitType={unitType} />
 

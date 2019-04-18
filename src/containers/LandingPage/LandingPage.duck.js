@@ -24,7 +24,6 @@ const landingPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case GET_ALL_LISTINGS_SUCCESS: {
-      console.log('-----payload--------',payload,);
       if(payload.data.include){}
        return { ...state, listings: payload };
       }

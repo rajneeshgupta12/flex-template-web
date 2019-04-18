@@ -119,6 +119,8 @@ export class LandingPageComponent extends Component {
       props.result.user.currentUser.attributes &&
       props.result.user.currentUser.attributes.profile &&
       props.result.user.currentUser.attributes.profile.firstName
+
+
     return (
       <Page
         className={css.root}

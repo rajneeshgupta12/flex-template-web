@@ -30,7 +30,7 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price ,publicData} = currentListing.attributes;
+  const { price, publicData } = currentListing.attributes;
   let userName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -43,21 +43,53 @@ const EditListingPricingPanel = props => {
         values={{ name: userName }}
       />
     );
-    let cancellation_or_refund= publicData.cancellation_or_refund
+  let cancellation_or_refund = publicData.cancellation_or_refund,
+    // cleaning_fee = publicData.other_charges && publicData.other_charges.cleaning_fee,
+    // weekend_price = publicData.other_charges && publicData.other_charges.weekend_price,
+    // extra_guest_fee = publicData.other_charges && publicData.other_charges.extra_guest_fee,
+    // seasonal_price = publicData.other_charges && publicData.other_charges.seasonal_price,
+    tax = publicData.other_charges && publicData.other_charges.tax
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
+  let calenders = {};
+  const updateCal = (cals) => {
+    calenders = {
+      startDateSpecial: cals.startDateSpecial,
+      endDateSpecial: cals.endDateSpecial,
+      endDateSeasonal: cals.endDateSeasonal,
+      startDateSeasonal: cals.startDateSeasonal
+    }
+  }
+  console.log('publicData', publicData)
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price ,cancellation_or_refund }}
+      initialValues={{
+        price,
+        cancellation_or_refund,
+        // cleaning_fee:JSON.parse(cleaning_fee),
+        // weekend_price:JSON.parse(weekend_price),
+        // extra_guest_fee:JSON.parse(extra_guest_fee),
+        // seasonal_price:JSON.parse(seasonal_price),
+        tax
+      }}
       onSubmit={values => {
-        const { cancellation_or_refund = '', price = '' } = values;
-
+        const { cancellation_or_refund = '', price = '', cleaning_fee = '', weekend_price, extra_guest_fee, seasonal_price, tax } = values;
         const updatedValues = {
           price,
-          publicData: { cancellation_or_refund },
+          publicData: {
+            cancellation_or_refund, other_charges: {
+              cleaning_fee: JSON.stringify(cleaning_fee),
+              weekend_price: JSON.stringify(weekend_price),
+              extra_guest_fee: JSON.stringify(extra_guest_fee),
+              seasonal_price: JSON.stringify(seasonal_price),
+              tax: tax,
+              calenders
+            }
+          },
         };
         onSubmit(updatedValues);
       }}
+      updateCal={updateCal}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       updated={panelUpdated}
