@@ -14,6 +14,7 @@ import {
 import { Form, LocationAutocompleteInputField, Button, FieldTextInput } from '../../components';
 
 import css from './EditListingLocationForm.css';
+const gMapKey =  process.env.REACT_APP_GOOGLE_MAP_KEY
 
 class EditListingLocationFormComponent extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class EditListingLocationFormComponent extends Component {
         const getFullAddress = (place) => {
           let lat = place.origin && place.origin.lat
           let lng = place.origin && place.origin.lng
-          fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + lng + '&key=' + 'AIzaSyAW-q3kSsXU-J3WsYh8spVFRUdrZm7eWd0')
+          fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + lng + '&key=' + gMapKey)
             .then((response) => response.json())
             .then((responseJson) => {
               let city = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'locality').length > 0)[0].long_name
@@ -115,7 +116,7 @@ class EditListingLocationFormComponent extends Component {
         values.state = this.state.state
         values.zip = this.state.postalCode
         return (
-          <Form className={classes} onChange={(e) => { console.log('e.target.value------', e.target.values) }} onSubmit={handleSubmit}>
+          <Form className={classes}  onSubmit={handleSubmit}>
             {errorMessage}
             {errorMessageShowListing}
             <LocationAutocompleteInputField

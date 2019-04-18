@@ -80,7 +80,6 @@ class EditListingLocationPanel extends Component {
           className={css.form}
           initialValues={this.state.initialValues}
           onSubmit={values => {
-            console.log('values=======',values)
             const { building = '', location='' ,zip='', state='', city='',} = values;
             const {
               selectedPlace: { address, origin },
