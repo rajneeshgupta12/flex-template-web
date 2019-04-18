@@ -35,6 +35,9 @@ class EditListingLocationPanel extends Component {
 
       location: locationFieldsPresent
         ? {
+          zip,
+          city,
+          state,
           search: address,
           selectedPlace: { address, origin: geolocation },
         }
@@ -77,26 +80,28 @@ class EditListingLocationPanel extends Component {
           className={css.form}
           initialValues={this.state.initialValues}
           onSubmit={values => {
-            const { building = '', location=''} = values;
+            console.log('values=======',values)
+            const { building = '', location='' ,zip='', state='', city='',} = values;
             const {
               selectedPlace: { address, origin },
             } = location;
             const updateValues = {
               geolocation: origin,
               publicData: {
-                location: {address, building },
+                location: { zip, state, city, address, building },
               },
             };
             this.setState({
               initialValues: {
                 building,
+                zip, state, city,
                 location: { search: address, selectedPlace: { address, origin } },
               },
             });
             onSubmit(updateValues);
           }}
           history={history}
-          onChange={onChange}
+          handleChange={(e)=>{console.log('at handleChange ',e)}}
           saveActionMsg={submitButtonText}
           updated={panelUpdated}
           updateInProgress={updateInProgress}
