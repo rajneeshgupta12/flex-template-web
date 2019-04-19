@@ -82,7 +82,7 @@ const RecItem = props => {
 const SectionHistory = props => {
   const { rootClassName, className, result, user, isGetQueryListingCalled, getQueryListingCalled } = props;
   let listingUrls = user && user.attributes && user.attributes.profile && user.attributes.profile.publicData && user.attributes.profile.publicData.visitedOasisHistory
-  !isGetQueryListingCalled && listingUrls.map(url => {
+  !isGetQueryListingCalled && listingUrls && listingUrls.map(url => {
     props.getQueryListing(url.id)
   }, getQueryListingCalled())
   const glamp = [{ glampImage }, { glampImage }];
