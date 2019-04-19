@@ -20,6 +20,10 @@ const RecItem = props => {
     if (item.type == 'image')
       imeges.push(item)
   })
+  imeges.shift()
+  let city = listing && listing.data && listing.data.attributes &&
+  listing.data.attributes.publicData && listing.data.attributes.publicData.location &&
+  listing.data.attributes.publicData.location.city
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   const prev = <span aria-hidden="true" className="carousel-control-prev-icon" />;
@@ -35,7 +39,6 @@ const RecItem = props => {
                 </div>
               </div>
               <Carousel.Caption>
-                <h3>:)</h3>
               </Carousel.Caption>
             </Carousel.Item>
           })}
@@ -53,6 +56,7 @@ const RecItem = props => {
             />
           }&nbsp;&nbsp;&nbsp;{listing.data.attributes.publicData.property_type.type &&
             listing.data.attributes.publicData.property_type.type.title}
+          &nbsp;&nbsp;&nbsp; {city}
         </div>
         <div className={css.titleInfo}>
           <strong>
@@ -77,17 +81,20 @@ const RecItem = props => {
   );
 }
 
-
-
 const SectionHistory = props => {
   const { rootClassName, className, result, user, isGetQueryListingCalled, getQueryListingCalled } = props;
   let listingUrls = user && user.attributes && user.attributes.profile && user.attributes.profile.publicData && user.attributes.profile.publicData.visitedOasisHistory
+  console.log('listingUrls---',listingUrls)
   !isGetQueryListingCalled && listingUrls && listingUrls.map(url => {
     props.getQueryListing(url.id)
   }, getQueryListingCalled())
+  console.log('isGetQueryListingCalled---',isGetQueryListingCalled)
+
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   let listings = result && result.LandingPage && result.LandingPage.visitedOasises
+  console.log('listings-2222222--',listings)
+
   return (
     <div className={classes}>
       {listings && listings.length > 0 &&
