@@ -142,6 +142,7 @@ export const showListing = (listingUrl, listingId, isOwn = false) => async (disp
       userHistory.length > 3 && userHistory.shift();
       const isalreadyExist = userHistory.map((x) => { return x.id; }).indexOf(listingUrl.id);
       isalreadyExist === -1 && userHistory.push(listingUrl);
+      console.log('userHistory-------',userHistory)
       let publicData = { visitedOasisHistory: userHistory }
       sdk.currentUser.updateProfile({ publicData: publicData })
     })

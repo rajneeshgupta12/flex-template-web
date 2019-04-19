@@ -24,9 +24,11 @@ const landingPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case GET_ALL_LISTINGS_SUCCESS: {
-      if(payload.data.include){}
-       return { ...state, listings: payload };
+      if (payload.data.included) {
+        payload.data.data['includedRelationships'] = payload.data.included
       }
+      return { ...state, listings: payload };
+    }
 
     case GET_ALL_LISTINGS_ERROR:
       return { ...state, fetchTimeSlotsError: payload };
@@ -37,7 +39,9 @@ const landingPageReducer = (state = initialState, action = {}) => {
       }
       else {
         let oasises = state.visitedOasises || []
-        oasises = oasises.length > 3 ? [] : oasises
+        if (oasises.length > 2) {
+          oasises.shift()
+        }
         oasises.push(payload)
         return { ...state, visitedOasises: oasises };
       }
@@ -83,7 +87,7 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
       'variants.square-small2x',
       "url"
     ],
-    expand:true
+    expand: true
 
   })
     .then(response => {

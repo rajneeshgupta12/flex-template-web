@@ -27,7 +27,8 @@ const AVATAR_IMAGE_VARIANTS = [
 ];
 
 export const AvatarComponent = props => {
-  const { rootClassName, className, user, renderSizes, disableProfileLink, intl } = props;
+  const { rootClassName, className, user, renderSizes, disableProfileLink, intl,listing } = props;
+  console.log('AvatarComponent loaded ',user)
   const classes = classNames(rootClassName || css.root, className);
 
   const userIsCurrentUser = user && user.type === 'currentUser';
@@ -60,7 +61,6 @@ export const AvatarComponent = props => {
     : { name: 'ProfileBasePage' };
   const hasProfileImage = avatarUser.profileImage && avatarUser.profileImage.id;
   const profileLinkEnabled = !disableProfileLink;
-
   if (isBannedUser || isDeletedUser) {
     return (
       <div {...rootProps}>

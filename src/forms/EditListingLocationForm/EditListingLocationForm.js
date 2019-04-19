@@ -14,7 +14,7 @@ import {
 import { Form, LocationAutocompleteInputField, Button, FieldTextInput } from '../../components';
 
 import css from './EditListingLocationForm.css';
-const gMapKey =  process.env.REACT_APP_GOOGLE_MAP_KEY
+const gMapKey = process.env.REACT_APP_GOOGLE_MAP_KEY
 
 class EditListingLocationFormComponent extends Component {
   constructor(props) {
@@ -26,6 +26,17 @@ class EditListingLocationFormComponent extends Component {
       postalCode: ''
     }
   }
+  componentWillReceiveProps(nextProps) {
+    let city, state, zip, country;
+    city = nextProps && nextProps.initialValues && nextProps.initialValues.location && nextProps.initialValues.location.city
+    state = nextProps && nextProps.initialValues && nextProps.initialValues.location && nextProps.initialValues.location.state
+    zip = nextProps && nextProps.initialValues && nextProps.initialValues.location && nextProps.initialValues.location.zip
+    country = nextProps && nextProps.initialValues && nextProps.initialValues.location && nextProps.initialValues.location.country
+    this.setState({
+      city: city || '', country: country || '', state: state || '', zip: zip || ''
+    })
+  }
+
   render() {
     return <FinalForm
       {...this.props}
@@ -96,27 +107,39 @@ class EditListingLocationFormComponent extends Component {
           fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + lng + '&key=' + gMapKey)
             .then((response) => response.json())
             .then((responseJson) => {
-              let city = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'locality').length > 0)[0].long_name
-              let state = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'administrative_area_level_1').length > 0)[0].long_name
-              let country = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'country').length > 0)[0].long_name
-              let postalCode = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'postal_code').length > 0)[0].long_name
+              let temp1 = responseJson.results[0].address_components.filter
+                (x => x.types.filter(t => t == 'locality').length > 0)
+              let city = temp1[0] && temp1[0].long_name
+
+              let temp2 = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'administrative_area_level_1').length > 0)
+              let state = temp2[0] && temp2[0].long_name
+
+
+              let temp3 = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'country').length > 0)
+              let country = temp3[0] && temp3[0].long_name
+
+
+              let temp4 = responseJson.results[0].address_components.filter(x => x.types.filter(t => t == 'postal_code').length > 0)
+
+              let zip = temp4[0] && temp4[0].long_name
+
               values.city = city
               values.state = state
-              values.zip = postalCode
+              values.zip = zip
 
               this.setState({
                 city,
                 state,
                 country,
-                postalCode
+                zip
               })
             })
         }
         values.city = this.state.city
         values.state = this.state.state
-        values.zip = this.state.postalCode
+        values.zip = this.state.zip
         return (
-          <Form className={classes}  onSubmit={handleSubmit}>
+          <Form className={classes} onSubmit={handleSubmit}>
             {errorMessage}
             {errorMessageShowListing}
             <LocationAutocompleteInputField

@@ -83,7 +83,7 @@ const EditListingPricingPanel = props => {
               extra_guest_fee: JSON.stringify(extra_guest_fee),
               seasonal_price: JSON.stringify(seasonal_price),
               tax: tax,
-              calenders
+              calenders: JSON.stringify(calenders),
             }
           },
         };

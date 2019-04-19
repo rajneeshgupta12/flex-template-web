@@ -80,7 +80,7 @@ class EditListingLocationPanel extends Component {
           className={css.form}
           initialValues={this.state.initialValues}
           onSubmit={values => {
-            const { building = '', location='' ,zip='', state='', city='',} = values;
+            const { building = '', location = '', zip = '', state = '', city = '', } = values;
             const {
               selectedPlace: { address, origin },
             } = location;
@@ -100,7 +100,7 @@ class EditListingLocationPanel extends Component {
             onSubmit(updateValues);
           }}
           history={history}
-          handleChange={(e)=>{console.log('at handleChange ',e)}}
+          handleChange={(e) => { console.log('at handleChange ', e) }}
           saveActionMsg={submitButtonText}
           updated={panelUpdated}
           updateInProgress={updateInProgress}

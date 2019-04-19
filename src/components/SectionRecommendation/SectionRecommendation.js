@@ -116,25 +116,32 @@ import glampImage from './images/Space.png'
 
 //import 'react-responsive-carousel/lib/styles/carousel.min.css' ;
 import { Carousel, Button, ButtonToolbar } from 'react-bootstrap'
-//mport 'bootstrap.css'
 import css from './SectionRecommendation.css'
 import { getQueryListing } from '../../containers/LandingPage/LandingPage.duck';
 
 const RecItem = props => {
-  let { rootClassName, className, icon, listing } = props;
+  let { rootClassName, className, icon, listing, listings } = props;
   const n = null;
   let imeges = []
-  listing.included && listing.included.forEach(item => {
-    if (item.type == 'image')
-      imeges.push(item)
+  listings.includedRelationships && listings.includedRelationships.forEach(item => {
+    if (item.type == 'image') {
+      let imgdata = listing.relationships && listing.relationships.images
+        && listing.relationships.images.data
+      imgdata.forEach(img => {
+        if (img.type == 'image' && img.id.uuid == item.id.uuid) {
+          imeges.push(item)
+        }
+      })
+    }
   })
+  let city = listing && listing.attributes && listing.attributes.publicData && listing.attributes.publicData.location && listing.attributes.publicData.location.city
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   const prev = <span aria-hidden="true" className="carousel-control-prev-icon" />;
   return (
     <div>
       <div className={css.carouselWrapper}>
-        {/* <Carousel interval={n}>
+        <Carousel interval={n}>
           {imeges.map(img => {
             return <Carousel.Item>
               <div className={css.imageWrapper}>
@@ -143,11 +150,10 @@ const RecItem = props => {
                 </div>
               </div>
               <Carousel.Caption>
-                <h3>:)</h3>
               </Carousel.Caption>
             </Carousel.Item>
           })}
-        </Carousel> */}
+        </Carousel>
       </div>
       {listing && <div className={css.textWrapper}>
         <div className={css.typeInfo}>
@@ -161,6 +167,7 @@ const RecItem = props => {
             />
           }&nbsp;&nbsp;&nbsp;{listing.attributes.publicData.property_type.type &&
             listing.attributes.publicData.property_type.type.title}
+          &nbsp;&nbsp;&nbsp; {city}
         </div>
         <div className={css.titleInfo}>
           <strong>
@@ -201,9 +208,9 @@ const SectionRecommendation = props => {
           <div className={css.allContainer}>
             <div className={css.rowContainer}>
               {listings.map((listing, idx) => {
-                if (idx < 3)
+                if (idx < 6)
                   return <Link to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
-                    <RecItem listing={listing} icon={css.tentIcon} />
+                    <RecItem listing={listing} listings={listings} icon={css.tentIcon} />
                   </Link>
               })}
             </div>

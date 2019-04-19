@@ -25,20 +25,25 @@ const SectionImages = props => {
   let allImages = hasImages && _.partition(listing.includedRelationships, function (relationship) {
     return relationship.type === 'image';
   });
+  allImages[0].shift();
   const firstImage = allImages[0][0] || null;
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel
- const actionBar = listing.id ? (
+  const actionBar = listing.id ? (
     <div onClick={e => e.stopPropagation()}>
       <ActionBarMaybe isOwnListing={isOwnListing} listing={listing} editParams={editParams} />
     </div>
   ) : null;
-
   const viewPhotosButton = hasImages ? (
     <button className={css.viewPhotos} onClick={handleViewPhotosClick}>
       <FormattedMessage
         id="ListingPage.viewImagesButton"
-        values={{ count: listing.includedRelationships[1].length }}
+        values={{
+          count: listing && listing.relationships &&
+            listing.relationships.images &&
+            listing.relationships.images.data
+            && listing.relationships.images.data.length
+        }}
       />
     </button>
   ) : null;
@@ -71,6 +76,7 @@ const SectionImages = props => {
         onManageDisableScrolling={onManageDisableScrolling}
       >
         {hasImages &&
+
           <ImageCarousel images={allImages && allImages[0] || []} />}
       </Modal>
     </div>

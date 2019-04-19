@@ -26,7 +26,8 @@ const SectionHost = props => {
       <h2 className={css.yourHostHeading}>
         <FormattedMessage id="ListingPage.yourHostHeading" />
       </h2>
-      <UserCard user={listing.author}listingAuthorName={listingAuthorName} author ={author}currentUser={currentUser} onContactUser={onContactUser} />
+      <UserCard {...props}
+        user={listing.author} listingAuthorName={listingAuthorName} author={author} currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
         id="ListingPage.enquiry"
         contentClassName={css.enquiryModalContent}
