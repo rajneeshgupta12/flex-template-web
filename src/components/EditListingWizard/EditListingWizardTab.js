@@ -199,6 +199,9 @@ const EditListingWizardTab = props => {
           images={images}
           validateImageUploaded={validateImageUploaded}
           IsImageUploaded={IsImageUploaded}
+          newListingPublished={newListingPublished}
+          onUpdateImageOrder={onUpdateImageOrder}
+          onRemoveImage={onRemoveImage}
         />
       );
     }

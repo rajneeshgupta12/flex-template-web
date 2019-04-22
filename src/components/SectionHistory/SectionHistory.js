@@ -84,16 +84,13 @@ const RecItem = props => {
 const SectionHistory = props => {
   const { rootClassName, className, result, user, isGetQueryListingCalled, getQueryListingCalled } = props;
   let listingUrls = user && user.attributes && user.attributes.profile && user.attributes.profile.publicData && user.attributes.profile.publicData.visitedOasisHistory
-  console.log('listingUrls---',listingUrls)
   !isGetQueryListingCalled && listingUrls && listingUrls.map(url => {
     props.getQueryListing(url.id)
   }, getQueryListingCalled())
-  console.log('isGetQueryListingCalled---',isGetQueryListingCalled)
 
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   let listings = result && result.LandingPage && result.LandingPage.visitedOasises
-  console.log('listings-2222222--',listings)
 
   return (
     <div className={classes}>

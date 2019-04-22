@@ -29,7 +29,7 @@ class EditListingLocationPanel extends Component {
     const locationFieldsPresent =
       publicData && publicData.location && publicData.location.address && geolocation;
     const location = publicData && publicData.location ? publicData.location : {};
-    const { address, zip, state, city } = location;
+    const { address, zip, state, city, building } = location;
 
     return {
 
@@ -38,6 +38,7 @@ class EditListingLocationPanel extends Component {
           zip,
           city,
           state,
+          building,
           search: address,
           selectedPlace: { address, origin: geolocation },
         }
@@ -72,7 +73,6 @@ class EditListingLocationPanel extends Component {
     ) : (
         <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
       );
-
     return (
       <div className={classes}>
         <h1 className={css.title}>{panelTitle}</h1>

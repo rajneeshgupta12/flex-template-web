@@ -26,10 +26,14 @@ const EditListingDescriptionPanel = props => {
     history,
     uploadDescriptionImages,
     handlePlaceTheme,
+    onRemoveImage,
     placeTheme,
     images,
     IsImageUploaded,
-    validateImageUploaded
+    validateImageUploaded,
+    fetchInProgress,
+    newListingPublished,
+    onUpdateImageOrder
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -44,6 +48,7 @@ const EditListingDescriptionPanel = props => {
   ) : (
       <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" values={{ name: "you" }} />
     );
+
   let glamping_rules = publicData && publicData.glamping_rules
   let selectedThemes = [];
 
@@ -58,12 +63,11 @@ const EditListingDescriptionPanel = props => {
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
-        initialValues={{ title, description, glamping_rules }}
+        initialValues={{ title, description, glamping_rules, images }}
         className={css.form}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, glamping_rules } = values;
-
+          const { title, description, glamping_rules, addImage } = values;
           const updateValues = {
             title: title.trim(),
             description,
@@ -72,12 +76,16 @@ const EditListingDescriptionPanel = props => {
           onSubmit(updateValues);
         }}
         onChange={onChange}
+        disabled={fetchInProgress}
+        ready={newListingPublished}
+        fetchErrors={errors}
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         categories={config.custom.categories}
         descriptionImages={descriptionImages}
         uploadDescriptionImages={uploadDescriptionImages}
+        onRemoveImage={onRemoveImage}
         history={history}
         handlePlaceTheme={handlePlaceTheme}
         placeTheme={placeTheme}
@@ -85,6 +93,8 @@ const EditListingDescriptionPanel = props => {
         onImageUpload={onImageUpload}
         IsImageUploaded={IsImageUploaded}
         validateImageUploaded={validateImageUploaded}
+        onUpdateImageOrder={onUpdateImageOrder}
+        saveActionMsg={submitButtonText}
       />
     </div>
   );

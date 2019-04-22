@@ -67,7 +67,7 @@ export class LandingPageComponent extends Component {
       sDate = new Date(), eDate = new Date(),
       lastday = sDate.getDate() - (sDate.getDay() - 1) + 6;
     endDate = new Date(sDate.setDate(lastday));
-    startday = eDate.getDate() - (eDate.getDay() - 1) + 5;
+    startday = eDate.getDate() - (eDate.getDay() - 1) + 3;
     startDate = new Date(eDate.setDate(startday));
     this.setState({ endDate, startDate })
   }

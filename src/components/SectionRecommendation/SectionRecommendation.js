@@ -198,6 +198,7 @@ const SectionRecommendation = props => {
   const classes = classNames(rootClassName || css.root, className);
   // let listings = result && result.LandingPage && result.LandingPage.visitedOasises
   const listings = result && result.LandingPage && result.LandingPage.listings && result.LandingPage.listings.data && result.LandingPage.listings.data.data
+  let viewableListingsCount =listings&& listings.length > 5 ? 6 : 3
   return (
     <div className={classes}>
       {listings && listings.length > 0 &&
@@ -208,7 +209,8 @@ const SectionRecommendation = props => {
           <div className={css.allContainer}>
             <div className={css.rowContainer}>
               {listings.map((listing, idx) => {
-                if (idx < 6)
+
+                if (idx < viewableListingsCount)
                   return <Link to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
                     <RecItem listing={listing} listings={listings} icon={css.tentIcon} />
                   </Link>

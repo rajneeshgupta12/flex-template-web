@@ -335,7 +335,6 @@ export default function reducer(state = initialState, action = {}) {
       const { id, imageId } = payload;
       const file = state.images[id].file;
       const images = { ...state.images, [id]: { id, imageId, file } };
-      console.log('UPLOAD_IMAGE_SUCCESS-------',images,payload)
       return { ...state, images };
     }
     case UPLOAD_IMAGE_ERROR: {

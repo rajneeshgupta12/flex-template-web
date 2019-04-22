@@ -138,6 +138,7 @@ class EditListingLocationFormComponent extends Component {
         values.city = this.state.city
         values.state = this.state.state
         values.zip = this.state.zip
+
         return (
           <Form className={classes} onSubmit={handleSubmit}>
             {errorMessage}
@@ -157,13 +158,21 @@ class EditListingLocationFormComponent extends Component {
               }}
               useDefaultPredictions={false}
               format={null}
-              valueFromForm={values.location}
+              valueFromForm={console.log('values.location,,,',values.location)}
               validate={composeValidators(
                 autocompleteSearchRequired(addressRequiredMessage),
                 autocompletePlaceSelected(addressNotRecognizedMessage)
               )}
             />
 
+            <FieldTextInput
+              className={css.building}
+              type="text"
+              name="building"
+              id="building"
+              label={buildingMessage}
+              placeholder={buildingPlaceholderMessage}
+            />
             <FieldTextInput
               className={css.building}
               type="text"

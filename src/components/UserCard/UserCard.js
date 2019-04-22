@@ -64,6 +64,7 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
+
   const { rootClassName, className, user, currentUser, onContactUser, author, listingAuthorName ,listing} = props;
 
   const userIsCurrentUser = user && user.type === 'currentUser';

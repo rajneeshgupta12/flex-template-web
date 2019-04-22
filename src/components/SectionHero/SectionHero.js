@@ -9,12 +9,12 @@ import css from './SectionHero.css';
 import { Form } from 'react-final-form';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-import {withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const StyledButton = withStyles({
   root: {
     width: '72px',
-    height  : '72px',
+    height: '72px',
     borderRadius: 0,
   },
 })(Button);
@@ -34,12 +34,11 @@ const SectionHero = props => {
       form="SearchFormDesktop"
     />
   );
-
   return (
     <div className={classes}>
       <div className={css.heroContent}>
         <h1 className={css.heroMainTitle}>
-          <FormattedMessage id={userName && userName.length > 0 ? "SectionHero.titleSignedIn" : "SectionHero.title"} values={{name: userName}}/>
+          <FormattedMessage id={userName && userName.length > 0 ? "SectionHero.titleSignedIn" : "SectionHero.title"} values={{ name: userName }} />
         </h1>
         <h2 className={css.heroSubTitle}>
           <FormattedMessage id="SectionHero.subTitle" />
@@ -47,27 +46,27 @@ const SectionHero = props => {
       </div>
       <div className={css.searchArea} >
 
-      <div className={css.heroSearchBar} >
-        <div className={css.searchSection} >
-        {search}
-        <div className={css.searchIconCoverBox} />
-        </div>      
-        <div className={css.calendarSection} onClick={() => { props.toggleCalendar() }} >
-           this weekend
-           <Icon className={css.calendarIcon} style={{fontSize: 30}}>expand_more</Icon>
-           <div className={css.calendar}>
-      {props.showCalendar &&
-            <Calendar onChange={props.onChange} />}
+        <div className={css.heroSearchBar} >
+          <div className={css.searchSection} >
+            {search}
+            <div className={css.searchIconCoverBox} />
+          </div>
+          <div className={css.calendarSection} onClick={() => { props.toggleCalendar() }} >
+            this weekend
+           <Icon className={css.calendarIcon} style={{ fontSize: 30 }}>expand_more</Icon>
+            <div className={css.calendar}>
+              {props.showCalendar &&
+                <Calendar onChange={props.onChange} />}
             </div>
+          </div>
+          <div className={css.buttonSection} >
+            <StyledButton variant="contained" color="primary" onClick={() => { props.submitSsearch() }}
+              className={css.iconButton}>
+              <Icon>search</Icon>
+            </StyledButton>
+          </div>
         </div>
-        <div className={css.buttonSection} > 
-          <StyledButton variant="contained" color="primary" onClick={() => {props.submitSsearch() }} 
-          className={css.iconButton}>
-            <Icon>search</Icon>
-          </StyledButton>      
-        </div>
-      </div>
-      
+
       </div>
     </div>
   );

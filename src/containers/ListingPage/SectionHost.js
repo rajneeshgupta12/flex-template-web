@@ -21,13 +21,17 @@ const SectionHost = props => {
     onManageDisableScrolling,
     listingAuthorName
   } = props;
+
+  let includedRelationships = props && props.listing && props.listing.includedRelationships
+  let userArrayIndex = includedRelationships.map(function (x) { return x.type; }).indexOf('user');
+  let userObj = includedRelationships[userArrayIndex];
   return (
     <div id="host" className={css.sectionHost}>
       <h2 className={css.yourHostHeading}>
         <FormattedMessage id="ListingPage.yourHostHeading" />
       </h2>
       <UserCard {...props}
-        user={listing.author} listingAuthorName={listingAuthorName} author={author} currentUser={currentUser} onContactUser={onContactUser} />
+        user={userObj} listingAuthorName={listingAuthorName} author={author} currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
         id="ListingPage.enquiry"
         contentClassName={css.enquiryModalContent}

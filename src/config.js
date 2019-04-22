@@ -159,7 +159,7 @@ const maps = {
 
     // Default zoom level when showing a single circle on a Map. Should
     // be small enough so the whole circle fits in.
-    defaultZoomLevel: 13,
+    defaultZoomLevel: 1,
 
     // Color of the circle on the Map component.
     circleColor: '#c0392b',

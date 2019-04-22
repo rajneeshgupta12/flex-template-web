@@ -74,7 +74,7 @@ const DynamicGoogleMap = withGoogleMap(props => {
 DynamicGoogleMap.defaultProps = {
   address: '',
   center: null,
-  zoom: config.maps.fuzzy.enabled ? config.maps.fuzzy.defaultZoomLevel : 11,
+  zoom: config.maps.fuzzy.enabled ? config.maps.fuzzy.defaultZoomLevel : 1,
   mapsConfig: config.maps,
 };
 
