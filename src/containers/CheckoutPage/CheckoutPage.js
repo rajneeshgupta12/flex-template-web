@@ -198,6 +198,8 @@ export class CheckoutPageComponent extends Component {
   }
 
   render() {
+    console.log('checkout page  this.props', this.props)
+    console.log('checkout page  this.state', this.state)
     const {
       scrollingDisabled,
       speculateTransactionInProgress,
@@ -225,7 +227,10 @@ export class CheckoutPageComponent extends Component {
     const currentTransaction = ensureTransaction(speculatedTransaction, {}, null);
     const currentBooking = ensureBooking(currentTransaction.booking);
     const currentListing = ensureListing(listing);
-    const currentAuthor = ensureUser(currentListing.author);
+    console.log('currentListing  11111111111        --', currentListing)
+    let userArrayIndex = listing && listing.includedRelationships.map(function (x) { return x.type; }).indexOf('user');
+    let authorObj = listing && listing.includedRelationships[userArrayIndex];
+    const currentAuthor = ensureUser(authorObj);
 
     const isOwnListing =
       currentUser &&
@@ -240,13 +245,20 @@ export class CheckoutPageComponent extends Component {
       bookingDates.bookingStart &&
       bookingDates.bookingEnd
     );
+    console.log('currentAuthor          --', currentAuthor)
+
     const hasRequiredData = hasListingAndAuthor && hasBookingDates;
+    console.log('hasRequiredData          --', hasRequiredData)
+
     const canShowPage = hasRequiredData && !isOwnListing;
     const shouldRedirect = !isLoading && !canShowPage;
 
     // Redirect back to ListingPage if data is missing.
     // Redirection must happen before any data format error is thrown (e.g. wrong currency)
     if (shouldRedirect) {
+      console.log('hasRequiredData          --', hasRequiredData)
+      console.log('canShowPage          --', canShowPage)
+      console.log('shouldRedirect          --', shouldRedirect)
       // eslint-disable-next-line no-console
       console.error('Missing or invalid data for checkout, redirecting back to listing page.', {
         transaction: currentTransaction,
@@ -396,8 +408,8 @@ export class CheckoutPageComponent extends Component {
     const unitTranslationKey = isNightly
       ? 'CheckoutPage.perNight'
       : isDaily
-      ? 'CheckoutPage.perDay'
-      : 'CheckoutPage.perUnit';
+        ? 'CheckoutPage.perDay'
+        : 'CheckoutPage.perUnit';
 
     const price = currentListing.attributes.price;
     const formattedPrice = formatMoney(intl, price);
@@ -419,7 +431,9 @@ export class CheckoutPageComponent extends Component {
     }
 
     return (
+
       <Page {...pageProps}>
+        {console.log('sfdsyr AT RENDEREDDDD')}
         {topbar}
         <div className={css.contentContainer}>
           <div className={css.aspectWrapper}>
@@ -439,7 +453,7 @@ export class CheckoutPageComponent extends Component {
               <div className={css.author}>
                 <FormattedMessage
                   id="CheckoutPage.hostedBy"
-                  values={{ name: currentAuthor.attributes.profile.firstName }}
+                  values={{ name: currentAuthor.attributes.profile.displayName }}
                 />
               </div>
             </div>

@@ -117,7 +117,6 @@ import glampImage from './images/Space.png'
 //import 'react-responsive-carousel/lib/styles/carousel.min.css' ;
 import { Carousel, Button, ButtonToolbar } from 'react-bootstrap'
 import css from './SectionRecommendation.css'
-import { getQueryListing } from '../../containers/LandingPage/LandingPage.duck';
 
 const RecItem = props => {
   let { rootClassName, className, icon, listing, listings } = props;
@@ -170,9 +169,9 @@ const RecItem = props => {
            &nbsp;<span className={css.typeCity}>/ {city}</span>
         </div>
         <div className={css.titleInfo}>
-          
+
             {listing.attributes && listing.attributes.title}
-         
+
         </div>
         <div className={css.costInfo}>
           ${listing.attributes && listing.attributes.price && (listing.attributes.price.amount) / 100}/night

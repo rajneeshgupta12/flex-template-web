@@ -25,7 +25,8 @@ const LineItemUnitPrice = props => {
     throw new Error(`LineItemUnitPrice: lineItem (${unitType}) missing`);
   }
   const formattedUnitPrice = formatMoney(intl, unitPurchase.unitPrice);
-  const formattedCleaningFee = formatMoney(intl, new Money(otherCharges.cleaning_fee.amount, "USD")
+  let cleaningFee = otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount || 0
+  const formattedCleaningFee = formatMoney(intl, new Money(cleaningFee, "USD")
   );
   return (
     <div>
@@ -36,14 +37,14 @@ const LineItemUnitPrice = props => {
 
         <span className={css.itemValue}>{formattedUnitPrice}</span>
       </div>
-      {otherCharges.cleaning_fee &&
+      {otherCharges&&otherCharges.cleaning_fee &&
         <div className={css.lineItem}>
           <span className={css.itemLabel}>
             Cleaning Fee
         </span>
           <span className={css.itemValue}>{formattedCleaningFee}</span>
         </div>
-      }    {otherCharges.tax && <div className={css.lineItem}>
+      }    {otherCharges && otherCharges.tax && <div className={css.lineItem}>
         <span className={css.itemLabel}>
           Tax
         </span>

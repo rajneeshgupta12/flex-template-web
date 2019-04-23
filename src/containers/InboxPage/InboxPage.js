@@ -70,23 +70,23 @@ export const txState = (intl, tx, type) => {
   } else if (txIsRequested(tx)) {
     const requested = isOrder
       ? {
-          nameClassName: css.nameNotEmphasized,
-          bookingClassName: css.bookingNoActionNeeded,
-          lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
-          stateClassName: css.stateActionNeeded,
-          state: intl.formatMessage({
-            id: 'InboxPage.stateRequested',
-          }),
-        }
+        nameClassName: css.nameNotEmphasized,
+        bookingClassName: css.bookingNoActionNeeded,
+        lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
+        stateClassName: css.stateActionNeeded,
+        state: intl.formatMessage({
+          id: 'InboxPage.stateRequested',
+        }),
+      }
       : {
-          nameClassName: css.nameEmphasized,
-          bookingClassName: css.bookingActionNeeded,
-          lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
-          stateClassName: css.stateActionNeeded,
-          state: intl.formatMessage({
-            id: 'InboxPage.statePending',
-          }),
-        };
+        nameClassName: css.nameEmphasized,
+        bookingClassName: css.bookingActionNeeded,
+        lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
+        stateClassName: css.stateActionNeeded,
+        state: intl.formatMessage({
+          id: 'InboxPage.statePending',
+        }),
+      };
 
     return requested;
   } else if (txIsDeclined(tx)) {
@@ -148,8 +148,8 @@ const bookingData = (unitType, tx, isOrder, intl) => {
   const endDate =
     isDaily || isUnits
       ? moment(endDateRaw)
-          .subtract(1, 'days')
-          .toDate()
+        .subtract(1, 'days')
+        .toDate()
       : endDateRaw;
   const bookingEnd = formatDate(intl, endDate);
   const bookingPrice = isOrder ? tx.attributes.payinTotal : tx.attributes.payoutTotal;
@@ -200,7 +200,7 @@ export const InboxItem = props => {
   const linkClasses = classNames(css.itemLink, {
     [css.bannedUserLink]: isOtherUserBanned,
   });
-
+  console.log('props------inbox-', props)
   return (
     <div className={css.item}>
       <div className={css.itemAvatar}>
@@ -370,10 +370,10 @@ export const InboxPageComponent = props => {
             {!fetchInProgress ? (
               transactions.map(toTxItem)
             ) : (
-              <li className={css.listItemsLoading}>
-                <IconSpinner />
-              </li>
-            )}
+                <li className={css.listItemsLoading}>
+                  <IconSpinner />
+                </li>
+              )}
             {noResults}
           </ul>
           {pagingLinks}

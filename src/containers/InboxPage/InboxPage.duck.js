@@ -75,7 +75,7 @@ const INBOX_PAGE_SIZE = 10;
 
 export const loadData = (params, search) => (dispatch, getState, sdk) => {
   const { tab } = params;
-
+  console.log('loadData method called--------------')
   const onlyFilterValues = {
     orders: 'order',
     sales: 'sale',

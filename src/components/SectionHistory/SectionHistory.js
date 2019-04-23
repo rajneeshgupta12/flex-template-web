@@ -10,7 +10,6 @@ import glampImage from './images/Space.png'
 import { Carousel, Button, ButtonToolbar } from 'react-bootstrap'
 //mport 'bootstrap.css'
 import css from './SectionHistory.css'
-import { getQueryListing } from '../../containers/LandingPage/LandingPage.duck';
 
 const RecItem = props => {
   let { rootClassName, className, icon, listing } = props;

@@ -39,6 +39,7 @@
     "raf": "3.4.0",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.0-beta.5",
+    "react-confirm-alert": "^2.4.1",
     "react-dates": "^18.2.2",
     "react-dom": "^16.6.3",
     "react-dropzone-component": "^3.2.0",

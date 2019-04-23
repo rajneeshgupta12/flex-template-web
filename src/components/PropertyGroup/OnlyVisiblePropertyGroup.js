@@ -43,7 +43,6 @@ const IconCheck = props => {
 const Item = props => {
   const { label, isSelected } = props;
   const labelClass = isSelected ? css.selectedLabel : css.notSelectedLabel;
-  console.log(label);
   return (
     <li className={css.item}>
       <span className={css.iconWrapper}>
@@ -51,7 +50,7 @@ const Item = props => {
         { label === 'Ride Service' ? <img src={rideIcon} className={css.transportationIcon}/>
         : label === 'Bus' ? <img src={busIcon} className={css.transportationIcon}/>
         : label === 'Subway' ? <img src={subwayIcon} className={css.transportationIcon}/>
-        : label === 'Train' ? <img src={trainIcon} className={css.transportationIcon}/> 
+        : label === 'Train' ? <img src={trainIcon} className={css.transportationIcon}/>
         : <IconCheck isVisible={isSelected} />
       }
       </span>

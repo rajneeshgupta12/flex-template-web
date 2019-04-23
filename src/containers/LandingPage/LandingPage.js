@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { loadData, getAllListings, getQueryListing } from './LandingPage.duck';
+import { loadData, loadBookingData, getAllListings, getQueryListing ,getListingBookings} from './LandingPage.duck';
+import * as inboxDuck from '../InboxPage/InboxPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -18,6 +19,7 @@ import {
   SectionDiscover,
   SectionHistory,
   SectionRecommendation,
+  SectionUpcomingBookings,
   SectionInterview,
   SectionType,
   SectionAbout,
@@ -63,11 +65,13 @@ export class LandingPageComponent extends Component {
 
   componentDidMount() {
     this.props.loadData()
+    this.props.loadBookingData()
+
     let startDate, endDate, startday,
       sDate = new Date(), eDate = new Date(),
       lastday = sDate.getDate() - (sDate.getDay() - 1) + 6;
     endDate = new Date(sDate.setDate(lastday));
-    startday = eDate.getDate() - (eDate.getDay() - 1) + 3;
+    startday = eDate.getDate() - (eDate.getDay() - 1) + 4;
     startDate = new Date(eDate.setDate(startday));
     this.setState({ endDate, startDate })
   }
@@ -105,14 +109,14 @@ export class LandingPageComponent extends Component {
   render() {
     const { history, intl, location, scrollingDisabled } = this.props;
     let { props, showCalendar } = this.state
+    console.log('this.state--------', this.state)
     // http://schema.org
     // We are using JSON-LD format
     const siteTitle = config.siteTitle;
     const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
     const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
     const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-    // const listing = props.showListing('5c63bee0-e3d8-4d64-ac7a-3914ea0c914c')
-
+    let marketplaceData = props && props.result && props.result.marketplaceData
     let userName = null
     let isloggedin = props && props.result && props.result.user && props.result.user.currentUser
     userName = props && props.result && props.result.user && props.result.user.currentUser &&
@@ -157,6 +161,15 @@ export class LandingPageComponent extends Component {
             </div>
             <ul className={css.sections}>
               {
+                isloggedin && marketplaceData && marketplaceData && marketplaceData.entities && marketplaceData.entities.booking &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionUpcomingBookings
+
+                     {...props} />
+                  </div>
+                </li>
+              }  {
                 isloggedin &&
                 <li className={css.section}>
                   <div className={css.sectionContent}>
@@ -244,7 +257,10 @@ const mapStateToProps = (state, landingPageReducer) => {
 const mapDispatchToProps = dispatch => ({
   // getAllListings: () => dispatch(getAllListings()),
   loadData: () => dispatch(loadData()),
-  getQueryListing: (values) => dispatch(getQueryListing(values))
+  loadBookingData: () => dispatch(loadBookingData()),
+  getQueryListing: (values) => dispatch(getQueryListing(values)),
+  getListingBookings: (values) => dispatch(getListingBookings(values))
+
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

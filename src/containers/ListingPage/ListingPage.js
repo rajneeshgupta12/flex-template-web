@@ -97,7 +97,8 @@ export class ListingPageComponent extends Component {
     // console.log('props',this.props)
     // const listing = getListing(listingId);
     // console.log('getListing(listingId)', getListing(listingId))
-    const { startDate, endDate, total_glampers, totalPrice } = values;
+    const { total_glampers, totalPrice } = values;
+    const { startDate, endDate, } = values && values.bookingDates;
 
     const initialValues = {
       listing,
@@ -337,9 +338,11 @@ export class ListingPageComponent extends Component {
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
     const { formattedPrice, priceTitle } = priceData(price, intl);
     const handleBookingSubmit = values => {
+      console.log("handle booking submit------------called ");
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
-        console.log('')
+        console.log('isOwnListing || isCurrentlyClosed= true')
+
         window.scrollTo(0, 0);
       } else {
         this.handleSubmit(values);
