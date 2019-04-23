@@ -52,7 +52,7 @@ const SectionHero = props => {
             <div className={css.searchIconCoverBox} />
           </div>
           <div className={css.calendarSection} onClick={() => { props.toggleCalendar() }} >
-            this weekend
+            &nbsp;this weekend
            <Icon className={css.calendarIcon} style={{ fontSize: 30 }}>expand_more</Icon>
             <div className={css.calendar}>
               {props.showCalendar &&

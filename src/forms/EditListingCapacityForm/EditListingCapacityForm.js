@@ -150,13 +150,13 @@ const EditListingCapacityFormComponent = props => (
             <span className={css.itemGuestsN}>{guestNumber || '    '}</span>
             <span className={css.itemGuestsI}>{incrementButton("guestNumber")}</span>
 
-            <div>
+            <div className={css.itemMaxGuestsA}>
               <strong>Maximum number of glampers</strong>
             </div>
 
-            <span >{derementButton("maxGuestNumber")}</span>
-            <span>{maxGuestNumber || '    '}</span>
-            <span >{incrementButton("maxGuestNumber")}</span>
+            <span className={css.itemMaxGuestsD}>{derementButton("maxGuestNumber")}</span>
+            <span className={css.itemMaxGuestsN}>{maxGuestNumber || '    '}</span>
+            <span className={css.itemMaxGuestsI} >{incrementButton("maxGuestNumber")}</span>
 
 
             <span className={css.itemBedQ}>How many bedrooms & beds can your glampers use?</span>

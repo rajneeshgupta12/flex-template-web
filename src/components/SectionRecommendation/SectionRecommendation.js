@@ -165,14 +165,14 @@ const RecItem = props => {
               listing.attributes.publicData.property_type.type.image}
               height="25" width="25"
             />
-          }&nbsp;&nbsp;&nbsp;{listing.attributes.publicData.property_type.type &&
-            listing.attributes.publicData.property_type.type.title}
-          &nbsp;&nbsp;&nbsp; {city}
+          }<span className={css.typeName}> {listing.attributes.publicData.property_type.type &&
+            listing.attributes.publicData.property_type.type.title} </span>
+           &nbsp;<span className={css.typeCity}>/ {city}</span>
         </div>
         <div className={css.titleInfo}>
-          <strong>
+          
             {listing.attributes && listing.attributes.title}
-          </strong>
+         
         </div>
         <div className={css.costInfo}>
           ${listing.attributes && listing.attributes.price && (listing.attributes.price.amount) / 100}/night

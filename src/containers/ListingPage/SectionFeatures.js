@@ -38,10 +38,10 @@ const SectionFeatures = props => {
 
       <br />
       <h3>Around the Oasis</h3>
-      <label>Available transportaition</label>
+      <label>Available transportation</label>
 
       <OnlyVisiblePropertyGroup
-        id="Available_transportaition"
+        id="Available_transportation"
         options={transportaionAmenitiesConfig}
         selectedOptions={travel_info.available_transportaion}
         twoColumns={false}

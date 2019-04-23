@@ -12,6 +12,11 @@ import includes from 'lodash/includes';
 
 import css from './PropertyGroup.css';
 
+import rideIcon from '../../assets/Ride.png';
+import busIcon from '../../assets/Bus.png';
+import subwayIcon from '../../assets/Subway.png';
+import trainIcon from '../../assets/Train.png';
+
 const checkSelected = (options, selectedOptions) => {
   return options.map(option => ({
     key: option.key,
@@ -38,10 +43,17 @@ const IconCheck = props => {
 const Item = props => {
   const { label, isSelected } = props;
   const labelClass = isSelected ? css.selectedLabel : css.notSelectedLabel;
+  console.log(label);
   return (
     <li className={css.item}>
       <span className={css.iconWrapper}>
-        <IconCheck isVisible={isSelected} />
+
+        { label === 'Ride Service' ? <img src={rideIcon} className={css.transportationIcon}/>
+        : label === 'Bus' ? <img src={busIcon} className={css.transportationIcon}/>
+        : label === 'Subway' ? <img src={subwayIcon} className={css.transportationIcon}/>
+        : label === 'Train' ? <img src={trainIcon} className={css.transportationIcon}/> 
+        : <IconCheck isVisible={isSelected} />
+      }
       </span>
       <div className={css.labelWrapper}>
         <span className={labelClass}>{label}</span>
@@ -51,7 +63,7 @@ const Item = props => {
 };
 
 const OnlyVisiblePropertyGroup = props => {
-  const { rootClassName, className, id, options, selectedOptions, fiveColumns } = props;
+  const { rootClassName, className, id, options, selectedOptions, fiveColumns} = props;
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = fiveColumns ? classNames(classes, css.fiveColumns) : classes;
 

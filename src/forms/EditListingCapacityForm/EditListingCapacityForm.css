@@ -61,7 +61,8 @@
 
 .itemGuestsA {
   grid-row-start: 2;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
+  
 }
 
 .itemGuestsD {
@@ -83,23 +84,47 @@
   grid-column-start: 4;
 }
 
+.itemMaxGuestsA{
+  grid-row-start: 3;
+  margin-bottom: 20px;
+}
+
+.itemMaxGuestsD {
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
+.itemMaxGuestsN {
+  grid-row-start: 3;
+  grid-column-start: 3;
+  text-align: center;
+
+  position: relative;
+  top: 2px;
+}
+
+.itemMaxGuestsI {
+  grid-row-start: 3;
+  grid-column-start: 4;
+}
+
 .itemBedQ {
   @apply --marketplaceH4FontStyles;
-  grid-row-start: 3;
+  grid-row-start: 4;
 }
 
 .itemBedroomA{
-  grid-row-start: 4;
+  grid-row-start: 5;
   margin-bottom: 20px;
 }
 
 .itemBedroomD{
-  grid-row-start: 4;
+  grid-row-start: 5;
   grid-column-start: 2;
 }
 
 .itemBedroomN{
-  grid-row-start: 4;
+  grid-row-start: 5;
   grid-column-start: 3;
   text-align: center;
 
@@ -108,22 +133,22 @@
 }
 
 .itemBedroomI{
-  grid-row-start: 4;
+  grid-row-start: 5;
   grid-column-start: 4;
 }
 
 .itemBedA{
-  grid-row-start: 5;
+  grid-row-start: 6;
   margin-bottom: 35px;
 }
 
 .itemBedD {
-  grid-row-start: 5;
+  grid-row-start: 6;
   grid-column-start: 2;
 }
 
 .itemBedN {
-  grid-row-start: 5;
+  grid-row-start: 6;
   grid-column-start: 3;
   text-align: center;
 
@@ -132,26 +157,26 @@
 }
 
 .itemBedI {
-  grid-row-start: 5;
+  grid-row-start: 6;
   grid-column-start: 4;
 }
 
 .itemBathroomQ{
   @apply --marketplaceH4FontStyles;
-  grid-row-start: 6;
+  grid-row-start: 7;
 }
 
 .itemBathroomA{
-  grid-row-start: 7;
+  grid-row-start: 8;
 }
 
 .itemBathroomD{
-  grid-row-start: 7;
+  grid-row-start: 8;
   grid-column-start: 2;
 }
 
 .itemBathroomN{
-  grid-row-start: 7;
+  grid-row-start: 8;
   grid-column-start: 3;
   text-align: center;
 
@@ -160,6 +185,6 @@
 }
 
 .itemBathroomI{
-  grid-row-start: 7;
+  grid-row-start: 8;
   grid-column-start: 4;
 }

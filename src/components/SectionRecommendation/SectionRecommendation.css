@@ -81,11 +81,25 @@
 }
 
 .typeInfo { 
-  @apply --marketplaceH6FontStyles;
+  font-size: 12px;
   display: flex;
   align-items: center;
   color: grey;
   margin-bottom: 5px;
+  position: relative;
+}
+
+.typeName {
+  position: relative;
+  left: 3px;
+  top: 3px;
+}
+
+.typeCity {
+  position: relative;
+  left: 3px;
+  top: 3px;
+
 }
 
 .tentIcon {
@@ -106,7 +120,8 @@
 }
 
 .titleInfo {
-  @apply --marketplaceH3FontStyles;
+  font-size: 18px;
+  color: black;
   display: inline-block;
   margin-top: 5px;
   margin-bottom: 0px;
