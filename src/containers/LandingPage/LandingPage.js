@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { loadData, loadBookingData, getAllListings, getQueryListing ,getListingBookings} from './LandingPage.duck';
-import * as inboxDuck from '../InboxPage/InboxPage.duck';
+import { loadData, loadBookingData, getAllListings, getQueryListing, getTx, getListingBookings } from './LandingPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -165,8 +164,22 @@ export class LandingPageComponent extends Component {
                 <li className={css.section}>
                   <div className={css.sectionContent}>
                     <SectionUpcomingBookings
+                      getBookingListingCalled={() => {
+                        console.log('getBookingListingCalled--------------------')
+                        { this.setState({ isGetBookingListingCalled: true }) }
+                      }}
+                      isGetBookingListingCalled={this.state.isGetBookingListingCalled}
+                      getTxCalled={() => {
+                        { this.setState({ isGetTxCalled: true }) }
+                      }}
+                      isGetTxCalled={this.state.isGetTxCalled}
+                      transactionRefsCalled={() => {
+                        console.log('transactionRefsCalled--------------------')
 
-                     {...props} />
+                        { this.setState({ isTransactionRefsCalled: true }) }
+                      }}
+                      isTransactionRefsCalled={this.state.isTransactionRefsCalled}
+                      {...props} />
                   </div>
                 </li>
               }  {
@@ -259,6 +272,7 @@ const mapDispatchToProps = dispatch => ({
   loadData: () => dispatch(loadData()),
   loadBookingData: () => dispatch(loadBookingData()),
   getQueryListing: (values) => dispatch(getQueryListing(values)),
+  getTx: (values) => dispatch(getTx(values)),
   getListingBookings: (values) => dispatch(getListingBookings(values))
 
 });

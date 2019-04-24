@@ -21,7 +21,12 @@ const { Money } = sdkTypes;
 export class EditListingPricingFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { focusedInput: null };
+    this.state = {
+      focusedInput: null,
+      seasonal_price: false,
+      extra_guest_fee: false,
+      special_price: false
+    };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.onFocusedInputChange = this.onFocusedInputChange.bind(this);
   }
@@ -42,7 +47,10 @@ export class EditListingPricingFormComponent extends Component {
       this.props.onSubmit({ startDate, endDate, total_glampers, totalPrice });
     }
   }
-
+  updateState = (stateName) => {
+    let currentState = this.state[stateName]
+    this.setState({ [stateName]: !currentState })
+  }
   render() {
     return <FinalForm
       {...this.props}
@@ -161,53 +169,75 @@ export class EditListingPricingFormComponent extends Component {
             />
             <label> %</label>
             <span>This is percentage of total price, except for Glam Oasis's service fee</span>
+            <div onClick={() => {
+              this.updateState("extra_guest_fee")
+            }}>
+              + Extra guest fee
+            </div>
+            {this.state.extra_guest_fee &&
+              <div>  <FieldCurrencyInput
+                id="extra_guest_fee"
+                name="extra_guest_fee"
+                className={css.priceInput}
+                label={""}
+                placeholder={pricePlaceholderMessage}
+                currencyConfig={config.currencyConfig}
+              /> <label> $ per night</label>
+              </div>
+            }
+            <div onClick={() => {
+              this.updateState("seasonal_price")
+            }}>
+              + Seasonal price
+            </div>{this.state.seasonal_price &&
+              <div>
+                <FieldCurrencyInput
+                  id="seasonal_price"
+                  name="seasonal_price"
+                  className={css.priceInput}
 
-            <FieldCurrencyInput
-              id="extra_guest_fee"
-              name="extra_guest_fee"
-              className={css.priceInput}
-              label={"Extra guest fee"}
-              placeholder={pricePlaceholderMessage}
-              currencyConfig={config.currencyConfig}
-            /><label> $ per night</label>
-            <FieldCurrencyInput
-              id="seasonal_price"
-              name="seasonal_price"
-              className={css.priceInput}
-
-              label={"Seasonal price"}
-              placeholder={pricePlaceholderMessage}
-              currencyConfig={config.currencyConfig}
-            /><label> $ per night</label>
-            <DateRangePicker
-              startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
-              startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-              endDate={this.state.endDateSeasonal} // momentPropTypes.momentObj or null,
-              endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-              onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })} // PropTypes.func.isRequired,
-              focusedInput={this.state.focusedInputSeasonal} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-              numberOfMonths={1}
-              onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })} // PropTypes.func.isRequired,
-            />
-            <FieldCurrencyInput
-              id="special_price"
-              name="special_price"
-              className={css.priceInput}
-
-              label={"Special price"}
-              placeholder={pricePlaceholderMessage}
-              currencyConfig={config.currencyConfig}
-            /><label> $ per night</label>
-            <DateRangePicker
-              startDate={this.state.startDateSpecial} // momentPropTypes.momentObj or null,
-              startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-              endDate={this.state.endDateSpecial} // momentPropTypes.momentObj or null,
-              endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-              onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSpecial": startDate, "endDateSpecial": endDate })} // PropTypes.func.isRequired,
-              focusedInput={this.state.focusedInputSpecial} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-              numberOfMonths={1}
-              onFocusChange={focusedInput => this.setState({ focusedInputSpecial: focusedInput })} // PropTypes.func.isRequired,
-            />
+                  label={""}
+                  placeholder={pricePlaceholderMessage}
+                  currencyConfig={config.currencyConfig}
+                /><label> $ per night</label>
+                <DateRangePicker
+                  startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
+                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                  endDate={this.state.endDateSeasonal} // momentPropTypes.momentObj or null,
+                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })} // PropTypes.func.isRequired,
+                  focusedInput={this.state.focusedInputSeasonal} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  numberOfMonths={1}
+                  onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })} // PropTypes.func.isRequired,
+                />
+              </div>
+            }
+            <div onClick={() => {
+              this.updateState("special_price")
+            }}>
+              + Special price
+            </div>{this.state.special_price &&
+              <div>
+                <FieldCurrencyInput
+                  id="special_price"
+                  name="special_price"
+                  className={css.priceInput}
+                  label={""}
+                  placeholder={pricePlaceholderMessage}
+                  currencyConfig={config.currencyConfig}
+                /><label> $ per night</label>
+                <DateRangePicker
+                  startDate={this.state.startDateSpecial} // momentPropTypes.momentObj or null,
+                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                  endDate={this.state.endDateSpecial} // momentPropTypes.momentObj or null,
+                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSpecial": startDate, "endDateSpecial": endDate })} // PropTypes.func.isRequired,
+                  focusedInput={this.state.focusedInputSpecial} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  numberOfMonths={1}
+                  onFocusChange={focusedInput => this.setState({ focusedInputSpecial: focusedInput })} // PropTypes.func.isRequired,
+                />
+              </div>
+            }
             <label>
               Cancellation & Refund
           </label>

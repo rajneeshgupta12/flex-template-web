@@ -16,14 +16,16 @@ const sortedTransactions = txs =>
   );
 // ================ Action types ================ //
 
-export const GET_LISTING_BOOKING_SUCCESS = 'app/ListingPage/GET_LISTING_BOOKING_SUCCESS';
-export const GET_LISTING_BOOKING_ERROR = 'app/ListingPage/GET_LISTING_BOOKING_ERROR';
-export const GET_ALL_OWN_LISTINGS_SUCCESS = 'app/ListingPage/GET_ALL_OWN_LISTINGS_SUCCESS';
-export const GET_ALL_OWN_LISTINGS_ERROR = 'app/ListingPage/GET_ALL_OWN_LISTINGS__ERROR';
-export const GET_ALL_LISTINGS_SUCCESS = 'app/ListingPage/GET_ALL_LISTINGS_SUCCESS';
-export const GET_ALL_LISTINGS_ERROR = 'app/ListingPage/GET_ALL_LISTINGS__ERROR';
-export const GET_QUERY_LISTINGS_SUCCESS = 'app/ListingPage/GET_QUERY_LISTINGS_SUCCESS';
-export const GET_QUERY_LISTINGS_ERROR = 'app/ListingPage/GET_QUERY_LISTINGS__ERROR';
+export const GET_TX_SUCCESS = 'app/LandingPage/GET_TX_SUCCESS';
+export const GET_TX_ERROR = 'app/LandingPage/GET_TX_ERROR';
+export const GET_LISTING_BOOKING_SUCCESS = 'app/LandingPage/GET_LISTING_BOOKING_SUCCESS';
+export const GET_LISTING_BOOKING_ERROR = 'app/LandingPage/GET_LISTING_BOOKING_ERROR';
+export const GET_ALL_OWN_LISTINGS_SUCCESS = 'app/LandingPage/GET_ALL_OWN_LISTINGS_SUCCESS';
+export const GET_ALL_OWN_LISTINGS_ERROR = 'app/LandingPage/GET_ALL_OWN_LISTINGS__ERROR';
+export const GET_ALL_LISTINGS_SUCCESS = 'app/LandingPage/GET_ALL_LISTINGS_SUCCESS';
+export const GET_ALL_LISTINGS_ERROR = 'app/LandingPage/GET_ALL_LISTINGS__ERROR';
+export const GET_QUERY_LISTINGS_SUCCESS = 'app/LandingPage/GET_QUERY_LISTINGS_SUCCESS';
+export const GET_QUERY_LISTINGS_ERROR = 'app/LandingPage/GET_QUERY_LISTINGS__ERROR';
 
 export const FETCH_ORDERS_OR_SALES_REQUEST = 'app/InboxPage/FETCH_ORDERS_OR_SALES_REQUEST';
 export const FETCH_ORDERS_OR_SALES_SUCCESS = 'app/InboxPage/FETCH_ORDERS_OR_SALES_SUCCESS';
@@ -57,6 +59,16 @@ const entityRefs = entities =>
 const landingPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_LISTING_BOOKING_SUCCESS: {
+      // let temp = []
+      // if (state.allBookings && state.allBookings.data) {
+      //   temp = state.allBookings.data.data
+      // }
+      // temp.forEach(booking => {
+      //   payload.data.data.push(booking)
+      // })
+      return { ...state, allBookings: payload };
+    }
     case GET_ALL_LISTINGS_SUCCESS: {
       if (payload.data.included) {
         payload.data.data['includedRelationships'] = payload.data.included
@@ -67,6 +79,14 @@ const landingPageReducer = (state = initialState, action = {}) => {
     case GET_ALL_LISTINGS_ERROR:
       return { ...state, fetchTimeSlotsError: payload };
 
+    case GET_TX_SUCCESS: {
+      console.log('GET_TX_SUCCESS-------')
+      return { ...state, Tx: payload };
+    }
+
+    case GET_TX_ERROR:
+      return { ...state, getTx: payload };
+
     case GET_ALL_OWN_LISTINGS_SUCCESS: {
       if (payload.data.included) {
         payload.data.data['includedRelationships'] = payload.data.included
@@ -76,21 +96,6 @@ const landingPageReducer = (state = initialState, action = {}) => {
 
     case GET_ALL_OWN_LISTINGS_ERROR:
       return { ...state, ownListingsError: payload };
-
-    case GET_LISTING_BOOKING_SUCCESS: {
-      console.log('all bookings-----------', payload)
-      // if (payload.data.data.length) {
-      //   return { ...state, listings: payload };
-      // }
-      // else {
-      //   let oasises = state.visitedOasises || []
-      //   if (oasises.length > 2) {
-      //     oasises.shift()
-      //   }
-      //   oasises.push(payload)
-      //   return { ...state, visitedOasises: oasises };
-      // }
-    }
 
     case GET_LISTING_BOOKING_ERROR:
       return { ...state, getListingBookingsError: payload };
@@ -201,6 +206,37 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
     });
 };
 
+
+export const getTx = (tx) => async (dispatch, getState, sdk) => {
+  console.log('VvgetTx---------called')
+  const params = {
+    id: new UUID(tx),
+    include: ['customer'],
+  };
+
+  sdk.transactions.show(params, { expand: true })
+    .then(response => {
+      return dispatch(getTxSuccess(response));
+    })
+    .catch(e => {
+      return dispatch(getTxError(e));
+    });
+};
+
+
+export const getTxError = error => ({
+  type: GET_TX_ERROR,
+  error: true,
+  payload: error,
+});
+
+export const getTxSuccess = tx => (
+  {
+    type: GET_TX_SUCCESS,
+    payload: tx,
+  }
+);
+
 export const getQueryListing = (listingId, isOwn = false) => async (dispatch, getState, sdk) => {
 
   const params = {
@@ -254,14 +290,19 @@ export const getListingBookings = (listingId, isOwn = true) => async (dispatch, 
   const params = {
     listingId: new UUID(listingId),
     start: new Date(start),
-    end: new Date(end)
+    end: new Date(end),
+    include: ['transaction', { expand: true }],
+    expand: true
   };
-  sdk.bookings.query(params)
+
+
+  sdk.bookings.query(params, { expand: true })
     .then(response => {
-      return getListingBookingsSuccess(response);
+      response.data['listingId'] = new UUID(listingId)
+      return dispatch(getListingBookingsSuccess(response));
     })
     .catch(e => {
-      return getListingBookingsError(e);
+      return dispatch(getListingBookingsError(e));
     });
 };
 
@@ -305,23 +346,12 @@ export const loadData = () => dispatch => {
 };
 
 export const loadBookingData = (params, search) => (dispatch, getState, sdk) => {
-  // const { tab='sale' } = params;
-  // console.log('loadBookingData method called--------------')
-  // const onlyFilterValues = {
-  //   orders: 'order',
-  //   sales: 'sale',
-  // };
-
-  // const onlyFilter = onlyFilterValues[tab];
-  // if (!onlyFilter) {
-  //   return Promise.reject(new Error(`Invalid tab for InboxPage: ${tab}`));
-  // }
 
   dispatch(fetchOrdersOrSalesRequest());
 
   const { page = 1 } = parse(search);
 
-  const apiQueryParams = {
+  const apiQueryParamsSale = {
     only: 'sale',
     lastTransitions: TRANSITIONS,
     include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'booking'],
@@ -330,8 +360,17 @@ export const loadBookingData = (params, search) => (dispatch, getState, sdk) => 
     per_page: INBOX_PAGE_SIZE,
   };
 
-  return sdk.transactions
-    .query(apiQueryParams)
+  const apiQueryParamsOrder = {
+    only: 'order',
+    lastTransitions: TRANSITIONS,
+    include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'booking'],
+    'fields.image': ['variants.square-small', 'variants.square-small2x'],
+    page,
+    per_page: INBOX_PAGE_SIZE,
+  };
+
+  sdk.transactions
+    .query(apiQueryParamsSale)
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchOrdersOrSalesSuccess(response));
@@ -341,4 +380,16 @@ export const loadBookingData = (params, search) => (dispatch, getState, sdk) => 
       dispatch(fetchOrdersOrSalesError(storableError(e)));
       throw e;
     });
+  sdk.transactions
+    .query(apiQueryParamsOrder)
+    .then(response => {
+      dispatch(addMarketplaceEntities(response));
+      dispatch(fetchOrdersOrSalesSuccess(response));
+      return response;
+    })
+    .catch(e => {
+      dispatch(fetchOrdersOrSalesError(storableError(e)));
+      throw e;
+    });
+  return 0
 };

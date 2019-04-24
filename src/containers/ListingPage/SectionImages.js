@@ -25,7 +25,7 @@ const SectionImages = props => {
   let allImages = hasImages && _.partition(listing.includedRelationships, function (relationship) {
     return relationship.type === 'image';
   });
-  allImages[0].shift();
+  allImages.length > 1 && allImages[0].shift();
   const firstImage = allImages[0][0] || null;
   // Action bar is wrapped with a div that prevents the click events
   // to the parent that would otherwise open the image carousel

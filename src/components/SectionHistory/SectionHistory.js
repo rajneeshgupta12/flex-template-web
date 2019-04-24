@@ -19,10 +19,10 @@ const RecItem = props => {
     if (item.type == 'image')
       imeges.push(item)
   })
-  imeges.shift()
+  imeges.length > 1  && imeges.shift()
   let city = listing && listing.data && listing.data.attributes &&
-  listing.data.attributes.publicData && listing.data.attributes.publicData.location &&
-  listing.data.attributes.publicData.location.city
+    listing.data.attributes.publicData && listing.data.attributes.publicData.location &&
+    listing.data.attributes.publicData.location.city
   const glamp = [{ glampImage }, { glampImage }];
   const classes = classNames(rootClassName || css.root, className);
   const prev = <span aria-hidden="true" className="carousel-control-prev-icon" />;
