@@ -25,7 +25,9 @@ export class EditListingPricingFormComponent extends Component {
       focusedInput: null,
       seasonal_price: false,
       extra_guest_fee: false,
-      special_price: false
+      special_price: false,
+      special_weekend: false,
+      seasonal_weekend: false
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.onFocusedInputChange = this.onFocusedInputChange.bind(this);
@@ -191,25 +193,47 @@ export class EditListingPricingFormComponent extends Component {
               + Seasonal price
             </div>{this.state.seasonal_price &&
               <div>
-                <FieldCurrencyInput
-                  id="seasonal_price"
-                  name="seasonal_price"
-                  className={css.priceInput}
+                <div>
+                  <FieldCurrencyInput
+                    id="seasonal_price"
+                    name="seasonal_price"
+                    className={css.priceInput}
 
-                  label={""}
-                  placeholder={pricePlaceholderMessage}
-                  currencyConfig={config.currencyConfig}
-                /><label> $ per night</label>
-                <DateRangePicker
-                  startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
-                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-                  endDate={this.state.endDateSeasonal} // momentPropTypes.momentObj or null,
-                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                  onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })} // PropTypes.func.isRequired,
-                  focusedInput={this.state.focusedInputSeasonal} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  numberOfMonths={1}
-                  onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })} // PropTypes.func.isRequired,
-                />
+                    label={""}
+                    placeholder={pricePlaceholderMessage}
+                    currencyConfig={config.currencyConfig}
+                  /><label> $ per night</label>
+                  <DateRangePicker
+                    startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
+                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                    endDate={this.state.endDateSeasonal} // momentPropTypes.momentObj or null,
+                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })} // PropTypes.func.isRequired,
+                    focusedInput={this.state.focusedInputSeasonal} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    numberOfMonths={1}
+                    onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })} // PropTypes.func.isRequired,
+                  />
+                </div>
+                <div onClick={() => {
+                  this.updateState("seasonal_weekend")
+                }}>
+                  + Seasonal weekend Price
+            </div>
+                <div>
+                  {this.state.seasonal_weekend &&
+                    <div>
+                      <FieldCurrencyInput
+                        id="seasonal_weekend"
+                        name="seasonal_weekend"
+                        className={css.priceInput}
+                        label={""}
+                        placeholder={pricePlaceholderMessage}
+                        currencyConfig={config.currencyConfig}
+                      />
+                      <label> $ per night</label>
+                    </div>
+                  }
+                </div>
               </div>
             }
             <div onClick={() => {
@@ -217,6 +241,7 @@ export class EditListingPricingFormComponent extends Component {
             }}>
               + Special price
             </div>{this.state.special_price &&
+              <div>
               <div>
                 <FieldCurrencyInput
                   id="special_price"
@@ -236,6 +261,27 @@ export class EditListingPricingFormComponent extends Component {
                   numberOfMonths={1}
                   onFocusChange={focusedInput => this.setState({ focusedInputSpecial: focusedInput })} // PropTypes.func.isRequired,
                 />
+              </div>
+                 <div onClick={() => {
+                  this.updateState("special_weekend")
+                }}>
+                  + Special weekend Price
+            </div>
+                <div>
+                  {this.state.special_weekend &&
+                    <div>
+                      <FieldCurrencyInput
+                        id="special_weekend"
+                        name="special_weekend"
+                        className={css.priceInput}
+                        label={""}
+                        placeholder={pricePlaceholderMessage}
+                        currencyConfig={config.currencyConfig}
+                      />
+                      <label> $ per night</label>
+                    </div>
+                  }
+                </div>
               </div>
             }
             <label>

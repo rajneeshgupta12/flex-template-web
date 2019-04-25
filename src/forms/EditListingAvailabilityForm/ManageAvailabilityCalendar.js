@@ -442,12 +442,12 @@ class ManageAvailabilityCalendar extends Component {
               <FormattedMessage id="EditListingAvailabilityForm.blockedDay" />
             </span>
           </div>
-          {/* <div className={css.legendRow}>
+          <div className={css.legendRow}>
             <span className={css.legendReservedColor} />
             <span className={css.legendText}>
               <FormattedMessage id="EditListingAvailabilityForm.bookedDay" />
             </span>
-          </div> */}
+          </div>
         </div>
         {fetchExceptionsError && fetchBookingsError ? (
           <p className={css.error}>

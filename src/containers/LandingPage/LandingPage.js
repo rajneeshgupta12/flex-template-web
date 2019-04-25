@@ -165,21 +165,13 @@ export class LandingPageComponent extends Component {
                   <div className={css.sectionContent}>
                     <SectionUpcomingBookings
                       getBookingListingCalled={() => {
-                        console.log('getBookingListingCalled--------------------')
                         { this.setState({ isGetBookingListingCalled: true }) }
                       }}
                       isGetBookingListingCalled={this.state.isGetBookingListingCalled}
                       getTxCalled={() => {
                         { this.setState({ isGetTxCalled: true }) }
                       }}
-                      isGetTxCalled={this.state.isGetTxCalled}
-                      transactionRefsCalled={() => {
-                        console.log('transactionRefsCalled--------------------')
-
-                        { this.setState({ isTransactionRefsCalled: true }) }
-                      }}
-                      isTransactionRefsCalled={this.state.isTransactionRefsCalled}
-                      {...props} />
+                      isGetTxCalled={this.state.isGetTxCalled}/>
                   </div>
                 </li>
               }  {
