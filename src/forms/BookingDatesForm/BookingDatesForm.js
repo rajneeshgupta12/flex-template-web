@@ -69,7 +69,7 @@ export class BookingDatesFormComponent extends Component {
     }
     const { total_glampers } = this.state
     const otherCharges = this.props && this.props.publicData && this.props.publicData.other_charges && {
-      cleaning_fee: JSON.parse(this.props.publicData.other_charges.clening_fee),
+      cleaning_fee: JSON.parse(this.props.publicData.other_charges.cleaning_fee),
       extra_guest_fee: JSON.parse(this.props.publicData.other_charges.extra_guest_fee),
       seasonal_price: JSON.parse(this.props.publicData.other_charges.seasonal_price),
       weekend_price: JSON.parse(this.props.publicData.other_charges.weekend_price),

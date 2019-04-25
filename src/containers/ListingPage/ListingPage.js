@@ -260,7 +260,7 @@ export class ListingPageComponent extends Component {
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.amount / 100) }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.ammount / 100) }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
     // const bookingSubTitle =
