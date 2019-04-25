@@ -27,6 +27,7 @@
   align-items: stretch;
   justify-content: space-around;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .rowContainer:first-child {
@@ -123,7 +124,7 @@
   font-size: 18px;
   color: black;
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
@@ -163,5 +164,13 @@
   @apply --marketplaceButtonStyles;
   width: 250px;
   height: 65px;
-  margin-top: 50px;
+}
+
+
+.linkBox {
+  padding-bottom: 15px;
+}
+
+.linkBox:hover .titleInfo{
+  color: var(--marketplaceColor);
 }

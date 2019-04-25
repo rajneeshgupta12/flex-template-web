@@ -140,6 +140,10 @@
 
 .createListing {
   @apply --TopbarDesktop_label;
+    position: relative;
+  padding: 9px 23px 12px 23px;
+ border: solid 2px #006db5;
+ margin: 12px 0px;
 }
 
 /* Inbox */

@@ -5,7 +5,7 @@
   @apply --marketplaceH1FontStyles;
 
   margin-top: 0;
-  max-width: 735px;
+  max-width: 1000px;
 
   @media (--viewportMedium) {
     margin-bottom: 23px;
@@ -80,12 +80,26 @@
 
 }
 
-.typeInfo {
-  @apply --marketplaceH6FontStyles;
+.typeInfo { 
+  font-size: 12px;
   display: flex;
   align-items: center;
   color: grey;
   margin-bottom: 5px;
+  position: relative;
+}
+
+.typeName {
+  position: relative;
+  left: 3px;
+  top: 3px;
+}
+
+.typeCity {
+  position: relative;
+  left: 3px;
+  top: 3px;
+
 }
 
 .tentIcon {
@@ -106,9 +120,10 @@
 }
 
 .titleInfo {
-  @apply --marketplaceH3FontStyles;
+  font-size: 18px;
+  color: black;
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 0px;
   margin-bottom: 0px;
 }
 
@@ -149,4 +164,8 @@
   width: 250px;
   height: 65px;
   margin-top: 50px;
+}
+
+.linkBox:hover .titleInfo {
+  color: var(--marketplaceColor);
 }

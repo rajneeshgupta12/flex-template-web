@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
-
+import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
+import {withStyles } from '@material-ui/core/styles';
 
 import { NamedLink } from '../../components';
 
@@ -24,6 +26,7 @@ import yachtImage from './images/Yacht.png';
 
 
 import css from './SectionType.css';
+
 
 class TypeImage extends Component {
   render() {
@@ -148,8 +151,12 @@ class SectionType extends React.Component {
         <div className={css.title}>
           <FormattedMessage id="SectionType.title" />
         </div>
-        <button onClick={() => this.click("left")} className={css.leftArrow}>&lt;-</button>
-        <button onClick={() => this.click("right")} className={css.rightArrow}>-&gt;</button>
+        <Fab onClick={() => this.click("left")} style={{position:'absolute', left:'5%', zIndex:'2', outline:'none', marginTop: 'calc((100px /2) - 56px/2)'}}className={classes.leftArrow}>
+          <Icon>arrow_back</Icon>
+        </Fab>
+        <Fab onClick={() => this.click("right")} style={{position:'absolute', right: '5%', zIndex:'2', outline:'none', marginTop: 'calc((100px /2) - 56px/2)'}} className={classes.rightArrow}>
+          <Icon>arrow_forward</Icon>
+        </Fab>
         <div className={css.rowWrapper}>
 
           <div style={moveStyle} className={css.images}>

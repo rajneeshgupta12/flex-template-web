@@ -210,15 +210,15 @@ const SectionRecommendation = props => {
               {listings.map((listing, idx) => {
 
                 if (idx < viewableListingsCount)
-                  return <Link to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
+                  return <Link style={{textDecoration: 'none'}} className={css.linkBox} to={`/l/${listing.attributes.title}/${listing.id.uuid.toString()}`}>
                     <RecItem listing={listing} listings={listings} icon={css.tentIcon} />
                   </Link>
               })}
             </div>
           </div>
-          <button>
-            <Link to={'/s'}>Find More</Link>
-          </button>
+          
+            <Link className={css.findButton} to={'/s'}>Find More</Link>
+          
         </div>
       }
     </div>

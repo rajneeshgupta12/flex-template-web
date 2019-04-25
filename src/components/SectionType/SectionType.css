@@ -2,7 +2,7 @@
 
 .title {
   @apply --marketplaceH1FontStyles;
-
+  
   margin-top: 0;
   max-width: 735px;
 
@@ -27,7 +27,6 @@
   position: relative;
   margin-right: 30px;
   max-width: 100px;
-
   /* Remove link's hover effect */
   &:hover {
     text-decoration: none;
@@ -141,7 +140,7 @@
   width: calc((98vw + 1056px));
   display: inline-flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow: auto;
 
   transition: left .5s;
 }
@@ -149,29 +148,4 @@
 ::-webkit-scrollbar {
   background: transparent;
   width: 0;
-}
-
-.rightArrow {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  right: 30px;
-  margin-top: calc(100px /2 - 40px);
-  z-index: 2;
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, .9);
-}
-
-.leftArrow {
-  display: block;
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  left: 30px;
-  margin-top: calc(100px /2 - 40px);
-  z-index: 2;
-  border-radius:50%;
-
-  background: rgba(255, 255, 255, .9);
 }

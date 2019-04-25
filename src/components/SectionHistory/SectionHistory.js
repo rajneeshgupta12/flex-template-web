@@ -53,9 +53,9 @@ const RecItem = props => {
               listing.data.attributes.publicData.property_type.type.image}
               height="25" width="25"
             />
-          }&nbsp;&nbsp;&nbsp;{listing.data.attributes.publicData.property_type.type &&
+          }<span className={css.typeName}> {listing.data.attributes.publicData.property_type.type &&
             listing.data.attributes.publicData.property_type.type.title}
-          &nbsp;&nbsp;&nbsp; {city}
+            </span>&nbsp; <span className={css.typeCity}>/ {city}</span>
         </div>
         <div className={css.titleInfo}>
           <strong>
@@ -101,7 +101,7 @@ const SectionHistory = props => {
           <div className={css.allContainer}>
             <div className={css.rowContainer}>
               {listings.map(listing => {
-                return <Link to={`/l/${listing.data.data.attributes.title}/${listing.data.data.id.uuid.toString()}`}>
+                return <Link style={{textDecoration: 'none'}} className={css.linkBox}to={`/l/${listing.data.data.attributes.title}/${listing.data.data.id.uuid.toString()}`}>
                   <RecItem listing={listing.data} icon={css.tentIcon} />
                 </Link>
               })}
