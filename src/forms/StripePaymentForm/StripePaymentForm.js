@@ -115,6 +115,7 @@ class StripePaymentForm extends Component {
       });
     }
   }
+
   componentWillUnmount() {
     if (this.card) {
       this.card.removeEventListener('change', this.handleCardValueChange);
@@ -204,7 +205,6 @@ class StripePaymentForm extends Component {
       [css.cardSuccess]: this.state.cardValueValid,
       [css.cardError]: this.state.error && !submitInProgress,
     });
-
     const messagePlaceholder = intl.formatMessage(
       { id: 'StripePaymentForm.messagePlaceholder' },
       { name: authorDisplayName }
@@ -267,21 +267,25 @@ class StripePaymentForm extends Component {
         {initialMessage}
         <div className={css.submitContainer}>
           <p className={css.paymentInfo}>{paymentInfo}</p>
-          <PrimaryButton
-            className={css.submitButton}
-            type="submit"
-            inProgress={submitInProgress}
-            disabled={submitDisabled}
-          >
-            <FormattedMessage id="StripePaymentForm.submitPaymentInfo" />
-          </PrimaryButton>
+          <div onClick={() => {
+            this.props.formSubmitButtonClicked()
+          }}>
+            <PrimaryButton
+              className={css.submitButton}
+              type="submit"
+              inProgress={submitInProgress}
+              disabled={submitDisabled}
+            >
+              <FormattedMessage id="StripePaymentForm.submitPaymentInfo" />
+            </PrimaryButton>
+          </div>
         </div>
       </Form>
     ) : (
-      <div className={css.missingStripeKey}>
-        <FormattedMessage id="StripePaymentForm.missingStripeKey" />
-      </div>
-    );
+        <div className={css.missingStripeKey}>
+          <FormattedMessage id="StripePaymentForm.missingStripeKey" />
+        </div>
+      );
   }
 }
 

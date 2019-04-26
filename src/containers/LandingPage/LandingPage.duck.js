@@ -60,13 +60,13 @@ const landingPageReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case GET_LISTING_BOOKING_SUCCESS: {
-      // let temp = []
-      // if (state.allBookings && state.allBookings.data) {
-      //   temp = state.allBookings.data.data
-      // }
-      // temp.forEach(booking => {
-      //   payload.data.data.push(booking)
-      // })
+      let temp = []
+      if (state.allBookings && state.allBookings.data) {
+        temp = state.allBookings.data.data
+      }
+      temp.forEach(booking => {
+        payload.data.data.push(booking)
+      })
       return { ...state, allBookings: payload };
     }
     case GET_ALL_LISTINGS_SUCCESS: {
@@ -306,7 +306,6 @@ export const getListingBookings = (listingId, isOwn = true) => async (dispatch, 
     });
 };
 
-
 export const getListingBookingsError = error => ({
   type: GET_LISTING_BOOKING_ERROR,
   error: true,
@@ -363,7 +362,7 @@ export const loadBookingData = (params, search) => (dispatch, getState, sdk) => 
   const apiQueryParamsOrder = {
     only: 'order',
     lastTransitions: TRANSITIONS,
-    include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'booking'],
+    include: ['provider', 'listing','provider.profileImage', 'customer', 'customer.profileImage', 'booking'],
     'fields.image': ['variants.square-small', 'variants.square-small2x'],
     page,
     per_page: INBOX_PAGE_SIZE,

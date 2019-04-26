@@ -27,6 +27,7 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
+  SectionUpcomingBookingsGuest,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -108,7 +109,6 @@ export class LandingPageComponent extends Component {
   render() {
     const { history, intl, location, scrollingDisabled } = this.props;
     let { props, showCalendar } = this.state
-    console.log('this.state--------', this.state)
     // http://schema.org
     // We are using JSON-LD format
     const siteTitle = config.siteTitle;
@@ -159,11 +159,12 @@ export class LandingPageComponent extends Component {
               />
             </div>
             <ul className={css.sections}>
-              {
+            {
                 isloggedin && marketplaceData && marketplaceData && marketplaceData.entities && marketplaceData.entities.booking &&
                 <li className={css.section}>
                   <div className={css.sectionContent}>
                     <SectionUpcomingBookings
+                      {...props}
                       getBookingListingCalled={() => {
                         { this.setState({ isGetBookingListingCalled: true }) }
                       }}
@@ -171,7 +172,23 @@ export class LandingPageComponent extends Component {
                       getTxCalled={() => {
                         { this.setState({ isGetTxCalled: true }) }
                       }}
-                      isGetTxCalled={this.state.isGetTxCalled}/>
+                      isGetTxCalled={this.state.isGetTxCalled} />
+                  </div>
+                </li>
+              }  {
+                isloggedin && marketplaceData && marketplaceData && marketplaceData.entities && marketplaceData.entities.booking &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionUpcomingBookingsGuest
+                      {...props}
+                      getBookingListingCalledGuest={() => {
+                        { this.setState({ isGetBookingListingCalledGuest: true }) }
+                      }}
+                      isGetBookingListingCalledGuest={this.state.isGetBookingListingCalledGuest}
+                      getTxCalledGuest={() => {
+                        { this.setState({ isGetTxCalledGuest: true }) }
+                      }}
+                      isGetTxCalledGuest={this.state.isGetTxCalledGuest} />
                   </div>
                 </li>
               }  {

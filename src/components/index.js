@@ -167,6 +167,7 @@ export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWo
 export { default as SectionLocations } from './SectionLocations/SectionLocations';
 export { default as SectionHistory } from './SectionHistory/SectionHistory';
 export { default as SectionRecommendation } from './SectionRecommendation/SectionRecommendation';
+export { default as SectionUpcomingBookingsGuest } from './SectionUpcomingBookingsGuest/SectionUpcomingBookingsGuest';
 export { default as SectionUpcomingBookings } from './SectionUpcomingBookings/SectionUpcomingBookings';
 export { default as SectionThumbnailLinks } from './SectionThumbnailLinks/SectionThumbnailLinks';
 export { default as SectionType } from './SectionType/SectionType';
