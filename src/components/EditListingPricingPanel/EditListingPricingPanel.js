@@ -44,10 +44,10 @@ const EditListingPricingPanel = props => {
       />
     );
   let cancellation_or_refund = publicData.cancellation_or_refund,
-    cleaning_fee = publicData.other_charges && publicData.other_charges.cleaning_fee,
-    weekend_price = publicData.other_charges && publicData.other_charges.weekend_price,
-    extra_guest_fee = publicData.other_charges && publicData.other_charges.extra_guest_fee,
-    seasonal_price = publicData.other_charges && publicData.other_charges.seasonal_price,
+    // cleaning_fee = publicData.other_charges && publicData.other_charges.cleaning_fee,
+    // weekend_price = publicData.other_charges && publicData.other_charges.weekend_price,
+    // extra_guest_fee = publicData.other_charges && publicData.other_charges.extra_guest_fee,
+    // seasonal_price = publicData.other_charges && publicData.other_charges.seasonal_price,
     tax = publicData.other_charges && publicData.other_charges.tax
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   let calenders = {};
@@ -66,10 +66,10 @@ const EditListingPricingPanel = props => {
       initialValues={{
         price,
         cancellation_or_refund,
-        cleaning_fee:JSON.parse(cleaning_fee),
-        weekend_price:JSON.parse(weekend_price),
-        extra_guest_fee:JSON.parse(extra_guest_fee),
-        seasonal_price:JSON.parse(seasonal_price),
+        // cleaning_fee:JSON.parse(cleaning_fee),
+        // weekend_price:JSON.parse(weekend_price),
+        // extra_guest_fee:JSON.parse(extra_guest_fee),
+        // seasonal_price:JSON.parse(seasonal_price),
         tax
       }}
       onSubmit={values => {
