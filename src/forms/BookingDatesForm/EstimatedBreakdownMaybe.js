@@ -120,8 +120,20 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   };
 };
 
+const NumberOfWeekdays = (days, startDate, endDate) => {
+  console.log("qwertyui", startDate, endDate)
+  var ndays = 1 + Math.round((endDate - startDate) / (24 * 3600 * 1000));
+  var sum = function (a, b) {
+    return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);
+  };
+  return days.reduce(sum, 0);
+
+}
 const EstimatedBreakdownMaybe = props => {
   const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers, otherCharges } = props.bookingData;
+  console.log('EstimatedBreakdownMaybe------', props)
+  const numberOfWeekday = NumberOfWeekdays([1, 2, 3, 4], startDate, endDate)
+  console.log("numberOfWeekday",numberOfWeekday)
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;

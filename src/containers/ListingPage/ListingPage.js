@@ -240,13 +240,15 @@ export class ListingPageComponent extends Component {
     if (shouldShowPublicListingPage) {
       return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
     }
-    const {
+    let {
       description = '',
       geolocation = null,
       price = null,
       title = '',
       publicData,
     } = currentListing.attributes;
+    const charges =  publicData.other_charges;
+    // price = charges
     const {
       author
     } = currentListing.relationships;
@@ -260,7 +262,7 @@ export class ListingPageComponent extends Component {
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.ammount / 100) }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.amount / 100) }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
     // const bookingSubTitle =
@@ -397,6 +399,8 @@ export class ListingPageComponent extends Component {
         listingAuthor = item
     });
     let listingAuthorName = listingAuthor.attributes && listingAuthor.attributes.profile && listingAuthor.attributes.profile.displayName
+    console.log('price0-0-0-0-0-0-',price)
+    console.log('public data0-0-0-0-0-0-',publicData)
     return (
       <Page
         title={schemaTitle}

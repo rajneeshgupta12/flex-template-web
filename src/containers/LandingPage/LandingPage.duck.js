@@ -80,7 +80,6 @@ const landingPageReducer = (state = initialState, action = {}) => {
       return { ...state, fetchTimeSlotsError: payload };
 
     case GET_TX_SUCCESS: {
-      console.log('GET_TX_SUCCESS-------')
       return { ...state, Tx: payload };
     }
 
@@ -208,7 +207,6 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
 
 
 export const getTx = (tx) => async (dispatch, getState, sdk) => {
-  console.log('VvgetTx---------called')
   const params = {
     id: new UUID(tx),
     include: ['customer'],

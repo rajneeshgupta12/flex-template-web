@@ -67,15 +67,19 @@ export class BookingDatesFormComponent extends Component {
         </div>
       );
     }
-    const { total_glampers } = this.state
+    const { total_glampers, } = this.state
+    this.props && this.props.publicData && this.props.publicData.other_charges && (console.log("AH, ", this.props.publicData.other_charges.seasonal_weekend))
     const otherCharges = this.props && this.props.publicData && this.props.publicData.other_charges && {
-      cleaning_fee: JSON.parse(this.props.publicData.other_charges.cleaning_fee),
-      extra_guest_fee: JSON.parse(this.props.publicData.other_charges.extra_guest_fee),
-      seasonal_price: JSON.parse(this.props.publicData.other_charges.seasonal_price),
-      weekend_price: JSON.parse(this.props.publicData.other_charges.weekend_price),
-      tax: Number(this.props.publicData.other_charges.tax)
+      cleaning_fee: this.props.publicData.other_charges.cleaning_fee ? JSON.parse(this.props.publicData.other_charges.cleaning_fee) : 0,
+      extra_guest_fee: this.props.publicData.other_charges.extra_guest_fee ? JSON.parse(this.props.publicData.other_charges.extra_guest_fee) : 0,
+      seasonal_price: this.props.publicData.other_charges.seasonal_price ? JSON.parse(this.props.publicData.other_charges.seasonal_price) : 0,
+      weekend_price: this.props.publicData.other_charges.weekend_price ? JSON.parse(this.props.publicData.other_charges.weekend_price) : 0,
+      seasonal_weekend: this.props.publicData.other_charges.seasonal_weekend ? JSON.parse(this.props.publicData.other_charges.seasonal_weekend) : 0,
+      special_weekend: this.props.publicData.other_charges.special_weekend ? JSON.parse(this.props.publicData.other_charges.special_weekend) : 0,
+      tax: this.props.publicData.other_charges.tax ?  Number(this.props.publicData.other_charges.tax) : 0,
     }
 
+    console.log('this.statessssssss', this.state)
     return (
       <FinalForm
         {...rest}
@@ -176,6 +180,9 @@ export class BookingDatesFormComponent extends Component {
                 focusedInput={this.state.focusedInput}
                 onFocusedInputChange={this.onFocusedInputChange}
                 format={null}
+                updateDates={(e) => {
+                  this.setState({ startDate: e.startDate, endDate: e.endDate })
+                }}
                 timeSlots={timeSlots}
                 useMobileMargins
                 validate={composeValidators(

@@ -143,7 +143,6 @@ export class EditListingPricingFormComponent extends Component {
               id="cleaning_fee"
               name="cleaning_fee"
               className={css.priceInput}
-
               label={"Cleaning fee"}
               placeholder={pricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
