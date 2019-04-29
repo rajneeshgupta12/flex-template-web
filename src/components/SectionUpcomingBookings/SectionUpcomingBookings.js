@@ -16,14 +16,12 @@ const RecItemHost = props => {
   const months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
   let { rootClassName, className, icon, listing, bookedlistingId, listings, booking,
-    getTxCalled, isGetTxCalled, user } = props;
+    getTxCalled, isGetTxCalled, user, bookedListing } = props;
   const n = null;
-  let userArrayIndex = listings && listings.data.map(function (x) { return x.id.uuid; }).indexOf(bookedlistingId.uuid);
-  let bookedListing = listings && listings.data[userArrayIndex];
   let bookedListingImageId = bookedListing
     && bookedListing.relationships
     && bookedListing.relationships.images.data[0].id.uuid
-  userArrayIndex = listings && listings.included.map(function (x) { return x.id.uuid; }).indexOf(bookedListingImageId);
+  let userArrayIndex = listings && listings.included.map(function (x) { return x.id.uuid; }).indexOf(bookedListingImageId);
   let img = listings && listings.included[userArrayIndex];
   let tx = booking && booking.relationships && booking.relationships.transaction
     && booking.relationships.transaction.data
@@ -36,75 +34,78 @@ const RecItemHost = props => {
   let endDate = booking.attributes.end.getDate();
   let endMonth = booking.attributes.end.getMonth();
   endMonth = months[endMonth];
- const checkInTime =  bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_in_time
- const checkOutTime= bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_out_time
+  const checkInTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_in_time
+  const checkOutTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_out_time;
+  let title = bookedListing.attributes && bookedListing.attributes.title
   return (
     <div>
-      <div className={css.carouselWrapper}>
-        <Carousel interval={n}>
-          return <Carousel.Item>
-            <div className={css.imageWrapper}>
-              <div className={css.aspectWrapper}>
-                <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+      <Link to={`/l/${title}/${bookedlistingId.uuid}`} >
+        <div className={css.carouselWrapper}>
+          <Carousel interval={n}>
+            return <Carousel.Item>
+              <div className={css.imageWrapper}>
+                <div className={css.aspectWrapper}>
+                  <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+                </div>
               </div>
-            </div>
-            <Carousel.Caption>
-            </Carousel.Caption>
-          </Carousel.Item>
-          })}
+              <Carousel.Caption>
+              </Carousel.Caption>
+            </Carousel.Item>
+            })}
         </Carousel>
-      </div>
-      {bookedListing &&  <div className={css.textWrapper}>
-        <div>
-          <div className={css.typeInfo}>
-            {
-              <img src={
-                bookedListing.attributes && bookedListing.attributes.publicData &&
-                bookedListing.attributes.publicData.property_type &&
-                bookedListing.attributes.publicData.property_type.type &&
-                bookedListing.attributes.publicData.property_type.type.image}
-                height="25" width="25"
-              />
-            }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
-              bookedListing.attributes.publicData.property_type.type.title}
-            &nbsp;&nbsp;&nbsp;
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-              {bookedListing.attributes && bookedListing.attributes.title}
-            </strong>
-          </div>
         </div>
-        <div>
-          <AvatarLarge className={css.avatar} user={user} listing={listing} />
+        <div className={css.textWrapper}>
+          <div>
+            <div className={css.typeInfo}>
+              {
+                <img src={
+                  bookedListing.attributes && bookedListing.attributes.publicData &&
+                  bookedListing.attributes.publicData.property_type &&
+                  bookedListing.attributes.publicData.property_type.type &&
+                  bookedListing.attributes.publicData.property_type.type.image}
+                  height="25" width="25"
+                />
+              }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
+                bookedListing.attributes.publicData.property_type.type.title}
+              &nbsp;&nbsp;&nbsp;
+          </div>
+            <div className={css.titleInfo}>
+              <strong>
+                {title}
+              </strong>
+            </div>
+          </div>
+          <div>
+            <AvatarLarge className={css.avatar} user={user} listing={listing} />
 
-          <div className={css.typeInfo}>
-            {startDate} {startMonth}
-            ~
+            <div className={css.typeInfo}>
+              {startDate} {startMonth}
+              ~
           {endDate} {endMonth}
-          </div>
-          <div className={css.typeInfo}>
-            Check in {checkInTime} / Check out {checkOutTime}
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-            </strong>
-          </div>
-          <Link to={`/sale/${tx}/details`} >
-            <button>
-              Messege to the guest
+            </div>
+            <div className={css.typeInfo}>
+              Check in {checkInTime} / Check out {checkOutTime}
+            </div>
+            <div className={css.titleInfo}>
+              <strong>
+              </strong>
+            </div>
+            <Link to={`/sale/${tx}/details`} >
+              <button>
+                Messege to the guest
         </button>
-          </Link>
-          <div className={css.costInfo}>
+            </Link>
+            <div className={css.costInfo}>
+            </div>
           </div>
         </div>
-      </div>
-      } </div>
+      </Link>
+    </div>
   );
 }
 
 const SectionUpcomingBookings = props => {
-  const { rootClassName, className, result, isGetBookingListingCalled, getBookingListingCalled, getTxCalled, isGetTxCalled  } = props;
+  const { rootClassName, className, result, isGetBookingListingCalled, getBookingListingCalled, getTxCalled, isGetTxCalled } = props;
   const classes = classNames(rootClassName || css.root, className);
   const listings = result && result.LandingPage && result.LandingPage.ownListings && result.LandingPage.ownListings.data;
 
@@ -115,21 +116,32 @@ const SectionUpcomingBookings = props => {
     props.getListingBookings(listing.id.uuid)
   }, getBookingListingCalled());
   const allBookings = result && result.LandingPage && result.LandingPage.allBookings && result.LandingPage.allBookings.data;
+  let bookedOasis = []
 
+  allBookings && allBookings.data && allBookings.data.forEach((booking, idx) => {
+    let bookedlistingId = allBookings.listingId;
+    let userArrayIndex = allListings && allListings.data.map(function (x) { return x.id.uuid; }).indexOf(bookedlistingId.uuid);
+    let bookedListing = allListings && allListings.data[userArrayIndex];
+    if (!bookedListing) {
+      return null
+    }
+    bookedOasis.push({ bookedListing, booking })
+  })
   return (
     <div className={classes}>
-      {allBookings && allBookings.data && allBookings.data.length > 0 &&
+      {bookedOasis.length > 0 &&
         <div>
           <div className={css.title}>
             <FormattedMessage id="SectionUpcomingBookings.title" />
           </div>
           <div className={css.allContainer}>
             <div>
-              {allBookings.data.map((booking, idx) => {
+              {bookedOasis.map((booking, idx) => {
                 if (idx === 0)
-                  return <RecItemHost booking={booking}
+                  return <RecItemHost booking={booking.booking}
                     bookedlistingId={allBookings.listingId}
                     listings={allListings}
+                    bookedListing={booking.bookedListing}
                     getTxCalled={getTxCalled}
                     isGetTxCalled={isGetTxCalled}
                     user={user}

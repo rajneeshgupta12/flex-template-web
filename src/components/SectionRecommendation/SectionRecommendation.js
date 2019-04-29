@@ -216,9 +216,9 @@ const SectionRecommendation = props => {
               })}
             </div>
           </div>
-          
+
             <Link className={css.findButton} to={'/s'}>Find More</Link>
-          
+
         </div>
       }
     </div>

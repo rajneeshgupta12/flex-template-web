@@ -67,15 +67,17 @@ export class BookingDatesFormComponent extends Component {
         </div>
       );
     }
-    const { total_glampers } = this.state
+    const { total_glampers, } = this.state
     const otherCharges = this.props && this.props.publicData && this.props.publicData.other_charges && {
       cleaning_fee: JSON.parse(this.props.publicData.other_charges.cleaning_fee),
       extra_guest_fee: JSON.parse(this.props.publicData.other_charges.extra_guest_fee),
       seasonal_price: JSON.parse(this.props.publicData.other_charges.seasonal_price),
       weekend_price: JSON.parse(this.props.publicData.other_charges.weekend_price),
+      seasonal_weekend: JSON.parse(this.props.publicData.other_charges.seasonal_weekend),
+      special_weekend: JSON.parse(this.props.publicData.other_charges.special_weekend),
       tax: Number(this.props.publicData.other_charges.tax)
     }
-
+    console.log('this.statessssssss', this.state)
     return (
       <FinalForm
         {...rest}
@@ -176,6 +178,9 @@ export class BookingDatesFormComponent extends Component {
                 focusedInput={this.state.focusedInput}
                 onFocusedInputChange={this.onFocusedInputChange}
                 format={null}
+                updateDates={(e) => {
+                  this.setState({ startDate: e.startDate, endDate: e.endDate })
+                }}
                 timeSlots={timeSlots}
                 useMobileMargins
                 validate={composeValidators(
