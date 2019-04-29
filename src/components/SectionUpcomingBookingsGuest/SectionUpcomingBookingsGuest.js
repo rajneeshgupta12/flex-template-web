@@ -57,13 +57,18 @@ let txId = 'id'
   const diffTime2 = Math.abs(date4.getTime() - date3.getTime());
   const diffRemainingDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
   return (
-    <div>
-      <div>
-        Left{diffRemainingDays} days
-  to Seattle
-for {diffTotalDays} nights stay!
-
+    <div className={css.tripContainer}>
+    <div className={css.scheduleWrapper}>
+      <div className={css.scheduleInfo}>
+        <div className={css.scheduleText}>
+         <div><b>{diffRemainingDays}</b> day{diffRemainingDays != 1 && 's'} left</div>
+         <div>until your trip</div>
+         <div>to <b>Seattle</b> </div>
+         <div>for <b>{diffTotalDays}</b> night{diffTotalDays!= 1 && 's'}!</div>
       </div>
+      </div>
+      </div>
+    <div className={css.tripInfo}>
       <div className={css.carouselWrapper}>
         <Carousel interval={n}>
           return <Carousel.Item>
@@ -95,16 +100,18 @@ for {diffTotalDays} nights stay!
               {bookedListing.attributes && bookedListing.attributes.title}
             </strong>
           </div>
-          <Link to={`/order/${txId}/details`} >
-            <button>
-              Messege to the Host
-        </button>
+          <Link className={css.messageButton} to={`/order/${txId}/details`} >
+        
+              Message to the Host
+      
           </Link>
           <div className={css.costInfo}>
           </div>
         </div>
-      </div>
+        </div>
+      
       } </div>
+      </div>
   );
 }
 
@@ -131,7 +138,7 @@ const SectionUpcomingBookingsGuest = props => {
           <div className={css.allContainer}>
             <div>
               {bookings.map((booking, idx) => {
-                if (idx <3)
+                if (idx < 3)
                   return <RecItemGuest
                     listings={allListings}
                     user={user}
@@ -141,9 +148,7 @@ const SectionUpcomingBookingsGuest = props => {
               })}
             </div>
           </div>
-          <button>
-            <Link to={'/inbox/orders'}>See all</Link>
-          </button>
+            <Link className={css.allButton} to={'/inbox/orders'}>See All</Link>
         </div>
       }
     </div>

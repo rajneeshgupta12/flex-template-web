@@ -76,10 +76,6 @@
 .textContainer {
 }
 
-.textWrapper {
-
-}
-
 .typeInfo { 
   font-size: 12px;
   display: flex;
@@ -159,9 +155,56 @@
 }
 
 
-.findButton {
+.allButton {
   @apply --marketplaceButtonStyles;
   width: 250px;
   height: 65px;
   margin-top: 50px;
+}
+
+.messageButton {
+  @apply --marketplaceButtonStyles;
+  width: 250px;
+  height: 65px;
+}
+
+.tripContainer {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px black;
+  height: 350px;
+}
+
+.scheduleWrapper {
+  
+
+}
+.scheduleInfo {
+  width: 350px;
+  height: 350px;
+  border-right: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.scheduleText {
+  font-size: 30px;
+  max-width: 230px;
+  word-wrap: break-word;
+  margin: auto;
+  text-align: center;
+  line-height: 1.1;
+  vertical-align: middle;
+}
+
+.tripInfo {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.textWrapper {
+
 }

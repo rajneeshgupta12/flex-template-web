@@ -90,10 +90,8 @@ const RecItemHost = props => {
             <strong>
             </strong>
           </div>
-          <Link to={`/sale/${tx}/details`} >
-            <button>
-              Messege to the guest
-        </button>
+          <Link className={css.messageButton} to={`/sale/${tx}/details`}>
+              Message to the guest
           </Link>
           <div className={css.costInfo}>
           </div>
@@ -138,9 +136,7 @@ const SectionUpcomingBookings = props => {
               })}
             </div>
           </div>
-          <button>
-            <Link to={'/inbox/sales'}>See all</Link>
-          </button>
+            <Link className={css.allButton} to={'/inbox/sales'}>See All</Link>
         </div>
       }
     </div>

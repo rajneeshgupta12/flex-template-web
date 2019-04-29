@@ -159,9 +159,13 @@
 }
 
 
-.findButton {
+.allButton {
   @apply --marketplaceButtonStyles;
   width: 250px;
   height: 65px;
   margin-top: 50px;
+}
+
+.messageButton {
+  @apply --marketplaceButtonStyles;
 }
