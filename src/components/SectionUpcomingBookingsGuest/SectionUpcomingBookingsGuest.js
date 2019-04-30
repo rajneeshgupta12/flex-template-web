@@ -61,7 +61,7 @@ const RecItemGuest = props => {
   const diffRemainingDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
 
   let title = bookedListing.attributes && bookedListing.attributes.title
-  let page = bookedListing ? <Link to={`/l/${title}/${bookedListing.id.uuid}`} >
+  let page = bookedListing ? <Link to={`/l/${title}/${bookedListing.id.uuid}`} className={css.containerLink}>
     <div className={css.tripContainer}>
       <div className={css.scheduleWrapper}>
         <div className={css.scheduleInfo}>
@@ -88,14 +88,13 @@ const RecItemGuest = props => {
           </Carousel>
         </div>
         <div className={css.textWrapper}>
-          <div>
             <div className={css.typeInfo}>
               {startDate} {startMonth}
               ~
               {endDate} {endMonth}
             </div>
             <div className={css.typeInfo}>
-              Check in {checkInTime} / Check out {checkOutTime}
+              Check in&nbsp;<b>{checkInTime}</b>&nbsp;/ Check out&nbsp;<b>{checkOutTime}</b>
             </div>
 
             <div className={css.titleInfo}>
@@ -105,11 +104,8 @@ const RecItemGuest = props => {
             </div>
 
             <Link className={css.messageButton} to={`/order/${txId}/details`} >        
-                Message to the Host 
+                Message the Host 
             </Link>
-            <div className={css.costInfo}>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -175,10 +171,21 @@ class SectionUpcomingBookingsGuest extends React.Component {
             </div>
             <div className={css.allContainer}>
               <div>
+              {actualBookings.length == 1 ? 
+                actualBookings.map((booking, idx) => {
+                  return <RecItemGuest
+                    listings={allListings}
+                    user={user}
+                    booking={booking}
+                    {...props}
+                  />
+                  })
+                  :             
                 <Tabs
                   id="controlled-tab-example"
                   activeKey={this.state.key}
                   onSelect={key => this.setState({ key })}
+                  className={css.tabs}
                 >
                   {actualBookings.map((booking, idx) => {
                     if (idx < 3)
@@ -191,6 +198,7 @@ class SectionUpcomingBookingsGuest extends React.Component {
                       </Tab>
                   })}
                 </Tabs>
+              }
               </div>
             </div>
             <Link className={css.allButton} to={'/inbox/orders'}>
