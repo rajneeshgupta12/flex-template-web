@@ -36,7 +36,10 @@ const RecItemHost = props => {
   endMonth = months[endMonth];
   const checkInTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_in_time
   const checkOutTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_out_time;
-  let title = bookedListing.attributes && bookedListing.attributes.title
+  let title = bookedListing.attributes && bookedListing.attributes.title;
+  console.log('bookedListing=======',bookedListing)
+  console.log('booking=======',booking)
+  console.log('tx=======',tx)
   return (
     <div>
       <Link to={`/l/${title}/${bookedlistingId.uuid}`} >

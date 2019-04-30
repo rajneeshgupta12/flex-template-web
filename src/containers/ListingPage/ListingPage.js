@@ -90,7 +90,7 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
-  handleSubmit(values) {
+  handleSubmit(values,totalGlampers) {
     let { history, getListing, params, useInitialValues, listing } = this.props;
     listing = listing.data
     // const listingId = new UUID(params.id);
@@ -103,13 +103,14 @@ export class ListingPageComponent extends Component {
     const initialValues = {
       listing,
       bookingData: {
-        total_glampers,
-        totalPrice
+        total_glampers:totalGlampers,
+        totalPrice:10
       },
       bookingDates: {
         bookingStart: startDate,
         bookingEnd: endDate,
       },
+      totalGlampers
     };
 
     const routes = routeConfiguration();
@@ -339,15 +340,16 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
     const { formattedPrice, priceTitle } = priceData(price, intl);
-    const handleBookingSubmit = values => {
-      console.log("handle booking submit------------called ");
+    const handleBookingSubmit = (values,totalGlampers) => {
+      console.log("handle booking submit------------called ",values);
+      console.log("handle booking submit------totalGlampers------called ",totalGlampers);
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
         console.log('isOwnListing || isCurrentlyClosed= true')
 
         window.scrollTo(0, 0);
       } else {
-        this.handleSubmit(values);
+        this.handleSubmit(values,totalGlampers);
       }
     };
 
@@ -399,8 +401,6 @@ export class ListingPageComponent extends Component {
         listingAuthor = item
     });
     let listingAuthorName = listingAuthor.attributes && listingAuthor.attributes.profile && listingAuthor.attributes.profile.displayName
-    console.log('price0-0-0-0-0-0-',price)
-    console.log('public data0-0-0-0-0-0-',publicData)
     return (
       <Page
         title={schemaTitle}

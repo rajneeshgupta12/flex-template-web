@@ -73,16 +73,28 @@ const EditListingPricingPanel = props => {
         tax
       }}
       onSubmit={values => {
-        const { cancellation_or_refund = '',special_weekend='',seasonal_weekend='', price = '', cleaning_fee = '', weekend_price, extra_guest_fee, seasonal_price, tax } = values;
+        const {
+          cancellation_or_refund = '',
+          special_weekend = {},
+          seasonal_weekend = {},
+          price = {},
+          cleaning_fee = {},
+          weekend_price = {},
+          extra_guest_fee = {},
+          seasonal_price = {},
+          special_price = {},
+          tax
+        } = values;
         const updatedValues = {
           price,
           publicData: {
             cancellation_or_refund, other_charges: {
-              special_weekend:JSON.stringify(special_weekend),
-              seasonal_weekend:JSON.stringify(seasonal_weekend),
+              special_weekend: JSON.stringify(special_weekend),
+              seasonal_weekend: JSON.stringify(seasonal_weekend),
               cleaning_fee: JSON.stringify(cleaning_fee),
               weekend_price: JSON.stringify(weekend_price),
               extra_guest_fee: JSON.stringify(extra_guest_fee),
+              special_price: JSON.stringify(special_price),
               seasonal_price: JSON.stringify(seasonal_price),
               tax: tax,
               calenders: JSON.stringify(calenders),

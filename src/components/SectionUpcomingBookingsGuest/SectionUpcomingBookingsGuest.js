@@ -56,11 +56,16 @@ const RecItemGuest = props => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime());
   const diffTotalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   const date3 = new Date(booking.attributes.displayStart);
-  const date4 = new Date(booking.attributes.displayEnd);
+  const date4 = new Date();
   const diffTime2 = Math.abs(date4.getTime() - date3.getTime());
   const diffRemainingDays = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24));
-
   let title = bookedListing.attributes && bookedListing.attributes.title
+  let address = ""
+  if (bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.location) {
+    let location = bookedListing.attributes.publicData.location;
+    address = location.address
+    // address = `${location.address}, ${location.city}, ${location.state}  ${location.zip}`
+  }
   let page = bookedListing ? <Link to={`/l/${title}/${bookedListing.id.uuid}`} className={css.containerLink}>
     <div className={css.tripContainer}>
       <div className={css.scheduleWrapper}>
@@ -69,7 +74,7 @@ const RecItemGuest = props => {
             <div><b>{diffRemainingDays}</b> day{diffRemainingDays != 1 && 's'} left</div>
             <div>until your trip</div>
             <div>to <b>Seattle</b> </div>
-            <div>for <b>{diffTotalDays}</b> night{diffTotalDays!= 1 && 's'}!</div>
+            <div>for <b>{diffTotalDays}</b> night{diffTotalDays != 1 && 's'}!</div>
           </div>
         </div>
       </div>
@@ -88,28 +93,32 @@ const RecItemGuest = props => {
           </Carousel>
         </div>
         <div className={css.textWrapper}>
-            <div className={css.typeInfo}>
-              {startDate} {startMonth}
-              ~
+          <div className={css.typeInfo}>
+            {startDate} {startMonth}
+            ~
               {endDate} {endMonth}
-            </div>
-            <div className={css.typeInfo}>
-              Check in&nbsp;<b>{checkInTime}</b>&nbsp;/ Check out&nbsp;<b>{checkOutTime}</b>
-            </div>
+          </div>
+          <div className={css.typeInfo}>
+            Check in&nbsp;<b>{checkInTime}</b>&nbsp;/ Check out&nbsp;<b>{checkOutTime}</b>
+          </div>
 
-            <div className={css.titleInfo}>
-              <strong>
-                {title}
-              </strong>
-            </div>
+          <div className={css.titleInfo}>
+            <strong>
+              {title}
+            </strong>
+          </div>
 
-            <Link className={css.messageButton} to={`/order/${txId}/details`} >        
-                Message the Host 
+          <div className={css.titleInfo}>
+            {address}
+          </div>
+
+          <Link className={css.messageButton} to={`/order/${txId}/details`} >
+            Message the Host
             </Link>
         </div>
       </div>
     </div>
-     </Link> : null
+  </Link> : null
   return page
 }
 
@@ -171,34 +180,34 @@ class SectionUpcomingBookingsGuest extends React.Component {
             </div>
             <div className={css.allContainer}>
               <div>
-              {actualBookings.length == 1 ? 
-                actualBookings.map((booking, idx) => {
-                  return <RecItemGuest
-                    listings={allListings}
-                    user={user}
-                    booking={booking}
-                    {...props}
-                  />
+                {actualBookings.length == 1 ?
+                  actualBookings.map((booking, idx) => {
+                    return <RecItemGuest
+                      listings={allListings}
+                      user={user}
+                      booking={booking}
+                      {...props}
+                    />
                   })
-                  :             
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={this.state.key}
-                  onSelect={key => this.setState({ key })}
-                  className={css.tabs}
-                >
-                  {actualBookings.map((booking, idx) => {
-                    if (idx < 3)
-                      return <Tab eventKey={idx + 1} title={idx + 1}> <RecItemGuest
-                        listings={allListings}
-                        user={user}
-                        booking={booking}
-                        {...props}
-                      />
-                      </Tab>
-                  })}
-                </Tabs>
-              }
+                  :
+                  <Tabs
+                    id="controlled-tab-example"
+                    activeKey={this.state.key}
+                    onSelect={key => this.setState({ key })}
+                    className={css.tabs}
+                  >
+                    {actualBookings.map((booking, idx) => {
+                      if (idx < 3)
+                        return <Tab eventKey={idx + 1} title={idx + 1}> <RecItemGuest
+                          listings={allListings}
+                          user={user}
+                          booking={booking}
+                          {...props}
+                        />
+                        </Tab>
+                    })}
+                  </Tabs>
+                }
               </div>
             </div>
             <Link className={css.allButton} to={'/inbox/orders'}>
@@ -206,7 +215,7 @@ class SectionUpcomingBookingsGuest extends React.Component {
             </Link>
           </div>
         }
-     </div>
+      </div>
     );
   };
 }

@@ -270,6 +270,8 @@ export class CheckoutPageComponent extends Component {
 
     // Show breakdown only when transaction and booking are loaded
     // (i.e. have an id)
+    console.log('this.props0000000',this.props)
+    console.log('this.state0000000',this.state)
     const breakdown =
       currentTransaction.id && currentBooking.id ? (
         <BookingBreakdown
@@ -279,7 +281,8 @@ export class CheckoutPageComponent extends Component {
           transaction={currentTransaction}
           booking={currentBooking}
         />
-      ) : null;
+      ) :
+      null;
 
     // Allow showing page when currentUser is still being downloaded,
     // but show payment form only when user info is loaded.

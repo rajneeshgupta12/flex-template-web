@@ -39,12 +39,12 @@ import css from './BookingDatesForm.css';
 
 const { Money, UUID } = sdkTypes;
 
-const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges) => {
-  const numericPrice = convertMoneyToNumber(unitPrice);
+const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges, totalPrice) => {
+  const numericPrice = totalPrice / 100;
   let numericTotalPrice = new Decimal(numericPrice).times(unitCount).times(totalGlampers).toNumber();
   numericTotalPrice += Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount / 100)
-  numericTotalPrice += numericTotalPrice * Number(otherCharges && otherCharges.tax) / 100
-  // numericTotalPrice
+  let taxRate = Number(otherCharges && otherCharges.tax);
+  numericTotalPrice += numericTotalPrice * ((1 + taxRate) / 100)
   return new Money(
     convertUnitToSubUnit(numericTotalPrice, unitDivisor(unitPrice.currency)),
     unitPrice.currency
@@ -54,18 +54,27 @@ const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges) 
 // When we cannot speculatively initiate a transaction (i.e. logged
 // out), we must estimate the booking breakdown. This function creates
 // an estimated transaction object for that use case.
-const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, totalGlampers, otherCharges = {}) => {
+const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, totalGlampers, otherCharges = {}, totalUnitPrice,
+  allowedGuestNumber,
+  allowedMaxGuestNumber) => {
   const now = new Date();
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
-
+  let isExtraGuest = allowedGuestNumber >= totalGlampers ? false : true;
+  let totalExtraGuestsFee=0
+  if (isExtraGuest && otherCharges.extra_guest_fee) {
+    let totalExtraGuests = 0;
+    totalExtraGuests = totalGlampers - allowedGuestNumber;
+    totalExtraGuestsFee = totalExtraGuests * otherCharges.extra_guest_fee.amount;
+    totalUnitPrice += totalExtraGuestsFee
+  };
   const unitCount = isNightly
     ? nightsBetween(bookingStart, bookingEnd)
     : isDaily
       ? daysBetween(bookingStart, bookingEnd)
       : quantity;
 
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges);
+  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges, totalUnitPrice);
   // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
   // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
   // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)
@@ -120,37 +129,105 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   };
 };
 
-const NumberOfWeekdays = (days, startDate, endDate) => {
-  console.log("qwertyui", startDate, endDate)
-  var ndays = 1 + Math.round((endDate - startDate) / (24 * 3600 * 1000));
-  var sum = function (a, b) {
-    return a + Math.floor((ndays + (startDate.getDay() + 6 - b) % 7) / 7);
-  };
-  return days.reduce(sum, 0);
-
+const getDateObj = (date) => {
+  return new moment(date)
 }
+
+const enumerateDaysBetweenDates = (startDate, endDate) => {
+  let now = startDate.clone(), dates = [];
+
+  while (now.isSameOrBefore(endDate)) {
+    dates.push(getDateObj(now));
+    now.add(1, 'days');
+  }
+  return dates;
+};
+const calculateAmount = (startDate, endDate, otherCharges, rates, basePrice) => {
+  const selectedStartDate = getDateObj(startDate),
+    selectedEndDate = getDateObj(endDate),
+    otherDates = JSON.parse(otherCharges.calenders || ''),
+    endDateSpecial = otherDates && otherDates.endDateSpecial && getDateObj(otherDates.endDateSpecial),
+    endDateSeasonal = otherDates && otherDates.endDateSeasonal && getDateObj(otherDates.endDateSeasonal),
+    startDateSeasonal = otherDates && otherDates.startDateSeasonal && getDateObj(otherDates.startDateSeasonal),
+    startDateSpecial = otherDates && otherDates.startDateSpecial && getDateObj(otherDates.startDateSpecial);
+  const selectedDays = enumerateDaysBetweenDates(selectedStartDate, selectedEndDate)
+  let totalPrice = 0;
+  selectedDays.length > 1 && selectedDays.pop();
+  let totalAmountDetails = []
+  selectedDays.forEach(selectedDay => {
+    let isWeekendDay = selectedDay.isoWeekday() >= 5 && selectedDay.isoWeekday() <= 7 ? true : false
+    if (isWeekendDay && selectedDay >= startDateSpecial && selectedDay <= endDateSpecial && rates.special_weekend.amount) {
+      totalPrice += rates.special_weekend.amount
+      totalAmountDetails.push({ selectedDay, charge: rates.special_weekend.amount })
+      return null
+    }
+    if (selectedDay >= startDateSpecial && selectedDay <= endDateSpecial && rates.special_price.amount) {
+      totalPrice += rates.special_price.amount
+      totalAmountDetails.push({ selectedDay, charge: rates.special_price.amount })
+      return null
+    }
+    if (isWeekendDay && selectedDay >= startDateSeasonal && selectedDay <= endDateSeasonal && rates.seasonal_weekend.amount) {
+      totalPrice += rates.seasonal_weekend.amount
+      totalAmountDetails.push({ selectedDay, charge: rates.seasonal_weekend.amount })
+      return null
+    }
+    if (selectedDay >= startDateSeasonal && selectedDay <= endDateSeasonal && rates.seasonal_price.amount) {
+      totalPrice += rates.seasonal_price.amount
+      totalAmountDetails.push({ selectedDay, charge: rates.seasonal_price.amount })
+      return null
+    }
+    if (isWeekendDay && rates.weekend_price.amount) {
+      totalPrice += rates.weekend_price.amount
+      totalAmountDetails.push({ selectedDay, charge: rates.weekend_price.amount })
+      return null
+    } else {
+      totalPrice += basePrice.amount
+      totalAmountDetails.push({ selectedDay, charge: basePrice.amount })
+      return null
+    }
+  })
+  return { totalPrice, totalAmountDetails }
+}
+
 const EstimatedBreakdownMaybe = props => {
   const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers, otherCharges } = props.bookingData;
-  console.log('EstimatedBreakdownMaybe------', props)
-  const numberOfWeekday = NumberOfWeekdays([1, 2, 3, 4], startDate, endDate)
-  console.log("numberOfWeekday",numberOfWeekday)
+  const { publicData, price } = props;
+  let allowedGuestNumber = publicData.capacity.guestNumber;
+  let allowedMaxGuestNumber = publicData.capacity.maxGuestNumber;
+  const totalAmount = calculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;
   if (!canEstimatePrice) {
     return null;
   }
-
-  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity, totalGlampers, otherCharges);
+  const tx = estimatedTransaction(
+    unitType,
+    startDate,
+    endDate,
+    unitPrice,
+    quantity,
+    totalGlampers,
+    otherCharges,
+    totalAmount.totalPrice,
+    allowedGuestNumber,
+    allowedMaxGuestNumber
+  );
 
   return (
     <BookingBreakdown
+      isEstimatedtotal={true}
       className={css.receipt}
       userRole="customer"
       unitType={unitType}
+      totalAmount={totalAmount}
       transaction={tx}
+      totalGlampers={totalGlampers}
       booking={tx.booking}
+      publicData={publicData}
       otherCharges={otherCharges}
+      allowedGuestNumber={allowedGuestNumber}
+      allowedMaxGuestNumber={allowedMaxGuestNumber}
     />
   );
 };

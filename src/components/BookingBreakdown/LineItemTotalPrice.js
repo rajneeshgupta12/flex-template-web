@@ -33,8 +33,7 @@ const LineItemUnitPrice = props => {
   return (
     <div className={css.lineItem}>
       <div className={css.totalLabel}>{totalLabel}</div>
-      {/* <div className={css.totalPrice}>{formattedTotalPrice}</div> */}
-      calculation error
+      <div className={css.totalPrice}>{formattedTotalPrice}</div>
     </div>
   );
 };
