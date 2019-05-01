@@ -34,6 +34,7 @@ import { TRANSITION_REQUEST, TX_TRANSITION_ACTOR_CUSTOMER } from '../../util/tra
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, LINE_ITEM_UNITS } from '../../util/types';
 import { unitDivisor, convertMoneyToNumber, convertUnitToSubUnit } from '../../util/currency';
 import { BookingBreakdown } from '../../components';
+import { CalculateAmount } from './CalculationsUtils'
 
 import css from './BookingDatesForm.css';
 
@@ -61,7 +62,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
   let isExtraGuest = allowedGuestNumber >= totalGlampers ? false : true;
-  let totalExtraGuestsFee=0
+  let totalExtraGuestsFee = 0
   if (isExtraGuest && otherCharges.extra_guest_fee) {
     let totalExtraGuests = 0;
     totalExtraGuests = totalGlampers - allowedGuestNumber;
@@ -129,78 +130,30 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   };
 };
 
-const getDateObj = (date) => {
-  return new moment(date)
-}
-
-const enumerateDaysBetweenDates = (startDate, endDate) => {
-  let now = startDate.clone(), dates = [];
-
-  while (now.isSameOrBefore(endDate)) {
-    dates.push(getDateObj(now));
-    now.add(1, 'days');
-  }
-  return dates;
-};
-const calculateAmount = (startDate, endDate, otherCharges, rates, basePrice) => {
-  const selectedStartDate = getDateObj(startDate),
-    selectedEndDate = getDateObj(endDate),
-    otherDates = JSON.parse(otherCharges.calenders || ''),
-    endDateSpecial = otherDates && otherDates.endDateSpecial && getDateObj(otherDates.endDateSpecial),
-    endDateSeasonal = otherDates && otherDates.endDateSeasonal && getDateObj(otherDates.endDateSeasonal),
-    startDateSeasonal = otherDates && otherDates.startDateSeasonal && getDateObj(otherDates.startDateSeasonal),
-    startDateSpecial = otherDates && otherDates.startDateSpecial && getDateObj(otherDates.startDateSpecial);
-  const selectedDays = enumerateDaysBetweenDates(selectedStartDate, selectedEndDate)
-  let totalPrice = 0;
-  selectedDays.length > 1 && selectedDays.pop();
-  let totalAmountDetails = []
-  selectedDays.forEach(selectedDay => {
-    let isWeekendDay = selectedDay.isoWeekday() >= 5 && selectedDay.isoWeekday() <= 7 ? true : false
-    if (isWeekendDay && selectedDay >= startDateSpecial && selectedDay <= endDateSpecial && rates.special_weekend.amount) {
-      totalPrice += rates.special_weekend.amount
-      totalAmountDetails.push({ selectedDay, charge: rates.special_weekend.amount })
-      return null
-    }
-    if (selectedDay >= startDateSpecial && selectedDay <= endDateSpecial && rates.special_price.amount) {
-      totalPrice += rates.special_price.amount
-      totalAmountDetails.push({ selectedDay, charge: rates.special_price.amount })
-      return null
-    }
-    if (isWeekendDay && selectedDay >= startDateSeasonal && selectedDay <= endDateSeasonal && rates.seasonal_weekend.amount) {
-      totalPrice += rates.seasonal_weekend.amount
-      totalAmountDetails.push({ selectedDay, charge: rates.seasonal_weekend.amount })
-      return null
-    }
-    if (selectedDay >= startDateSeasonal && selectedDay <= endDateSeasonal && rates.seasonal_price.amount) {
-      totalPrice += rates.seasonal_price.amount
-      totalAmountDetails.push({ selectedDay, charge: rates.seasonal_price.amount })
-      return null
-    }
-    if (isWeekendDay && rates.weekend_price.amount) {
-      totalPrice += rates.weekend_price.amount
-      totalAmountDetails.push({ selectedDay, charge: rates.weekend_price.amount })
-      return null
-    } else {
-      totalPrice += basePrice.amount
-      totalAmountDetails.push({ selectedDay, charge: basePrice.amount })
-      return null
-    }
-  })
-  return { totalPrice, totalAmountDetails }
-}
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers, otherCharges } = props.bookingData;
-  const { publicData, price } = props;
+  const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers } = props.bookingData;
+  const { publicData, price,setFormattedUnitPrice,updatedTotalPrice } = props;
+  const otherCharges = publicData && publicData.other_charges && {
+    cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
+    extra_guest_fee: publicData.other_charges.extra_guest_fee ? JSON.parse(publicData.other_charges.extra_guest_fee) : 0,
+    seasonal_price: publicData.other_charges.seasonal_price ? JSON.parse(publicData.other_charges.seasonal_price) : 0,
+    special_price: publicData.other_charges.special_price ? JSON.parse(publicData.other_charges.special_price) : 0,
+    weekend_price: publicData.other_charges.weekend_price ? JSON.parse(publicData.other_charges.weekend_price) : 0,
+    seasonal_weekend: publicData.other_charges.seasonal_weekend ? JSON.parse(publicData.other_charges.seasonal_weekend) : 0,
+    special_weekend: publicData.other_charges.special_weekend ? JSON.parse(publicData.other_charges.special_weekend) : 0,
+    tax: publicData.other_charges.tax ? Number(publicData.other_charges.tax) : 0,
+  }
   let allowedGuestNumber = publicData.capacity.guestNumber;
   let allowedMaxGuestNumber = publicData.capacity.maxGuestNumber;
-  const totalAmount = calculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
+  const totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;
   if (!canEstimatePrice) {
     return null;
   }
+
   const tx = estimatedTransaction(
     unitType,
     startDate,
@@ -216,7 +169,6 @@ const EstimatedBreakdownMaybe = props => {
 
   return (
     <BookingBreakdown
-      isEstimatedtotal={true}
       className={css.receipt}
       userRole="customer"
       unitType={unitType}
@@ -228,6 +180,9 @@ const EstimatedBreakdownMaybe = props => {
       otherCharges={otherCharges}
       allowedGuestNumber={allowedGuestNumber}
       allowedMaxGuestNumber={allowedMaxGuestNumber}
+      updatedTotalPrice={updatedTotalPrice}
+      setFormattedUnitPrice={setFormattedUnitPrice}
+
     />
   );
 };

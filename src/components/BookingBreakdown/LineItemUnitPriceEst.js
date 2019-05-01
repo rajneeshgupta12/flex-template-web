@@ -3,6 +3,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { formatMoney } from '../../util/currency';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import moment from 'moment';
+import { Modal, Button } from '../../components';
 
 import css from './BookingBreakdown.css';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -14,7 +15,6 @@ class LineItemUnitPriceEst extends React.Component {
     this.state = { showDetails: false };
   }
   render() {
-    console.log('-isEstimatedtotal')
     const { transaction, unitType, intl, otherCharges, totalAmount, publicData, totalGlampers } = this.props;
     const isNightly = unitType === LINE_ITEM_NIGHT;
     const isDaily = unitType === LINE_ITEM_DAY;
@@ -54,11 +54,16 @@ class LineItemUnitPriceEst extends React.Component {
         </div>
         {this.state.showDetails &&
           <div>
-            <ul>
-              {totalAmountDetails.map(days => {
-                return <li> {moment(days.selectedDay).format("ll")} ${days.charge / 100}</li>
-              })}
-            </ul>
+            <Modal id="UniqueIdForThisModal" isOpen={this.state.showDetails} onClose={() => {
+              this.setState({ showDetails: !this.state.showDetails })
+            }}
+              onManageDisableScrolling={() => { }} >
+              <ul>
+                {totalAmountDetails.map(days => {
+                  return <li> {moment(days.selectedDay).format("ll")} ${days.charge / 100}</li>
+                })}
+              </ul>
+            </Modal>
 
           </div>}
         <div className={css.lineItem}>

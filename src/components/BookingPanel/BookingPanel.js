@@ -68,6 +68,14 @@ const BookingPanel = props => {
     description,
     publicData,
     intl,
+    setFormattedUnitPrice,
+    updatedTotalPrice,
+    startDate,
+    endDate,
+    updateDates
+    ,updateGlampers,
+    calculatePrice
+
   } = props;
 
   const price = listing.attributes.price;
@@ -126,6 +134,13 @@ const BookingPanel = props => {
             fetchTimeSlotsError={fetchTimeSlotsError}
             description={description}
             publicData={publicData}
+            setFormattedUnitPrice={setFormattedUnitPrice}
+            updatedTotalPrice={updatedTotalPrice}
+            startDate={startDate}
+            endDate={endDate}
+            updateDates={updateDates}
+            updateGlampers={updateGlampers}
+            calculatePrice={calculatePrice}
           />
         ) : null}
       </ModalInMobile>

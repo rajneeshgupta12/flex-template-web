@@ -23,10 +23,10 @@ import LineItemProviderCommissionRefundMaybe from './LineItemProviderCommissionR
 import LineItemRefundMaybe from './LineItemRefundMaybe';
 import LineItemTotalPrice from './LineItemTotalPrice';
 import css from './BookingBreakdown.css';
-import LineItemUnitPriceEst from './LineItemUnitPriceEst';
 
 export const BookingBreakdownComponent = props => {
-  const { rootClassName, className, userRole, totalAmount, unitType, transaction, booking, intl, otherCharges, allowedGuestNumber, allowedMaxGuestNumber, totalGlampers, publicData, isEstimatedtotal } = props;
+  const { rootClassName, className, userRole, totalAmount, unitType, transaction, booking, intl, otherCharges, allowedGuestNumber, allowedMaxGuestNumber, totalGlampers, publicData,setFormattedUnitPrice,
+    updatedTotalPrice } = props;
 
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
@@ -37,10 +37,10 @@ export const BookingBreakdownComponent = props => {
     return (hasCustomerCommission || hasProviderCommission) && !item.reversal;
   });
   const classes = classNames(rootClassName || css.root, className);
+  console.log('-------')
   return (
     <div className={classes}>
-      {isEstimatedtotal ?
-        <LineItemUnitPriceEst
+        <LineItemUnitPrice
           publicData={publicData}
           allowedGuestNumber={allowedGuestNumber}
           allowedMaxGuestNumber={allowedMaxGuestNumber}
@@ -50,9 +50,10 @@ export const BookingBreakdownComponent = props => {
           totalGlampers={totalGlampers}
           unitType={unitType}
           intl={intl}
+          setFormattedUnitPrice={setFormattedUnitPrice}
+          updatedTotalPrice={updatedTotalPrice}
         />
-        : <LineItemUnitPrice transaction={transaction} otherCharges={otherCharges} unitType={unitType} intl={intl} />
-      }
+
       <LineItemBookingPeriod transaction={transaction} booking={booking} unitType={unitType} />
       <LineItemUnitsMaybe transaction={transaction} unitType={unitType} />
 

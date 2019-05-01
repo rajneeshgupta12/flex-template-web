@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
+import  {CalculateAmount} from '../../forms/BookingDatesForm/CalculationsUtils'
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -82,6 +83,7 @@ export class ListingPageComponent extends Component {
       pageClassNames: [],
       // imageCarouselOpen: false,
       props: props,
+      updatedTotalPrice: 10,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
     };
 
@@ -90,21 +92,17 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
-  handleSubmit(values,totalGlampers) {
+  handleSubmit(values, totalGlampers) {
     let { history, getListing, params, useInitialValues, listing } = this.props;
     listing = listing.data
-    // const listingId = new UUID(params.id);
-    // console.log('props',this.props)
-    // const listing = getListing(listingId);
-    // console.log('getListing(listingId)', getListing(listingId))
     const { total_glampers, totalPrice } = values;
     const { startDate, endDate, } = values && values.bookingDates;
 
     const initialValues = {
       listing,
       bookingData: {
-        total_glampers:totalGlampers,
-        totalPrice:10
+        total_glampers: totalGlampers,
+        totalPrice: 10
       },
       bookingDates: {
         bookingStart: startDate,
@@ -168,12 +166,45 @@ export class ListingPageComponent extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // if (newProps && newProps.listing && newProps.listing.data && newProps.listing.data.attributes && newProps.listing.data.attributes.price && newProps.listing.data.attributes.price.amount) {
-    //   let price = newProps.listing.data.attributes.price.amount;
-    //   newProps.listing.data.attributes.price.amount = (price / 100);
-    // }
     this.setState({ props: newProps })
   }
+
+  calculatePrice = (publicData, price) => {
+    const otherCharges = publicData && publicData.other_charges && {
+      cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
+      extra_guest_fee: publicData.other_charges.extra_guest_fee ? JSON.parse(publicData.other_charges.extra_guest_fee) : 0,
+      seasonal_price: publicData.other_charges.seasonal_price ? JSON.parse(publicData.other_charges.seasonal_price) : 0,
+      special_price: publicData.other_charges.special_price ? JSON.parse(publicData.other_charges.special_price) : 0,
+      weekend_price: publicData.other_charges.weekend_price ? JSON.parse(publicData.other_charges.weekend_price) : 0,
+      seasonal_weekend: publicData.other_charges.seasonal_weekend ? JSON.parse(publicData.other_charges.seasonal_weekend) : 0,
+      special_weekend: publicData.other_charges.special_weekend ? JSON.parse(publicData.other_charges.special_weekend) : 0,
+      tax: publicData.other_charges.tax ? Number(publicData.other_charges.tax) : 0,
+    }
+    const { startDate, endDate } = this.state
+    if (startDate, endDate, publicData, price) {
+      let totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
+      const { totalAmountDetails } = totalAmount;
+    let avgPrice = 0
+    totalAmountDetails.forEach(day => {
+      avgPrice += day.charge
+    })
+    let formattedUnitPrice = (avgPrice) / (totalAmountDetails.length)
+    formattedUnitPrice = (formattedUnitPrice / 100).toFixed(2).toString()
+    // this.setState({ : })
+
+    this.setState({updatedTotalPriceNew:formattedUnitPrice})
+
+    }
+  }
+
+  updateDates = (e) => {
+    this.setState({ startDate: e.startDate, endDate: e.endDate })
+  }
+
+  updateGlampers = (e) => {
+    this.setState({ total_glampers: e.target.value })
+  }
+
   render() {
     const {
       unitType,
@@ -204,6 +235,7 @@ export class ListingPageComponent extends Component {
       tourAmenitiesConfig,
 
     } = this.state.props;
+    const { startDate, endDate } = this.state
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
@@ -248,7 +280,7 @@ export class ListingPageComponent extends Component {
       title = '',
       publicData,
     } = currentListing.attributes;
-    const charges =  publicData.other_charges;
+    const charges = publicData.other_charges;
     // price = charges
     const {
       author
@@ -263,7 +295,7 @@ export class ListingPageComponent extends Component {
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: price && (price.amount / 100) }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: this.state.updatedTotalPriceNew || price && (price.amount / 100) }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
     // const bookingSubTitle =
@@ -340,16 +372,12 @@ export class ListingPageComponent extends Component {
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
     const { formattedPrice, priceTitle } = priceData(price, intl);
-    const handleBookingSubmit = (values,totalGlampers) => {
-      console.log("handle booking submit------------called ",values);
-      console.log("handle booking submit------totalGlampers------called ",totalGlampers);
+    const handleBookingSubmit = (values, totalGlampers) => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
-        console.log('isOwnListing || isCurrentlyClosed= true')
-
         window.scrollTo(0, 0);
       } else {
-        this.handleSubmit(values,totalGlampers);
+        this.handleSubmit(values, totalGlampers);
       }
     };
 
@@ -503,6 +531,11 @@ export class ListingPageComponent extends Component {
                   price={price}
                   description={description}
                   publicData={publicData}
+                  updatedTotalPrice={this.state.updatedTotalPrice}
+                  updateDates={this.updateDates}
+                  startDate={startDate}
+                  endDate={endDate}
+                  calculatePrice={this.calculatePrice}
                 />
               </div>
             </div>

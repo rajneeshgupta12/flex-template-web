@@ -17,7 +17,7 @@ import css from './BookingDatesForm.css';
 export class BookingDatesFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { focusedInput: null,total_glampers:0 };
+    this.state = { focusedInput: null, total_glampers: 0 };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.onFocusedInputChange = this.onFocusedInputChange.bind(this);
   }
@@ -41,7 +41,7 @@ export class BookingDatesFormComponent extends Component {
       e.preventDefault();
       this.setState({ focusedInput: END_DATE });
     } else {
-      this.props.onSubmit(e,this.state.total_glampers);
+      this.props.onSubmit(e, this.state.total_glampers);
     }
   }
 
@@ -68,16 +68,6 @@ export class BookingDatesFormComponent extends Component {
       );
     }
     const { total_glampers, } = this.state
-    const otherCharges = this.props && this.props.publicData && this.props.publicData.other_charges && {
-      cleaning_fee: this.props.publicData.other_charges.cleaning_fee ? JSON.parse(this.props.publicData.other_charges.cleaning_fee) : 0,
-      extra_guest_fee: this.props.publicData.other_charges.extra_guest_fee ? JSON.parse(this.props.publicData.other_charges.extra_guest_fee) : 0,
-      seasonal_price: this.props.publicData.other_charges.seasonal_price ? JSON.parse(this.props.publicData.other_charges.seasonal_price) : 0,
-      special_price: this.props.publicData.other_charges.special_price ? JSON.parse(this.props.publicData.other_charges.special_price) : 0,
-      weekend_price: this.props.publicData.other_charges.weekend_price ? JSON.parse(this.props.publicData.other_charges.weekend_price) : 0,
-      seasonal_weekend: this.props.publicData.other_charges.seasonal_weekend ? JSON.parse(this.props.publicData.other_charges.seasonal_weekend) : 0,
-      special_weekend: this.props.publicData.other_charges.special_weekend ? JSON.parse(this.props.publicData.other_charges.special_weekend) : 0,
-      tax: this.props.publicData.other_charges.tax ?  Number(this.props.publicData.other_charges.tax) : 0,
-    }
 
     return (
       <FinalForm
@@ -131,8 +121,7 @@ export class BookingDatesFormComponent extends Component {
                 // NOTE: If unitType is `line-item/units`, a new picker
                 // for the quantity should be added to the form.
                 quantity: 1,
-                totalGlampers: total_glampers,
-                otherCharges
+                totalGlampers: total_glampers
               }
               : null;
           const bookingInfo = bookingData ? (
@@ -140,7 +129,8 @@ export class BookingDatesFormComponent extends Component {
               <h3 className={css.priceBreakdownTitle}>
                 <FormattedMessage id="BookingDatesForm.priceBreakdownTitle" />
               </h3>
-              <EstimatedBreakdownMaybe bookingData={bookingData} {...this.props}/>
+              <EstimatedBreakdownMaybe
+                bookingData={bookingData} {...this.props} />
             </div>
           ) : null;
 
@@ -164,61 +154,68 @@ export class BookingDatesFormComponent extends Component {
             submitButtonWrapperClassName || css.submitButtonWrapper
           );
           return (
+
             <Form onSubmit={handleSubmit} className={classes}>
               {timeSlotsError}
-              <FieldDateRangeInput
-                className={css.bookingDates}
-                name="bookingDates"
-                unitType={unitType}
-                startDateId={`${form}.bookingStartDate`}
-                startDateLabel={bookingStartLabel}
-                startDatePlaceholderText={startDatePlaceholderText}
-                endDateId={`${form}.bookingEndDate`}
-                endDateLabel={bookingEndLabel}
-                endDatePlaceholderText={endDatePlaceholderText}
-                focusedInput={this.state.focusedInput}
-                onFocusedInputChange={this.onFocusedInputChange}
-                format={null}
-                updateDates={(e) => {
-                  this.setState({ startDate: e.startDate, endDate: e.endDate })
-                }}
-                timeSlots={timeSlots}
-                useMobileMargins
-                validate={composeValidators(
-                  required(requiredMessage),
-                  bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
-                )}
-              />
-              <div
-                onChange={(e) => { this.setState({ total_glampers: e.target.value }) }}
-              >
-                <FieldTextInput
-                  id="quantity"
-                  name="quantity"
-                  type="number"
-                  min={1}
-                  max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
-                  }
-                  label={"Number of people"}
-                  placeholder={"2"}
-                  validate={composeValidators(required("Required"))}
+
+                <FieldDateRangeInput
+                  className={css.bookingDates}
+                  name="bookingDates"
+                  unitType={unitType}
+                  startDateId={`${form}.bookingStartDate`}
+                  startDateLabel={bookingStartLabel}
+                  startDatePlaceholderText={startDatePlaceholderText}
+                  endDateId={`${form}.bookingEndDate`}
+                  endDateLabel={bookingEndLabel}
+                  endDatePlaceholderText={endDatePlaceholderText}
+                  focusedInput={this.state.focusedInput}
+                  onFocusedInputChange={this.onFocusedInputChange}
+                  format={null}
+                  updateDates={(e) => {
+                    this.props.updateDates(e)
+                    this.setState({ startDate: e.startDate, endDate: e.endDate,total_glampers:total_glampers })
+                    this.props.calculatePrice(this.props.publicData, this.props.price)
+                  }}
+                  timeSlots={timeSlots}
+                  useMobileMargins
+                  validate={composeValidators(
+                    required(requiredMessage),
+                    bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
+                  )}
                 />
-              </div>
-              {bookingInfo}
-              <p className={css.smallPrint}>
-                <FormattedMessage
-                  id={
-                    isOwnListing
-                      ? 'BookingDatesForm.ownListing'
-                      : 'BookingDatesForm.youWontBeChargedInfo'
-                  }
-                />
-              </p>
-              <div className={submitButtonClasses}>
-                <PrimaryButton type="submit">
-                  <FormattedMessage id="BookingDatesForm.requestToBook" />
-                </PrimaryButton>
-              </div>
+                <div
+                  onChange={(e) => { this.setState({ total_glampers: e.target.value })
+                  this.props.calculatePrice(this.props.publicData, this.props.price)
+                 }}
+                >
+                  <FieldTextInput
+                    id="quantity"
+                    name="quantity"
+                    type="number"
+                    min={1}
+                    max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
+                    }
+                    label={"Number of people"}
+                    placeholder={"2"}
+                    validate={composeValidators(required("Required"))}
+
+                  />
+                </div>
+                {bookingInfo}
+                <p className={css.smallPrint}>
+                  <FormattedMessage
+                    id={
+                      isOwnListing
+                        ? 'BookingDatesForm.ownListing'
+                        : 'BookingDatesForm.youWontBeChargedInfo'
+                    }
+                  />
+                </p>
+                <div className={submitButtonClasses}>
+                  <PrimaryButton type="submit">
+                    <FormattedMessage id="BookingDatesForm.requestToBook" />
+                  </PrimaryButton>
+                </div>
             </Form>
           );
         }}

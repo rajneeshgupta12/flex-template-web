@@ -41,6 +41,7 @@ import config from '../../config';
 
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
+import EstimatedBreakdownMaybe from '../../forms/BookingDatesForm/EstimatedBreakdownMaybe';
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -270,19 +271,6 @@ export class CheckoutPageComponent extends Component {
 
     // Show breakdown only when transaction and booking are loaded
     // (i.e. have an id)
-    console.log('this.props0000000',this.props)
-    console.log('this.state0000000',this.state)
-    const breakdown =
-      currentTransaction.id && currentBooking.id ? (
-        <BookingBreakdown
-          className={css.bookingBreakdown}
-          userRole="customer"
-          unitType={config.bookingUnitType}
-          transaction={currentTransaction}
-          booking={currentBooking}
-        />
-      ) :
-      null;
 
     // Allow showing page when currentUser is still being downloaded,
     // but show payment form only when user info is loaded.
@@ -417,6 +405,36 @@ export class CheckoutPageComponent extends Component {
     const price = currentListing.attributes.price;
     const formattedPrice = formatMoney(intl, price);
     const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
+    let total_glampers = this.state && this.state.pageData
+      && this.state.pageData.bookingData
+      && this.state.pageData.bookingData.total_glampers;
+
+    const bookingData1 = {
+      unitType,
+      unitPrice: price,
+      startDate: bookingDates.bookingStart,
+      endDate: bookingDates.bookingEnd,
+      // NOTE: If unitType is `line-item/units`, a new picker
+      // for the quantity should be added to the form.
+      quantity: 1,
+      totalGlampers: total_glampers,
+    }
+
+    const breakdown =
+      currentTransaction.id && currentBooking.id ? (
+        <EstimatedBreakdownMaybe
+        bookingData={bookingData1}
+         price={price}
+         publicData={currentListing.attributes.publicData} />
+        // <BookingBreakdown
+        //   className={css.bookingBreakdown}
+        //   userRole="customer"
+        //   unitType={config.bookingUnitType}
+        //   transaction={currentTransaction}
+        //   booking={currentBooking}
+        // />
+      ) :
+        null;
 
     const showInitialMessageInput = !enquiredTransaction;
 
