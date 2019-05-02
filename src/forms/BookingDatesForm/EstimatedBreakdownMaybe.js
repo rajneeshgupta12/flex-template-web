@@ -133,7 +133,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate,  totalGlampers } = props.bookingData;
   const { publicData, price, setFormattedUnitPrice, updatedTotalPrice } = props;
   const otherCharges = publicData && publicData.other_charges && {
     cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
@@ -149,6 +149,7 @@ const EstimatedBreakdownMaybe = props => {
   let allowedMaxGuestNumber = publicData.capacity.maxGuestNumber;
   const totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
   const isUnits = unitType === LINE_ITEM_UNITS;
+  let quantity= totalGlampers
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;
   if (!canEstimatePrice) {

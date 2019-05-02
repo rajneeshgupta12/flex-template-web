@@ -200,7 +200,6 @@ export const InboxItem = props => {
   const linkClasses = classNames(css.itemLink, {
     [css.bannedUserLink]: isOtherUserBanned,
   });
-  console.log('props------inbox-', props)
   return (
     <div className={css.item}>
       <div className={css.itemAvatar}>

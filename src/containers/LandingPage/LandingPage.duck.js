@@ -158,7 +158,7 @@ const INBOX_PAGE_SIZE = 10;
 
 
 export const getAllOwnListings = (listingId, dispatch, getState, sdk) => {
-  return sdk.ownListings.query({})
+  return sdk.ownListings.query({include:['images','author']})
     .then(response => {
       return dispatch(getAllOwnListingsSuccess(response))
     })
@@ -171,7 +171,7 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
   getAllOwnListings(listingId, dispatch, getState, sdk)
   return sdk.listings.query({
     authorId: undefined,
-    include: ["images"],
+    include: ["images",'author'],
     'fields.image': [
       // Listing page
       'variants.landscape-crop',
@@ -209,7 +209,7 @@ export const getAllListings = (listingId) => (dispatch, getState, sdk) => {
 export const getTx = (tx) => async (dispatch, getState, sdk) => {
   const params = {
     id: new UUID(tx),
-    include: ['customer'],
+    include: ['customer','provider'],
   };
 
   sdk.transactions.show(params, { expand: true })

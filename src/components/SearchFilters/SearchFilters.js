@@ -218,10 +218,13 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
+        {dateRangeFilterElement}
+
+        {priceFilterElement}
+        {categoryFilterElement}
+        {categoryFilterElement}
         {categoryFilterElement}
         {amenitiesFilterElement}
-        {priceFilterElement}
-        {dateRangeFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
 

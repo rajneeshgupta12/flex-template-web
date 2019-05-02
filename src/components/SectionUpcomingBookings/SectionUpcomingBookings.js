@@ -22,6 +22,8 @@ const RecItemHost = props => {
     && bookedListing.relationships
     && bookedListing.relationships.images.data[0].id.uuid
   let userArrayIndex = listings && listings.included.map(function (x) { return x.id.uuid; }).indexOf(bookedListingImageId);
+  let proId = bookedListing.relationships && bookedListing.relationships.images && bookedListing.relationships.images.data.length > 0 && bookedListing.relationships.images.data[0] && bookedListing.relationships.images.data[0].id.uuid
+
   let img = listings && listings.included[userArrayIndex];
   let tx = booking && booking.relationships && booking.relationships.transaction
     && booking.relationships.transaction.data
@@ -37,9 +39,7 @@ const RecItemHost = props => {
   const checkInTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_in_time
   const checkOutTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_out_time;
   let title = bookedListing.attributes && bookedListing.attributes.title;
-  console.log('bookedListing=======',bookedListing)
-  console.log('booking=======',booking)
-  console.log('tx=======',tx)
+
   return (
     <div>
       <Link to={`/l/${title}/${bookedlistingId.uuid}`} >
@@ -67,7 +67,7 @@ const RecItemHost = props => {
                 height="25" width="25"
               />
             }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
-            bookedListing.attributes.publicData.property_type.type.title}
+              bookedListing.attributes.publicData.property_type.type.title}
             &nbsp;&nbsp;&nbsp;
           </div>
           <div className={css.titleInfo}>
@@ -91,7 +91,7 @@ const RecItemHost = props => {
             </strong>
           </div>
           <Link className={css.messageButton} to={`/sale/${tx}/details`}>
-              Message to the guest
+            Message to the guest
           </Link>
           <div className={css.costInfo}>
           </div>
@@ -103,14 +103,18 @@ const RecItemHost = props => {
 
 const SectionUpcomingBookings = props => {
   const { rootClassName, className, result, isGetBookingListingCalled, getBookingListingCalled, getTxCalled, isGetTxCalled } = props;
+
   const classes = classNames(rootClassName || css.root, className);
   const listings = result && result.LandingPage && result.LandingPage.ownListings && result.LandingPage.ownListings.data;
 
   const allListings = result && result.LandingPage && result.LandingPage.listings && result.LandingPage.listings.data;
-
   let user = result && result.LandingPage && result.LandingPage.Tx && result.LandingPage.Tx.data.data.relationships.customer.data;
-  !isGetBookingListingCalled && listings && listings.data.forEach(listing => {
-    props.getListingBookings(listing.id.uuid)
+  let userId = user && user.id.uuid
+  user = result.marketplaceData.entities.user[userId]
+  if (user)
+    user['profileImage'] = user && user.relationships && user.relationships.profileImage
+  !isGetBookingListingCalled && listings && listings.data.forEach(async listing => {
+    await props.getListingBookings(listing.id.uuid)
   }, getBookingListingCalled());
   const allBookings = result && result.LandingPage && result.LandingPage.allBookings && result.LandingPage.allBookings.data;
   let bookedOasis = []
@@ -147,7 +151,7 @@ const SectionUpcomingBookings = props => {
               })}
             </div>
           </div>
-            <Link className={css.allButton} to={'/inbox/sales'}>See All</Link>
+          <Link className={css.allButton} to={'/inbox/sales'}>See All</Link>
         </div>
       }
     </div>

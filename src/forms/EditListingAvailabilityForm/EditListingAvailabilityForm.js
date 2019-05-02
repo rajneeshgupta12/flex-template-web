@@ -5,7 +5,7 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { Form, Button, FieldSelect } from '../../components';
+import { Form, Button, FieldSelect,FieldCheckboxGroup } from '../../components';
 
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
 import css from './EditListingAvailabilityForm.css';
@@ -69,6 +69,7 @@ export class EditListingAvailabilityFormComponent extends Component {
             <option key={"10:00 PM"} value={"10:00 PM"}>  {"10:00 PM"} </option>,
             <option key={"11:00 PM"} value={"11:00 PM"}>  {"11:00 PM"} </option>,
           ]
+          const optionsQt = [{ key: "isAllowQT", label: 'Do you want to allow Multiple transaction process' }]
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               {errorMessage}
@@ -119,6 +120,12 @@ export class EditListingAvailabilityFormComponent extends Component {
                   return option
                 })}
               </FieldSelect>
+              <FieldCheckboxGroup
+                className={css.features}
+                id={'isQuickIransactionAllow'}
+                name={'isQuickIransactionAllow'}
+                options={optionsQt}
+              />
               <Button
                 className={css.submitButton}
                 type="submit"

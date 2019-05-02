@@ -163,6 +163,7 @@ export class CheckoutPageComponent extends Component {
       cardToken,
       bookingStart: speculatedTransaction.booking.attributes.start,
       bookingEnd: speculatedTransaction.booking.attributes.end,
+      totalGlampers:this.state.total_glampers||0
     };
 
     const enquiredTransaction = this.state.pageData.enquiredTransaction;

@@ -65,8 +65,8 @@ ExpandableBio.propTypes = {
 
 const UserCard = props => {
 
-  const { rootClassName, className, user, currentUser, onContactUser, author, listingAuthorName ,listing} = props;
-
+  const { rootClassName, className, user, currentUser, onContactUser, author, listingAuthorName, listing } = props;
+  user['profileImage'] = user.relationships.profileImage
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
 
@@ -120,6 +120,10 @@ const UserCard = props => {
   let hostId = author && author.data && author.data.id && author.data.id.uuid
   let displayHostName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
   displayHostName = <Link to={`/u/${hostId}`} >{listingAuthorName}</Link>
+
+  let userArrayIndex = listing && listing.includedRelationships.map(function (x) { return x.id.uuid; }).indexOf(user&&user.profileImage&& user.profileImage.data&&  user.profileImage.data.id.uuid);
+  let image = listing&& listing.includedRelationships &&listing.includedRelationships[userArrayIndex]
+  user.profileImage = image
   return (
     <div className={classes}>
       <div className={css.content}>
