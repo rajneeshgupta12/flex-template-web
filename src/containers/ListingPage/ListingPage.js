@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
-import  {CalculateAmount} from '../../forms/BookingDatesForm/CalculationsUtils'
+import { CalculateAmount } from '../../forms/BookingDatesForm/CalculationsUtils'
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -183,17 +183,12 @@ export class ListingPageComponent extends Component {
     const { startDate, endDate } = this.state
     if (startDate, endDate, publicData, price) {
       let totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
-      const { totalAmountDetails } = totalAmount;
-    let avgPrice = 0
-    totalAmountDetails.forEach(day => {
-      avgPrice += day.charge
-    })
-    let formattedUnitPrice = (avgPrice) / (totalAmountDetails.length)
-    formattedUnitPrice = (formattedUnitPrice / 100).toFixed(2).toString()
-    // this.setState({ : })
-
-    this.setState({updatedTotalPriceNew:formattedUnitPrice})
-
+      const { averagePrice } = totalAmount;
+      let formattedUnitPrice = (averagePrice / 100).toFixed(2).toString()
+      if (formattedUnitPrice == 'NaN') {
+        formattedUnitPrice = "Loading... Price"
+      }
+      this.setState({ updatedTotalPriceNew: formattedUnitPrice })
     }
   }
 
@@ -490,7 +485,6 @@ export class ListingPageComponent extends Component {
                     natureAmenitiesConfig={natureAmenitiesConfig}
                     convenienceAmenitiesConfig={convenienceAmenitiesConfig}
                     tourAmenitiesConfig={tourAmenitiesConfig}
-
                     publicData={publicData}
                   />
                   <SectionRulesMaybe publicData={publicData} />

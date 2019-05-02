@@ -158,64 +158,65 @@ export class BookingDatesFormComponent extends Component {
             <Form onSubmit={handleSubmit} className={classes}>
               {timeSlotsError}
 
-                <FieldDateRangeInput
-                  className={css.bookingDates}
-                  name="bookingDates"
-                  unitType={unitType}
-                  startDateId={`${form}.bookingStartDate`}
-                  startDateLabel={bookingStartLabel}
-                  startDatePlaceholderText={startDatePlaceholderText}
-                  endDateId={`${form}.bookingEndDate`}
-                  endDateLabel={bookingEndLabel}
-                  endDatePlaceholderText={endDatePlaceholderText}
-                  focusedInput={this.state.focusedInput}
-                  onFocusedInputChange={this.onFocusedInputChange}
-                  format={null}
-                  updateDates={(e) => {
-                    this.props.updateDates(e)
-                    this.setState({ startDate: e.startDate, endDate: e.endDate,total_glampers:total_glampers })
-                    this.props.calculatePrice(this.props.publicData, this.props.price)
-                  }}
-                  timeSlots={timeSlots}
-                  useMobileMargins
-                  validate={composeValidators(
-                    required(requiredMessage),
-                    bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
-                  )}
-                />
-                <div
-                  onChange={(e) => { this.setState({ total_glampers: e.target.value })
-                  this.props.calculatePrice(this.props.publicData, this.props.price)
-                 }}
-                >
-                  <FieldTextInput
-                    id="quantity"
-                    name="quantity"
-                    type="number"
-                    min={1}
-                    max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
-                    }
-                    label={"Number of people"}
-                    placeholder={"2"}
-                    validate={composeValidators(required("Required"))}
+              <FieldDateRangeInput
+                className={css.bookingDates}
+                name="bookingDates"
+                unitType={unitType}
+                startDateId={`${form}.bookingStartDate`}
+                startDateLabel={bookingStartLabel}
+                startDatePlaceholderText={startDatePlaceholderText}
+                endDateId={`${form}.bookingEndDate`}
+                endDateLabel={bookingEndLabel}
+                endDatePlaceholderText={endDatePlaceholderText}
+                focusedInput={this.state.focusedInput}
+                onFocusedInputChange={this.onFocusedInputChange}
+                format={null}
+                updateDates={async (e) => {
+                  await this.props.updateDates(e)
+                  this.setState({ startDate: e.startDate, endDate: e.endDate, total_glampers: total_glampers }, this.props.calculatePrice(this.props.publicData, this.props.price))
 
-                  />
-                </div>
-                {bookingInfo}
-                <p className={css.smallPrint}>
-                  <FormattedMessage
-                    id={
-                      isOwnListing
-                        ? 'BookingDatesForm.ownListing'
-                        : 'BookingDatesForm.youWontBeChargedInfo'
-                    }
-                  />
-                </p>
-                <div className={submitButtonClasses}>
-                  <PrimaryButton type="submit">
-                    <FormattedMessage id="BookingDatesForm.requestToBook" />
-                  </PrimaryButton>
-                </div>
+                }}
+                timeSlots={timeSlots}
+                useMobileMargins
+                validate={composeValidators(
+                  required(requiredMessage),
+                  bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
+                )}
+              />
+              <div
+                onChange={(e) => {
+                  this.setState({ total_glampers: e.target.value })
+                  this.props.calculatePrice(this.props.publicData, this.props.price)
+                }}
+              >
+                <FieldTextInput
+                  id="quantity"
+                  name="quantity"
+                  type="number"
+                  min={1}
+                  max={this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
+                  }
+                  label={"Number of people"}
+                  placeholder={"2"}
+                  validate={composeValidators(required("Required"))}
+
+                />
+              </div>
+              {bookingInfo}
+              <p className={css.smallPrint}>
+                <FormattedMessage
+                  id={
+                    isOwnListing
+                      ? 'BookingDatesForm.ownListing'
+                      : 'BookingDatesForm.youWontBeChargedInfo'
+                  }
+                />
+              </p>
+              <div className={submitButtonClasses}>
+                <PrimaryButton type="submit">
+                  <FormattedMessage id="BookingDatesForm.requestToBook" />
+                </PrimaryButton>
+              </div>
             </Form>
           );
         }}

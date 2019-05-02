@@ -172,7 +172,6 @@ export const convertUnitToSubUnit = (value, subUnitDivisor, useComma = false) =>
 
   const val = typeof value === 'string' ? convertToDecimal(value, useComma) : new Decimal(value);
   const amount = val.times(subUnitDivisorAsDecimal);
-
   if (!isSafeNumber(amount)) {
     throw new Error(
       `Cannot represent money minor unit value ${amount.toString()} safely as a number`

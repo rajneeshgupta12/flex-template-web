@@ -40,12 +40,15 @@ import css from './BookingDatesForm.css';
 
 const { Money, UUID } = sdkTypes;
 
-const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges, totalPrice) => {
-  const numericPrice = totalPrice / 100;
+const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges, totalPrice=100, totalExtraGuestsFee = 0) => {
+  const numericPrice = (totalPrice / 100).toFixed(2);
   let numericTotalPrice = new Decimal(numericPrice).times(unitCount).times(totalGlampers).toNumber();
+  numericTotalPrice += totalExtraGuestsFee
   numericTotalPrice += Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount / 100)
   let taxRate = Number(otherCharges && otherCharges.tax);
-  numericTotalPrice += numericTotalPrice * ((1 + taxRate) / 100)
+  numericTotalPrice += (taxRate / 100 * numericTotalPrice)
+  numericTotalPrice = numericTotalPrice.toFixed(2)
+
   return new Money(
     convertUnitToSubUnit(numericTotalPrice, unitDivisor(unitPrice.currency)),
     unitPrice.currency
@@ -55,7 +58,7 @@ const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges, 
 // When we cannot speculatively initiate a transaction (i.e. logged
 // out), we must estimate the booking breakdown. This function creates
 // an estimated transaction object for that use case.
-const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, totalGlampers, otherCharges = {}, totalUnitPrice,
+const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, totalGlampers, otherCharges = {}, averagePrice,
   allowedGuestNumber,
   allowedMaxGuestNumber) => {
   const now = new Date();
@@ -64,10 +67,8 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   let isExtraGuest = allowedGuestNumber >= totalGlampers ? false : true;
   let totalExtraGuestsFee = 0
   if (isExtraGuest && otherCharges.extra_guest_fee) {
-    let totalExtraGuests = 0;
-    totalExtraGuests = totalGlampers - allowedGuestNumber;
-    totalExtraGuestsFee = totalExtraGuests * otherCharges.extra_guest_fee.amount;
-    totalUnitPrice += totalExtraGuestsFee
+    totalExtraGuestsFee += otherCharges.extra_guest_fee.amount / 100;
+    totalExtraGuestsFee *=  totalGlampers -allowedGuestNumber
   };
   const unitCount = isNightly
     ? nightsBetween(bookingStart, bookingEnd)
@@ -75,7 +76,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
       ? daysBetween(bookingStart, bookingEnd)
       : quantity;
 
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges, totalUnitPrice);
+  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges, averagePrice, totalExtraGuestsFee);
   // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
   // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
   // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)
@@ -133,7 +134,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 
 const EstimatedBreakdownMaybe = props => {
   const { unitType, unitPrice, startDate, endDate, quantity, totalGlampers } = props.bookingData;
-  const { publicData, price,setFormattedUnitPrice,updatedTotalPrice } = props;
+  const { publicData, price, setFormattedUnitPrice, updatedTotalPrice } = props;
   const otherCharges = publicData && publicData.other_charges && {
     cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
     extra_guest_fee: publicData.other_charges.extra_guest_fee ? JSON.parse(publicData.other_charges.extra_guest_fee) : 0,
@@ -162,7 +163,7 @@ const EstimatedBreakdownMaybe = props => {
     quantity,
     totalGlampers,
     otherCharges,
-    totalAmount.totalPrice,
+    totalAmount.averagePrice,
     allowedGuestNumber,
     allowedMaxGuestNumber
   );
@@ -182,7 +183,6 @@ const EstimatedBreakdownMaybe = props => {
       allowedMaxGuestNumber={allowedMaxGuestNumber}
       updatedTotalPrice={updatedTotalPrice}
       setFormattedUnitPrice={setFormattedUnitPrice}
-
     />
   );
 };

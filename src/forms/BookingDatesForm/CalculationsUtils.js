@@ -59,5 +59,10 @@ export const CalculateAmount = (startDate, endDate, otherCharges, rates, basePri
       return null
     }
   })
-  return { totalPrice, totalAmountDetails }
+  let avgPrice = 0
+  totalAmountDetails.forEach(day => {
+    avgPrice += day.charge
+  })
+
+  return { totalPrice, totalAmountDetails, averagePrice:(avgPrice) / (totalAmountDetails.length) }
 }

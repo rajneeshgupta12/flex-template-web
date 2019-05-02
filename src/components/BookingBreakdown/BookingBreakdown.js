@@ -37,7 +37,6 @@ export const BookingBreakdownComponent = props => {
     return (hasCustomerCommission || hasProviderCommission) && !item.reversal;
   });
   const classes = classNames(rootClassName || css.root, className);
-  console.log('-------')
   return (
     <div className={classes}>
         <LineItemUnitPrice

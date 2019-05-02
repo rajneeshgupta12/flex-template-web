@@ -15,7 +15,7 @@ class LineItemUnitPrice extends React.Component {
     this.state = { showDetails: false, formattedUnitPrice: '' };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // const { totalAmountDetails } = this.props.totalAmount;
     // let avgPrice = 0
     // totalAmountDetails.forEach(day => {
@@ -33,7 +33,7 @@ class LineItemUnitPrice extends React.Component {
     this.setPrice(false)
   }
 
-  setPrice = (init)=>{
+  setPrice = (init) => {
     const { totalAmountDetails } = this.props.totalAmount;
     let avgPrice = 0
     totalAmountDetails.forEach(day => {
@@ -41,8 +41,8 @@ class LineItemUnitPrice extends React.Component {
     })
     let formattedUnitPrice = (avgPrice) / (totalAmountDetails.length)
     formattedUnitPrice = (formattedUnitPrice / 100).toFixed(2).toString()
-    this.setState({formattedUnitPrice})
-    if(init){
+    this.setState({ formattedUnitPrice })
+    if (init) {
       // this.props.setFormattedUnitPrice(formattedUnitPrice)
     }
   }
@@ -83,6 +83,7 @@ class LineItemUnitPrice extends React.Component {
     );
     const formattedExtraGuestFee = formatMoney(intl, new Money(extraGuestFee, "USD")
     );
+    let totalPrice = 0
     return (
       <div>
         <div onClick={() => {
@@ -92,13 +93,16 @@ class LineItemUnitPrice extends React.Component {
         </div>
         <Modal id="UniqueIdForThisModal" isOpen={this.state.showDetails} onClose={() => {
           this.setState({ showDetails: !this.state.showDetails })
-        }}
-          onManageDisableScrolling={() => { }} >
+        }} onManageDisableScrolling={() => { }} >
+          Base price breakdown
           <ul>
             {totalAmountDetails.map(days => {
+              totalPrice += days.charge / 100
               return <li> {moment(days.selectedDay).format("ll")} ${days.charge / 100}</li>
             })}
           </ul>
+          <hr />
+          Total Base price {totalPrice}
         </Modal>
         <div className={css.lineItem}>
           <span className={css.itemLabel}>
@@ -120,7 +124,7 @@ class LineItemUnitPrice extends React.Component {
             <span className={css.itemLabel}>
               Extra Guest Fee
         </span>
-            <span className={css.itemValue}>{formattedExtraGuestFee}</span>
+            <span className={css.itemValue}>{formattedExtraGuestFee}</span> /Head
           </div>
         }    {otherCharges && otherCharges.tax && <div className={css.lineItem}>
           <span className={css.itemLabel}>
