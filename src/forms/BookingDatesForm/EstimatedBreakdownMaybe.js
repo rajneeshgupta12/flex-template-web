@@ -40,9 +40,9 @@ import css from './BookingDatesForm.css';
 
 const { Money, UUID } = sdkTypes;
 
-const estimatedTotalPrice = (unitPrice, unitCount, totalGlampers, otherCharges, totalPrice=100, totalExtraGuestsFee = 0) => {
+const estimatedTotalPrice = (unitPrice, unitCount, otherCharges, totalPrice = 100, totalExtraGuestsFee = 0) => {
   const numericPrice = (totalPrice / 100).toFixed(2);
-  let numericTotalPrice = new Decimal(numericPrice).times(unitCount).times(totalGlampers).toNumber();
+  let numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
   numericTotalPrice += totalExtraGuestsFee
   numericTotalPrice += Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount / 100)
   let taxRate = Number(otherCharges && otherCharges.tax);
@@ -66,17 +66,20 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
   const isDaily = unitType === LINE_ITEM_DAY;
   let isExtraGuest = allowedGuestNumber >= totalGlampers ? false : true;
   let totalExtraGuestsFee = 0
-  if (isExtraGuest && otherCharges.extra_guest_fee) {
-    totalExtraGuestsFee += otherCharges.extra_guest_fee.amount / 100;
-    totalExtraGuestsFee *=  totalGlampers -allowedGuestNumber
-  };
+
   const unitCount = isNightly
     ? nightsBetween(bookingStart, bookingEnd)
     : isDaily
       ? daysBetween(bookingStart, bookingEnd)
       : quantity;
 
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, totalGlampers, otherCharges, averagePrice, totalExtraGuestsFee);
+  if (isExtraGuest && otherCharges.extra_guest_fee) {
+    totalExtraGuestsFee += otherCharges.extra_guest_fee.amount / 100;
+    totalExtraGuestsFee *= (totalGlampers - allowedGuestNumber)
+    totalExtraGuestsFee *= (unitCount)
+  };
+
+  const totalPrice = estimatedTotalPrice(unitPrice, unitCount,  otherCharges, averagePrice, totalExtraGuestsFee);
   // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
   // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
   // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)
@@ -133,7 +136,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate,  totalGlampers } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate, totalGlampers } = props.bookingData;
   const { publicData, price, setFormattedUnitPrice, updatedTotalPrice } = props;
   const otherCharges = publicData && publicData.other_charges && {
     cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
@@ -149,7 +152,7 @@ const EstimatedBreakdownMaybe = props => {
   let allowedMaxGuestNumber = publicData.capacity.maxGuestNumber;
   const totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
   const isUnits = unitType === LINE_ITEM_UNITS;
-  let quantity= totalGlampers
+  let quantity = totalGlampers
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits && totalGlampers;
   if (!canEstimatePrice) {

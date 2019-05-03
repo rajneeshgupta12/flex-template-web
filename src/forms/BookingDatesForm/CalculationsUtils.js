@@ -49,7 +49,7 @@ export const CalculateAmount = (startDate, endDate, otherCharges, rates, basePri
       totalAmountDetails.push({ selectedDay, charge: rates.seasonal_price.amount })
       return null
     }
-    if (isWeekendDay && rates.weekend_price.amount) {
+    if (isWeekendDay && rates&&rates.weekend_price&&rates.weekend_price.amount) {
       totalPrice += rates.weekend_price.amount
       totalAmountDetails.push({ selectedDay, charge: rates.weekend_price.amount })
       return null

@@ -158,7 +158,7 @@ class EditListingLocationFormComponent extends Component {
               }}
               useDefaultPredictions={false}
               format={null}
-              valueFromForm={console.log('values.location,,,',values.location)}
+              valueFromForm={console.log()}
               validate={composeValidators(
                 autocompleteSearchRequired(addressRequiredMessage),
                 autocompletePlaceSelected(addressNotRecognizedMessage)
