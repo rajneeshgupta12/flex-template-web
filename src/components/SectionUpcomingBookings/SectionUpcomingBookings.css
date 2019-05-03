@@ -169,3 +169,169 @@
 .messageButton {
   @apply --marketplaceButtonStyles;
 }
+
+
+.typeInfo { 
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  color: grey;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.typeName {
+  position: relative;
+  left: 3px;
+  top: 3px;
+}
+
+.typeCity {
+  position: relative;
+  left: 3px;
+  top: 3px;
+
+}
+
+.tentIcon {
+  @apply --tentIcon;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  margin-right: 5px;
+
+}
+
+.hutIcon {
+  @apply --hutIcon;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.titleInfo {
+  font-size: 16px;
+  color: black;
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.costInfo {
+  @apply --marketplaceH6FontStyles;
+  color: grey;
+}
+
+.reviewInfo {
+  @apply --marketplaceH6FontStyles;
+  color: grey;
+
+  display: flex;
+  align-items: center;
+}
+
+.stars {
+  display: inline-block;
+  color: blue;
+  margin-right: 5px;
+}
+
+.carousel-control-prev-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  color: black;
+  /*background: no-repeat center center;
+  background-size: 100% 100%;
+  background-color: black;
+  /*background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+*/
+}
+
+
+.allButton {
+  @apply --marketplaceButtonStyles;
+  width: 250px;
+  height: 65px;
+  margin-top: 50px;
+}
+
+.messageButton {
+  @apply --marketplaceButtonStyles;
+  width: 250px;
+  height: 65px;
+  margin-top: 10px;
+}
+
+.tripContainer {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px black;
+  height: 350px;
+}
+
+
+.placeInfo {
+  position: relative;
+  top: 21px;
+  width: 340px;
+  display: flex;
+  flex-direction: column; 
+  margin: auto;
+}
+
+.placeWrapper {
+  width: 420px;
+  height: 350px;
+  border-right: solid 1px black;
+}
+
+.scheduleText {
+
+  position: relative;
+  top: -5px;
+  font-size: 30px;
+  max-width: 230px;
+  word-wrap: break-word;
+  margin: auto;
+  text-align: center;
+  line-height: 1.1;
+  vertical-align: middle;
+}
+
+.bookerInfo {
+  margin: auto 0;
+  display: flex;
+  flex-direction: row;
+  width: 640px;
+}
+
+.avatar {
+  position: relative;
+  left: 10px;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  margin-right: 0;
+}
+
+.textWrapper {
+  position: relative;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 350px;
+  margin: 0 auto;
+}
+
+.tabs {
+  margin-top: 4px;
+  min-height: 46px;
+}
+
+
+.tabs a:first-child{
+  margin-left: auto;
+}

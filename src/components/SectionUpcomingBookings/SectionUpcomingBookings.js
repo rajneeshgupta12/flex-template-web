@@ -42,22 +42,25 @@ const RecItemHost = props => {
 
   return (
     <div>
+  
       <Link to={`/l/${title}/${bookedlistingId.uuid}`} >
-        <div className={css.carouselWrapper}>
-          <Carousel interval={n}>
-            <Carousel.Item>
-              <div className={css.imageWrapper}>
-                <div className={css.aspectWrapper}>
-                  <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
-                </div>
-              </div>
-              <Carousel.Caption>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </div>
-        <div className={css.textWrapper}>
-          <div className={css.typeInfo}>
+        <div className={css.tripContainer}>
+        <div className={css.placeWrapper}>
+          <div className={css.placeInfo}>
+            <div className={css.carouselWrapper}>
+              <Carousel interval={n}>
+                <Carousel.Item>
+                  <div className={css.imageWrapper}>
+                    <div className={css.aspectWrapper}>
+                      <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+                    </div>
+                  </div>
+                  <Carousel.Caption>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel>
+            </div>
+            <div className={css.typeInfo}>
             {
               <img src={
                 bookedListing.attributes && bookedListing.attributes.publicData &&
@@ -69,32 +72,35 @@ const RecItemHost = props => {
             }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
               bookedListing.attributes.publicData.property_type.type.title}
             &nbsp;&nbsp;&nbsp;
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-              {title}
-            </strong>
+            </div>
+            <div className={css.titleInfo}>
+              <strong>
+                {title}
+              </strong>
+            </div>
           </div>
         </div>
-        <div>
-          <AvatarLarge className={css.avatar} user={user} listing={listing} />
-          <div className={css.typeInfo}>
-            {startDate} {startMonth}
-            ~
-            {endDate} {endMonth}
+          
+          <div className={css.bookerInfo}>
+            <div className={css.avatar}>
+              <AvatarLarge className={css.avatar} user={user} listing={listing} />
+            </div>
+            <div className={css.textWrapper}>
+              <div className={css.typeInfo}>
+                {startDate} {startMonth}
+                ~
+                  {endDate} {endMonth}
+              </div>
+              <div className={css.typeInfo}>
+                Check in&nbsp;<b>{checkInTime}</b>&nbsp;/ Check out&nbsp;<b>{checkOutTime}</b>
+              </div>
+
+              <Link className={css.messageButton} to={`/order/${tx}/details`} >
+                Message the Guest
+              </Link>
+            </div>
           </div>
-          <div className={css.typeInfo}>
-            Check in {checkInTime} / Check out {checkOutTime}
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-            </strong>
-          </div>
-          <Link className={css.messageButton} to={`/sale/${tx}/details`}>
-            Message to the guest
-          </Link>
-          <div className={css.costInfo}>
-          </div>
+       
         </div>
       </Link>
     </div>
@@ -167,3 +173,61 @@ SectionUpcomingBookings.propTypes = {
 
 export default SectionUpcomingBookings;
 
+
+/*
+
+
+        <div className={css.carouselWrapper}>
+          <Carousel interval={n}>
+            <Carousel.Item>
+              <div className={css.imageWrapper}>
+                <div className={css.aspectWrapper}>
+                  <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+                </div>
+              </div>
+              <Carousel.Caption>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </div>
+        <div className={css.textWrapper}>
+          <div className={css.typeInfo}>
+            {
+              <img src={
+                bookedListing.attributes && bookedListing.attributes.publicData &&
+                bookedListing.attributes.publicData.property_type &&
+                bookedListing.attributes.publicData.property_type.type &&
+                bookedListing.attributes.publicData.property_type.type.image}
+                height="25" width="25"
+              />
+            }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
+              bookedListing.attributes.publicData.property_type.type.title}
+            &nbsp;&nbsp;&nbsp;
+          </div>
+          <div className={css.titleInfo}>
+            <strong>
+              {title}
+            </strong>
+          </div>
+        </div>
+        <div>
+          <AvatarLarge className={css.avatar} user={user} listing={listing} />
+          <div className={css.typeInfo}>
+            {startDate} {startMonth}
+            ~
+            {endDate} {endMonth}
+          </div>
+          <div className={css.typeInfo}>
+            Check in {checkInTime} / Check out {checkOutTime}
+          </div>
+          <div className={css.titleInfo}>
+            <strong>
+            </strong>
+          </div>
+          <Link className={css.messageButton} to={`/sale/${tx}/details`}>
+            Message to the guest
+          </Link>
+          <div className={css.costInfo}>
+          </div>
+        </div>
+        */
