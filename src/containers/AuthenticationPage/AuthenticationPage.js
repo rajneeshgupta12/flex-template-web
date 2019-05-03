@@ -90,8 +90,8 @@ export class AuthenticationPageComponent extends Component {
         {isSignupEmailTakenError(signupError) ? (
           <FormattedMessage id="AuthenticationPage.signupFailedEmailAlreadyTaken" />
         ) : (
-          <FormattedMessage id="AuthenticationPage.signupFailed" />
-        )}
+            <FormattedMessage id="AuthenticationPage.signupFailed" />
+          )}
       </div>
     );
 
@@ -131,7 +131,15 @@ export class AuthenticationPageComponent extends Component {
     ];
 
     const handleSubmitSignup = values => {
-      const { fname, lname, ...rest } = values;
+      let { fname, lname, ...rest } = values;
+      fname = fname.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+      lname = lname.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
       const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
       submitSignup(params);
     };
@@ -143,13 +151,13 @@ export class AuthenticationPageComponent extends Component {
         {isLogin ? (
           <LoginForm className={css.form} onSubmit={submitLogin} inProgress={authInProgress} />
         ) : (
-          <SignupForm
-            className={css.form}
-            onSubmit={handleSubmitSignup}
-            inProgress={authInProgress}
-            onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
-          />
-        )}
+            <SignupForm
+              className={css.form}
+              onSubmit={handleSubmitSignup}
+              inProgress={authInProgress}
+              onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
+            />
+          )}
       </div>
     );
 
@@ -200,8 +208,8 @@ export class AuthenticationPageComponent extends Component {
             {sendVerificationEmailInProgress ? (
               <FormattedMessage id="AuthenticationPage.sendingEmail" />
             ) : (
-              <FormattedMessage id="AuthenticationPage.resendEmail" values={{ resendEmailLink }} />
-            )}
+                <FormattedMessage id="AuthenticationPage.resendEmail" values={{ resendEmailLink }} />
+              )}
           </p>
           <p className={css.modalHelperText}>
             <FormattedMessage id="AuthenticationPage.fixEmail" values={{ fixEmailLink }} />
