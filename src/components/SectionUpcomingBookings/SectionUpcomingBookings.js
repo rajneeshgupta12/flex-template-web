@@ -16,7 +16,7 @@ const RecItemHost = props => {
   const months = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
   let { rootClassName, className, icon, listing, bookedlistingId, listings, booking,
-    getTxCalled, isGetTxCalled, user, bookedListing } = props;
+    getTxCalled, isGetTxCalled, user, bookedListing, result } = props;
   const n = null;
   let bookedListingImageId = bookedListing
     && bookedListing.relationships
@@ -39,52 +39,61 @@ const RecItemHost = props => {
   const checkInTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_in_time
   const checkOutTime = bookedListing && bookedListing.attributes && bookedListing.attributes.publicData && bookedListing.attributes.publicData.check_out_time;
   let title = bookedListing.attributes && bookedListing.attributes.title;
-
+  let guestName = user && user.attributes.profile.displayName.split(' ')
+  guestName = guestName && guestName.length > 0 && guestName[0] || '';
+  console.log('booking----', booking)
+  let customerImageId = user && user.relationships && user.relationships.profileImage && user.relationships.profileImage.data && user.relationships.profileImage.data.id.uuid
+  let customerProfileImage = result.marketplaceData.entities.image[customerImageId];
+  if (user)
+    user['profileImage'] = customerProfileImage;
   return (
     <div>
-  
       <Link to={`/l/${title}/${bookedlistingId.uuid}`} >
         <div className={css.tripContainer}>
-        <div className={css.placeWrapper}>
-          <div className={css.placeInfo}>
-            <div className={css.carouselWrapper}>
-              <Carousel interval={n}>
-                <Carousel.Item>
-                  <div className={css.imageWrapper}>
-                    <div className={css.aspectWrapper}>
-                      <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+          <div className={css.placeWrapper}>
+            <div className={css.placeInfo}>
+              <div className={css.carouselWrapper}>
+                <Carousel interval={n}>
+                  <Carousel.Item>
+                    <div className={css.imageWrapper}>
+                      <div className={css.aspectWrapper}>
+                        <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
+                      </div>
                     </div>
-                  </div>
-                  <Carousel.Caption>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              </Carousel>
+                    <Carousel.Caption>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                </Carousel>
+              </div>
+              <div className={css.typeInfo}>
+                {
+                  <img src={
+                    bookedListing.attributes && bookedListing.attributes.publicData &&
+                    bookedListing.attributes.publicData.property_type &&
+                    bookedListing.attributes.publicData.property_type.type &&
+                    bookedListing.attributes.publicData.property_type.type.image}
+                    height="25" width="25"
+                  />
+                }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
+                  bookedListing.attributes.publicData.property_type.type.title}
+                &nbsp;&nbsp;&nbsp;
             </div>
-            <div className={css.typeInfo}>
-            {
-              <img src={
-                bookedListing.attributes && bookedListing.attributes.publicData &&
-                bookedListing.attributes.publicData.property_type &&
-                bookedListing.attributes.publicData.property_type.type &&
-                bookedListing.attributes.publicData.property_type.type.image}
-                height="25" width="25"
-              />
-            }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
-              bookedListing.attributes.publicData.property_type.type.title}
-            &nbsp;&nbsp;&nbsp;
-            </div>
-            <div className={css.titleInfo}>
-              <strong>
-                {title}
-              </strong>
+              <div className={css.titleInfo}>
+                <strong>
+                  {title}
+                </strong>
+              </div>
             </div>
           </div>
-        </div>
-          
+
           <div className={css.bookerInfo}>
             <div className={css.avatar}>
               <AvatarLarge className={css.avatar} user={user} listing={listing} />
             </div>
+            <span>
+              {console.log('--------user', user)}
+              {guestName}
+            </span>
             <div className={css.textWrapper}>
               <div className={css.typeInfo}>
                 {startDate} {startMonth}
@@ -95,12 +104,12 @@ const RecItemHost = props => {
                 Check in&nbsp;<b>{checkInTime}</b>&nbsp;/ Check out&nbsp;<b>{checkOutTime}</b>
               </div>
 
-              <Link className={css.messageButton} to={`/order/${tx}/details`} >
+              <Link className={css.messageButton} to={`/sale/${tx}/details`} >
                 Message the Guest
               </Link>
             </div>
           </div>
-       
+
         </div>
       </Link>
     </div>
@@ -109,7 +118,7 @@ const RecItemHost = props => {
 
 const SectionUpcomingBookings = props => {
   const { rootClassName, className, result, isGetBookingListingCalled, getBookingListingCalled, getTxCalled, isGetTxCalled } = props;
-
+  console.log('result---------', result)
   const classes = classNames(rootClassName || css.root, className);
   const listings = result && result.LandingPage && result.LandingPage.ownListings && result.LandingPage.ownListings.data;
 

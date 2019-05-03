@@ -261,6 +261,7 @@ export class CheckoutPageComponent extends Component {
       console.log('hasRequiredData          --', hasRequiredData)
       console.log('canShowPage          --', canShowPage)
       console.log('shouldRedirect          --', shouldRedirect)
+      alert("can not book own listing")
       // eslint-disable-next-line no-console
       console.error('Missing or invalid data for checkout, redirecting back to listing page.', {
         transaction: currentTransaction,
