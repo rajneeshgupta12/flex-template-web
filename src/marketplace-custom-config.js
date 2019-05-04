@@ -99,9 +99,9 @@ export const amenities_glamping = [
 
 export const available_transportaion = [
   { key: 'ride_service', label: 'Ride Service', hasInput: true, inputKeyName: "ride_service_text" },
-  { key: 'bus', label: 'Bus',  hasInput: true, inputKeyName: "bus_text" },
-  { key: 'subway', label: 'Subway' , hasInput: true, inputKeyName: "subway_text" },
-  { key: 'train', label: 'Train' ,hasInput: true, inputKeyName: "train_text" },
+  { key: 'bus', label: 'Bus', hasInput: true, inputKeyName: "bus_text" },
+  { key: 'subway', label: 'Subway', hasInput: true, inputKeyName: "subway_text" },
+  { key: 'train', label: 'Train', hasInput: true, inputKeyName: "train_text" },
   { key: 'parking_available', label: 'Parking available', hasInput: true, inputKeyName: "parking_available_text" },
 ];
 
@@ -146,10 +146,10 @@ export const facilities_tour = [
 ];
 
 export const categories = [
-  { key: 'smoke', label: 'Smoke' },
-  { key: 'electric', label: 'Electric' },
-  { key: 'wood', label: 'Wood' },
-  { key: 'other', label: 'Other' },
+  { key: 'one', label: '1' },
+  { key: 'two', label: '2' },
+  { key: 'three', label: '3' },
+  { key: 'more then 3', label: 'more then 3' },
 ];
 
 // Price filter configuration

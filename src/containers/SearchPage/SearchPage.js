@@ -56,7 +56,7 @@ export class SearchPageComponent extends Component {
 
     return {
       categoryFilter: {
-        paramName: 'pub_category',
+        paramName: 'pub_glampers',
         options: categories,
       },
       placeFilter: {

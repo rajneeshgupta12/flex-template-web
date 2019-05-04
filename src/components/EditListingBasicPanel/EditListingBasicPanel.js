@@ -93,7 +93,7 @@ const EditListingBasicPanel = props => {
             publicData: {
               place: [place],
               property_type,
-              property_type_id: property_type.id.toString(),
+              property_type_id: Number(property_type.id),
               metaData: {
                 all_property_type: propertType
               }
