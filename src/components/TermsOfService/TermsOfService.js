@@ -273,7 +273,7 @@ const TermsOfService = props => {
         policy by making any Listing, Posting, or Booking:
       </p>
       <p>
-        - Free Cancellation: If you cancel anytime before your check in day and time, you will receive a full
+        \xa0\xa0\xa0\xa0\xa0\xa0\xa0- \xa0\xa0\xa0Free Cancellation: If you cancel anytime before your check in day and time, you will receive a full
         refund (minus service fee).
         <br/>- Flexible Cancellation: If you cancel at least 7 days before your check in day and time, you will
         receive a full refund (minus service fee).
