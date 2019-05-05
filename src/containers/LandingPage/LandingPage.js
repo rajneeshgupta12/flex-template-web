@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from 'react-intl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { loadData, getAllListings } from './LandingPage.duck';
+import { loadData, loadBookingData, getAllListings, getQueryListing, getTx, getListingBookings } from './LandingPage.duck';
 import config from '../../config';
 import { createResourceLocatorString } from '../../util/routes';
 import routeConfiguration from '../../routeConfiguration';
@@ -16,7 +16,9 @@ import {
   SectionLocations,
   SectionHost,
   SectionDiscover,
+  SectionHistory,
   SectionRecommendation,
+  SectionUpcomingBookings,
   SectionInterview,
   SectionType,
   SectionAbout,
@@ -25,6 +27,7 @@ import {
   LayoutWrapperMain,
   LayoutWrapperFooter,
   Footer,
+  SectionUpcomingBookingsGuest,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -61,9 +64,18 @@ export class LandingPageComponent extends Component {
   }
 
   componentDidMount() {
-    // this.props.getAllListings()
     this.props.loadData()
+    this.props.loadBookingData()
+
+    let startDate, endDate, startday,
+      sDate = new Date(), eDate = new Date(),
+      lastday = sDate.getDate() - (sDate.getDay() - 1) + 6;
+    endDate = new Date(sDate.setDate(lastday));
+    startday = eDate.getDate() - (eDate.getDay() - 1) + 4;
+    startDate = new Date(eDate.setDate(startday));
+    this.setState({ endDate, startDate })
   }
+
 
   componentWillReceiveProps(newProps) {
     this.setState({ props: newProps });
@@ -87,7 +99,6 @@ export class LandingPageComponent extends Component {
         searchParams = {}
       }
     }
-
     if (searchParams || endDate) {
       searchParams['endDate'] = Date.parse(endDate)
       searchParams['startDate'] = Date.parse(startDate)
@@ -104,10 +115,15 @@ export class LandingPageComponent extends Component {
     const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
     const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
     const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-    // const listing = props.showListing('5c63bee0-e3d8-4d64-ac7a-3914ea0c914c')
-
+    let marketplaceData = props && props.result && props.result.marketplaceData
     let userName = null
-    userName = props && props.result && props.result.user && props.result.user.currentUser && props.result.user.currentUser.attributes && props.result.user.currentUser.attributes.profile && props.result.user.currentUser.attributes.profile.firstName
+    let isloggedin = props && props.result && props.result.user && props.result.user.currentUser
+    userName = props && props.result && props.result.user && props.result.user.currentUser &&
+      props.result.user.currentUser.attributes &&
+      props.result.user.currentUser.attributes.profile &&
+      props.result.user.currentUser.attributes.profile.firstName
+
+
     return (
       <Page
         className={css.root}
@@ -143,7 +159,51 @@ export class LandingPageComponent extends Component {
               />
             </div>
             <ul className={css.sections}>
+            {
+                isloggedin && marketplaceData && marketplaceData && marketplaceData.entities && marketplaceData.entities.booking &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionUpcomingBookings
+                      {...props}
+                      getBookingListingCalled={() => {
+                        { this.setState({ isGetBookingListingCalled: true }) }
+                      }}
+                      isGetBookingListingCalled={this.state.isGetBookingListingCalled}
+                      getTxCalled={() => {
+                        { this.setState({ isGetTxCalled: true }) }
+                      }}
+                      isGetTxCalled={this.state.isGetTxCalled} />
+                  </div>
+                </li>
+              }  {
+                isloggedin && marketplaceData && marketplaceData && marketplaceData.entities && marketplaceData.entities.booking &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionUpcomingBookingsGuest
+                      {...props}
+                      getBookingListingCalledGuest={() => {
+                        { this.setState({ isGetBookingListingCalledGuest: true }) }
+                      }}
+                      isGetBookingListingCalledGuest={this.state.isGetBookingListingCalledGuest}
+                      getTxCalledGuest={() => {
+                        { this.setState({ isGetTxCalledGuest: true }) }
+                      }}
+                      isGetTxCalledGuest={this.state.isGetTxCalledGuest} />
+                  </div>
+                </li>
+              }  {
+                isloggedin &&
+                <li className={css.section}>
+                  <div className={css.sectionContent}>
+                    <SectionHistory user={isloggedin} {...props}
+                      getQueryListingCalled={() => {
+                        { this.setState({ isGetQueryListingCalled: true }) }
+                      }}
+                      isGetQueryListingCalled={this.state.isGetQueryListingCalled}
+                    />
 
+                  </div>
+                </li>}
               <li className={css.sectionOverflow}>
                 <div className={css.sectionContentFirstChild}>
                   <SectionDiscover />
@@ -156,12 +216,25 @@ export class LandingPageComponent extends Component {
               </li>
               <li className={css.sectionOverflow}>
                 <div className={css.sectionContent}>
-                  <SectionType />
+                  <SectionType   {...props} />
+                </div>
+              </li>
+              <li className={css.section}>
+                <div className={css.sectionText}>
+                  <hr className={css.dash} />
+                  We are preparing for
+                  a variety of interesting listings!
+                <hr className={css.dash} />
                 </div>
               </li>
               <li className={css.section}>
                 <div className={css.sectionContent}>
                   <SectionInterview />
+                </div>
+              </li>
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionHost />
                 </div>
               </li>
 
@@ -205,7 +278,12 @@ const mapStateToProps = (state, landingPageReducer) => {
 
 const mapDispatchToProps = dispatch => ({
   // getAllListings: () => dispatch(getAllListings()),
-  loadData:()=>dispatch(loadData())
+  loadData: () => dispatch(loadData()),
+  loadBookingData: () => dispatch(loadBookingData()),
+  getQueryListing: (values) => dispatch(getQueryListing(values)),
+  getTx: (values) => dispatch(getTx(values)),
+  getListingBookings: (values) => dispatch(getListingBookings(values))
+
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

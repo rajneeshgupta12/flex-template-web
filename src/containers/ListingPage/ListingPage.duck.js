@@ -45,6 +45,7 @@ const initialState = {
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
+  listing: null
 };
 
 const listingPageReducer = (state = initialState, action = {}) => {
@@ -53,8 +54,10 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case SET_INITAL_VALUES:
       return { ...initialState, ...payload };
 
-    case SHOW_LISTING_REQUEST:
-      return { ...state, id: payload.id, showListingError: null };
+    // case SHOW_LISTING_REQUEST:
+    // console.log('SHOW_LISTING_REQUEST-----1----',payload)
+
+    //   return { ...state, listing: payload, showListingError: null };
     case SHOW_LISTING_ERROR:
       return { ...state, showListingError: payload };
 
@@ -78,6 +81,9 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, sendEnquiryInProgress: false };
     case SEND_ENQUIRY_ERROR:
       return { ...state, sendEnquiryInProgress: false, sendEnquiryError: payload };
+    case SHOW_LISTING_REQUEST:
+      payload.data.data['includedRelationships'] = payload.data.included
+      return { ...state, listing: payload.data };
 
     default:
       return state;
@@ -129,8 +135,18 @@ export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, p
 
 // ================ Thunks ================ //
 
-export const showListing = (listingId, isOwn = false) => (dispatch, getState, sdk) => {
-  dispatch(showListingRequest(listingId));
+export const showListing = (listingUrl, listingId, isOwn = false) => async (dispatch, getState, sdk) => {
+  sdk.currentUser.show()
+    .then(async user => {
+      let userHistory = user.data.data.attributes.profile.publicData.visitedOasisHistory || []
+      userHistory.length > 3 && userHistory.shift();
+      const isalreadyExist = userHistory.map((x) => { return x.id; }).indexOf(listingUrl.id);
+      isalreadyExist === -1 && userHistory.push(listingUrl);
+      let publicData = { visitedOasisHistory: userHistory }
+      sdk.currentUser.updateProfile({ publicData: publicData })
+    })
+
+  // dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
     id: listingId,
@@ -158,16 +174,18 @@ export const showListing = (listingId, isOwn = false) => (dispatch, getState, sd
     ],
   };
 
-  const show = isOwn ? sdk.ownListings.show(params) : sdk.listings.show(params);
+  // const show = isOwn ? sdk.ownListings.show(params, { expand: true }) : await sdk.ownListings.show(params, { expand: true });
 
-  return show
-    .then(data => {
-      dispatch(addMarketplaceEntities(data));
-      return data;
-    })
-    .catch(e => {
-      dispatch(showListingError(storableError(e)));
-    });
+  const show = isOwn ? await sdk.ownListings.show(params, { expand: true }) : await sdk.listings.show(params, { expand: true })
+  dispatch(addMarketplaceEntities(show));
+  return dispatch({
+    type: SHOW_LISTING_REQUEST,
+    payload: show,
+  })
+  // })
+  // .catch(e => {
+  //   dispatch(showListingError(storableError(e)));
+  // });
 };
 
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {
@@ -271,19 +289,19 @@ export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => 
 
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
-
   const ownListingVariants = [LISTING_PAGE_DRAFT_VARIANT, LISTING_PAGE_PENDING_APPROVAL_VARIANT];
   if (ownListingVariants.includes(params.variant)) {
-    return dispatch(showListing(listingId, true));
+    return dispatch(showListing(params, listingId, true));
   }
 
   if (config.enableAvailability) {
+
     return Promise.all([
-      dispatch(showListing(listingId)),
+      dispatch(showListing(params, listingId)),
       dispatch(fetchTimeSlots(listingId)),
       dispatch(fetchReviews(listingId)),
     ]);
   } else {
-    return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]);
+    return Promise.all([dispatch(showListing(params, listingId)), dispatch(fetchReviews(listingId))]);
   }
 };

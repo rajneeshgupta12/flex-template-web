@@ -178,6 +178,7 @@ class DateRangeInputComponent extends Component {
     }));
 
     this.props.onChange({ startDate: startDateAsDate, endDate: endDateAsDate });
+    this.props.updateDates && this.props.updateDates({ startDate: startDateAsDate, endDate: endDateAsDate })
   }
 
   onFocusChange(focusedInput) {

@@ -203,3 +203,17 @@ export const validHKID = message => value => {
 
 export const composeValidators = (...validators) => value =>
   validators.reduce((error, validator) => error || validator(value), VALID);
+
+  export const requiredSelectBox = message => value => {
+    if (!value) {
+      return message;
+    }
+    return VALID;
+  };
+
+  export const requiredRadioBox = message => value => {
+    if(!value){
+      return message;
+    }
+    return VALID;
+  }

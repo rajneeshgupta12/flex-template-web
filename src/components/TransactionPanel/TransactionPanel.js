@@ -22,6 +22,7 @@ import { formatMoney } from '../../util/currency';
 import { AvatarLarge, BookingPanel, ReviewModal, UserDisplayName } from '../../components';
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
+import EstimatedBreakdownMaybe from '../../forms/BookingDatesForm/EstimatedBreakdownMaybe';
 
 // These are internal components that make this file more readable.
 import AddressLinkMaybe from './AddressLinkMaybe';
@@ -260,8 +261,8 @@ export class TransactionPanelComponent extends Component {
     const unitTranslationKey = isNightly
       ? 'TransactionPanel.perNight'
       : isDaily
-      ? 'TransactionPanel.perDay'
-      : 'TransactionPanel.perUnit';
+        ? 'TransactionPanel.perDay'
+        : 'TransactionPanel.perUnit';
 
     const price = currentListing.attributes.price;
     const bookingSubTitle = price
@@ -297,6 +298,19 @@ export class TransactionPanelComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
+    console.log(' Tpage props---', this.props)
+    console.log('Tpage state---', this.state)
+    let bookingDates = this.props && this.props.transaction && this.props.transaction.booking && this.props.transaction.booking.attributes
+    const bookingData1 = {
+      unitType,
+      unitPrice: price,
+      startDate: bookingDates.displayStart,
+      endDate: bookingDates.displayEnd,
+      // NOTE: If unitType is `line-item/units`, a new picker
+      // for the quantity should be added to the form.
+      quantity: 1,
+      totalGlampers: 1,
+    }
     return (
       <div className={classes}>
         <div className={css.container}>
@@ -333,7 +347,11 @@ export class TransactionPanelComponent extends Component {
                 geolocation={geolocation}
                 showAddress={stateData.showAddress}
               />
-              <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+              <EstimatedBreakdownMaybe
+                bookingData={bookingData1}
+                price={price}
+                publicData={publicData} />
+              {/* <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} /> */}
             </div>
 
             <FeedSection
@@ -361,8 +379,8 @@ export class TransactionPanelComponent extends Component {
                 onSubmit={this.onMessageSubmit}
               />
             ) : (
-              <div className={css.sendingMessageNotAllowed}>{sendingMessageNotAllowed}</div>
-            )}
+                <div className={css.sendingMessageNotAllowed}>{sendingMessageNotAllowed}</div>
+              )}
 
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>
@@ -402,10 +420,14 @@ export class TransactionPanelComponent extends Component {
                   fetchTimeSlotsError={fetchTimeSlotsError}
                 />
               ) : null}
-              <BreakdownMaybe
+              <EstimatedBreakdownMaybe
+                bookingData={bookingData1}
+                price={price}
+                publicData={publicData} />
+              {/* <BreakdownMaybe
                 className={css.breakdownContainer}
                 transaction={currentTransaction}
-                transactionRole={transactionRole}
+                transactionRole={transactionRole} */}
               />
 
               {stateData.showSaleButtons ? (

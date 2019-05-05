@@ -38,24 +38,25 @@ const initialPriceRangeValue = (queryParams, paramName) => {
 
   return !!price && valuesFromParams.length === 2
     ? {
-        minPrice: valuesFromParams[0],
-        maxPrice: valuesFromParams[1],
-      }
+      minPrice: valuesFromParams[0],
+      maxPrice: valuesFromParams[1],
+    }
     : null;
 };
 
 const initialDateRangeValue = (queryParams, paramName) => {
-  const dates = queryParams[paramName];
-  const rawValuesFromParams = !!dates ? dates.split(',') : [];
+  if(queryParams.endDate && queryParams.startDate){
+  const startDate = queryParams['startDate'];
+  const endDate = queryParams['endDate'];
+  const rawValuesFromParams = [startDate, endDate];
   const valuesFromParams = rawValuesFromParams.map(v => parseDateFromISO8601(v));
   const initialValues =
-    !!dates && valuesFromParams.length === 2
+    valuesFromParams.length === 2
       ? {
-          dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
-        }
+        dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
+      }
       : { dates: null };
-
-  return initialValues;
+  return initialValues;}
 };
 
 const SearchFiltersComponent = props => {
@@ -80,6 +81,20 @@ const SearchFiltersComponent = props => {
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
 
+  const glampersLabel = intl.formatMessage({
+    id: 'SearchFilters.glampersLabel',
+  });
+
+  const oasisTypeLabel = intl.formatMessage({
+    id: 'SearchFilters.oasisTypeLabel',
+  });
+
+  const themeLabel = intl.formatMessage({
+    id: 'SearchFilters.themeLabel',
+  });
+  const morefilterLabel = intl.formatMessage({
+    id: 'SearchFilters.morefilterLabel',
+  });
   const categoryLabel = intl.formatMessage({
     id: 'SearchFilters.categoryLabel',
   });
@@ -150,11 +165,94 @@ const SearchFiltersComponent = props => {
   const categoryFilterElement = categoryFilter ? (
     <SelectSingleFilter
       urlParam={categoryFilter.paramName}
-      label={categoryLabel}
+      label={glampersLabel}
       onSelect={handleSelectOption}
       showAsPopup
       options={categoryFilter.options}
       initialValue={initialCategory}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
+  const oasisTypeFilterElement = categoryFilter ? (
+    <SelectSingleFilter
+      urlParam={categoryFilter.paramName}
+      label={oasisTypeLabel}
+      onSelect={handleSelectOption}
+      showAsPopup
+      options={[
+
+          {
+            "key": '_0',
+            "label": "Bell Tent",
+          },
+          {
+            "key": '_1',
+            "label": "Safari Tent",
+          },
+          {
+            "key": '_2',
+            "label": "Tipi",
+          },
+          {
+            "key": '_3',
+            "label": "Yurt",
+          },
+          {
+            "key": '_4',
+            "label": "Igloo/Dome",
+          },
+          {
+            "key": '_5',
+            "label": "RV Camper",
+          },
+          {
+            "key": '_6',
+            "label": "Treehouse",
+          },
+          {
+            "key": '_7',
+            "label": "Tiny House",
+          },
+          {
+            "key": '_8',
+            "label": "Cabin",
+          },
+          {
+            "key": '_9',
+            "label": "Hut",
+          },
+          {
+            "key": '_10',
+            "label": "Sheperd's Hut",
+          },
+          {
+            "key": '_11',
+            "label": "Glamping Pod",
+          },
+          {
+            "key": '_12',
+            "label": "Boat/Yacht",
+          }
+      ]}
+      // initialValue={initialCategory}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
+  const themeFilterElement = categoryFilter ? (
+    <SelectSingleFilter
+      urlParam={categoryFilter.paramName}
+      label={themeLabel}
+      onSelect={handleSelectOption}
+      showAsPopup
+      options={[
+        { key: 'couple_friendly', label: 'Couple Friendly' },
+        { key: 'family_friendly', label: 'Family Friendly' },
+        { key: 'for_single_trip', label: 'Single Trip' },
+        { key: 'pet_friendly', label: 'Pet Friendly' },
+      ]}
+      // initialValue={initialCategory}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
@@ -217,10 +315,11 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
-        {categoryFilterElement}
-        {amenitiesFilterElement}
-        {priceFilterElement}
         {dateRangeFilterElement}
+        {categoryFilterElement}
+        {oasisTypeFilterElement}
+        {priceFilterElement}
+        {themeFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
 

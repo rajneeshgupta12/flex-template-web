@@ -32,7 +32,7 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-export const BASIC = 'basic info'; 
+export const BASIC = 'basic info';
 export const CAPACITY = 'capacity';
 export const TRAVEL = 'travel info';
 
@@ -48,8 +48,7 @@ export const SUPPORTED_TABS = [
   TRAVEL,
   PRICING,
   AVAILABILITY,
-  PHOTOS,
-
+  PHOTOS
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -106,21 +105,35 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    currentUser,
+    guestNumber, bedsNumber, bedroomsNumber, bathroomsNumber,
+    maxGuestNumber,
+    updateCapacityValues,
+    showTravelSubfield,
+    travelSubFields,
+    descriptionImages,
+    uploadDescriptionImages,
+    handlePlaceTheme,
+    placeTheme,
+    IsImageUploaded,
+    validateImageUploaded,
+    IstravelsfieldInitialized,
+    mangeIstravelsfieldInitialized
   } = props;
-
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
-
   const currentListing = ensureListing(listing);
   const imageIds = images => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
+
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
-    // Normalize images for API call
-    const { images: updatedImages, ...otherValues } = updateValues;
+    console.log('tab, updateValues-[',tab, updateValues)
+    let { ...otherValues } = updateValues;
+    let updatedImages = props.images
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
@@ -139,7 +152,6 @@ const EditListingWizardTab = props => {
           if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
-
             // After successful saving of draft data, user should be redirected to next tab
             redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
           } else {
@@ -172,11 +184,24 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditDescription';
       return (
         <EditListingDescriptionPanel
+          history={props.history}
           {...panelProps(DESCRIPTION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
+          descriptionImages={descriptionImages}
+          uploadDescriptionImages={uploadDescriptionImages}
+          handlePlaceTheme={handlePlaceTheme}
+          placeTheme={placeTheme}
+          onImageUpload={onImageUpload}
+          images={images}
+          validateImageUploaded={validateImageUploaded}
+          IsImageUploaded={IsImageUploaded}
+          newListingPublished={newListingPublished}
+          onUpdateImageOrder={onUpdateImageOrder}
+          onRemoveImage={onRemoveImage}
         />
       );
     }
@@ -186,6 +211,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingFeaturesPanel
+          history={props.history}
           {...panelProps(FEATURES)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -200,6 +226,8 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditPolicies';
       return (
         <EditListingPoliciesPanel
+          history={props.history}
+
           {...panelProps(POLICY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -214,6 +242,8 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditLocation';
       return (
         <EditListingLocationPanel
+          history={props.history}
+
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -228,6 +258,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditPricing';
       return (
         <EditListingPricingPanel
+          history={props.history}
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
@@ -242,6 +273,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditAvailability';
       return (
         <EditListingAvailabilityPanel
+          history={props.history}
           {...panelProps(AVAILABILITY)}
           availability={availability}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
@@ -260,6 +292,7 @@ const EditListingWizardTab = props => {
       return (
         <EditListingPhotosPanel
           {...panelProps(PHOTOS)}
+          history={props.history}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           newListingPublished={newListingPublished}
           fetchInProgress={fetchInProgress}
@@ -275,7 +308,7 @@ const EditListingWizardTab = props => {
     }
     case BASIC: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveNewBasic'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingBasicPanel
@@ -284,36 +317,51 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
+
         />
       );
     }
 
     case CAPACITY: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveCapicity'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingCapacityPanel
+          history={props.history}
           {...panelProps(CAPACITY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          updateCapacityValues={updateCapacityValues}
+          guestNumber={guestNumber}
+          maxGuestNumber={maxGuestNumber}
+          bedsNumber={bedsNumber}
+          bedroomsNumber={bedroomsNumber}
+          bathroomsNumber={bathroomsNumber}
         />
       );
     }
 
     case TRAVEL: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
+        ? 'EditListingWizard.saveNewTravel'
         : 'EditListingWizard.saveEditFeatures';
       return (
         <EditListingTravelPanel
+          history={props.history}
           {...panelProps(TRAVEL)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          currentUser={currentUser}
+          showTravelSubfield={showTravelSubfield}
+          travelSubFields={travelSubFields}
+          IstravelsfieldInitialized={IstravelsfieldInitialized}
+          mangeIstravelsfieldInitialized={mangeIstravelsfieldInitialized}
         />
       );
     }

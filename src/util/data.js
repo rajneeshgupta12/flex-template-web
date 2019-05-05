@@ -172,7 +172,7 @@ export const ensureListing = listing => {
   const empty = {
     id: null,
     type: 'listing',
-    attributes: { publicData: {} },
+    attributes: {title:'', publicData: {} },
     images: [],
   };
   return { ...empty, ...listing };
@@ -258,10 +258,10 @@ export const ensureAvailabilityException = availabilityException => {
 export const userDisplayNameAsString = (user, defaultUserDisplayName) => {
   const hasAttributes = user && user.attributes;
   const hasProfile = hasAttributes && user.attributes.profile;
-  const hasDisplayName = hasProfile && user.attributes.profile.displayName;
+  const hasDisplayName = hasProfile && user.attributes.profile.firstName;
 
   if (hasDisplayName) {
-    return user.attributes.profile.displayName;
+    return user.attributes.profile.firstName;
   } else {
     return defaultUserDisplayName || '';
   }
@@ -277,7 +277,7 @@ export const userDisplayNameAsString = (user, defaultUserDisplayName) => {
  */
 export const userDisplayName = (user, bannedUserDisplayName) => {
   console.warn(
-    `Function userDisplayName is deprecated! 
+    `Function userDisplayName is deprecated!
 User function userDisplayNameAsString or component UserDisplayName instead.`
   );
 

@@ -114,8 +114,8 @@ const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
 const facebookAppId = null;
 
 const maps = {
-  mapboxAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
-  googleMapsAPIKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  // mapboxAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
+  googleMapsAPIKey: process.env.REACT_APP_GOOGLE_MAP_KEY,
 
   // The location search input can be configured to show default
   // searches when the user focuses on the input and hasn't yet typed
@@ -159,7 +159,7 @@ const maps = {
 
     // Default zoom level when showing a single circle on a Map. Should
     // be small enough so the whole circle fits in.
-    defaultZoomLevel: 13,
+    defaultZoomLevel: 1,
 
     // Color of the circle on the Map component.
     circleColor: '#c0392b',

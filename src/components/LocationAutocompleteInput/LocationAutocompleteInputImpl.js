@@ -9,8 +9,8 @@ import config from '../../config';
 
 import IconHourGlass from './IconHourGlass';
 import IconCurrentLocation from './IconCurrentLocation';
-import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderMapbox';
-// import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderGoogleMaps';
+// import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderMapbox';
+import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderGoogleMaps';
 
 import css from './LocationAutocompleteInput.css';
 
@@ -327,6 +327,7 @@ class LocationAutocompleteInputImpl extends Component {
           predictions: [],
           selectedPlace: place,
         });
+        this.props.onValueUpdate(place)
       })
       .catch(e => {
         this.setState({ fetchingPlaceDetails: false });
@@ -478,7 +479,6 @@ class LocationAutocompleteInputImpl extends Component {
     // might want to hardcode this to `true`. Otherwise the dropdown
     // list will disappear.
     const renderPredictions = this.state.inputHasFocus;
-
     return (
       <div className={rootClass}>
         <div className={iconClass}>

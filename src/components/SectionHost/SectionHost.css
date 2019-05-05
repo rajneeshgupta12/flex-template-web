@@ -9,6 +9,18 @@
 	background-color: #d1d1d1;
 	padding: 55px 53px 61px 53px;
 	width: auto;
+
+	background: url('../../assets/BecomeAHost.png');
+
+    /* Add loading color for the div */
+  
+
+    /* Cover the whole screen with the background image */
+    background-size: cover;
+
+    /* Align the image within the container */
+    background-position: center center;
+    height: 350px;
 }
 
 .info {
@@ -22,4 +34,5 @@
 	@apply --marketplaceButtonStyles;
 	width: 252px;
 	height: 65px;
+	margin-top: 224px;
 }

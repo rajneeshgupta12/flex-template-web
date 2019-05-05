@@ -56,7 +56,7 @@
   box-shadow: var(--boxShadowLight);
 
   @media (--viewportLarge) {
-    padding: 0 70px 0 55px;
+    padding: 0 0px 0 0px;
    /* padding: 0 24px 0 0; */
   }
 }
@@ -67,10 +67,10 @@
   flex-shrink: 0;
   padding: 21px 24px 21px 24px;
   height: 100%;
-  width: 180px;
+  width: auto;
 
   @media (--viewportLarge) {
-    padding: 15px 0px 16px 0;
+    padding: 15px 20px 16px 20px;
     /*padding: 21px 36px 21px 36px;*/
   }
 }
@@ -112,7 +112,7 @@
   height: var(--topbarHeightDesktop);
 
   @media (--viewportLarge) {
-    padding-left: 34px;
+    padding-left: 14px;
   }
 }
 
@@ -140,6 +140,10 @@
 
 .createListing {
   @apply --TopbarDesktop_label;
+    position: relative;
+  padding: 9px 23px 12px 23px;
+ border: solid 2px #006db5;
+ margin: 12px 0px;
 }
 
 /* Inbox */
@@ -210,7 +214,7 @@
   align-items: center;
   height: 100%;
   margin: 0;
-  padding: 0 12px 0 12px;
+  padding: 0 17px 0 17px;
 
   &:active {
     border-bottom: 0;
@@ -224,6 +228,7 @@
 }
 
 .avatar {
+
   margin: 16px 0;
 }
 

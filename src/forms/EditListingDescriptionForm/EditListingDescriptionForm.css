@@ -64,3 +64,18 @@
     margin-top: 100px;
   }
 }
+
+.buttonLayout {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.themeButton {
+  border-radius: 22px;
+  width: auto;
+  padding: 0 22px 0 22px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}

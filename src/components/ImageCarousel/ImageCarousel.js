@@ -96,10 +96,9 @@ class ImageCarousel extends Component {
     const imageClasses = classNames(css.image, {
       [css.imageLoading]: !currentImageIsLoaded,
     });
-
     return (
-      <div className={classes}>
-        <div className={css.imageWrapper}>
+
+        <div className={classes}><div className={css.imageWrapper}>
           <IconSpinner className={loadingIconClasses} />
           <ResponsiveImage
             className={imageClasses}

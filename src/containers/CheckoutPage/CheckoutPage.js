@@ -41,6 +41,7 @@ import config from '../../config';
 
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
+import EstimatedBreakdownMaybe from '../../forms/BookingDatesForm/EstimatedBreakdownMaybe';
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -56,6 +57,7 @@ export class CheckoutPageComponent extends Component {
 
     this.loadInitialData = this.loadInitialData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log('checkout pAGE  rendered')
   }
 
   componentWillMount() {
@@ -161,6 +163,7 @@ export class CheckoutPageComponent extends Component {
       cardToken,
       bookingStart: speculatedTransaction.booking.attributes.start,
       bookingEnd: speculatedTransaction.booking.attributes.end,
+      totalGlampers:this.state.total_glampers||0
     };
 
     const enquiredTransaction = this.state.pageData.enquiredTransaction;
@@ -197,6 +200,8 @@ export class CheckoutPageComponent extends Component {
   }
 
   render() {
+    console.log('checkout page  this.props', this.props)
+    console.log('checkout page  this.state', this.state)
     const {
       scrollingDisabled,
       speculateTransactionInProgress,
@@ -224,7 +229,10 @@ export class CheckoutPageComponent extends Component {
     const currentTransaction = ensureTransaction(speculatedTransaction, {}, null);
     const currentBooking = ensureBooking(currentTransaction.booking);
     const currentListing = ensureListing(listing);
-    const currentAuthor = ensureUser(currentListing.author);
+    console.log('currentListing  11111111111        --', currentListing)
+    let userArrayIndex = listing && listing.includedRelationships.map(function (x) { return x.type; }).indexOf('user');
+    let authorObj = listing && listing.includedRelationships[userArrayIndex];
+    const currentAuthor = ensureUser(authorObj);
 
     const isOwnListing =
       currentUser &&
@@ -239,13 +247,21 @@ export class CheckoutPageComponent extends Component {
       bookingDates.bookingStart &&
       bookingDates.bookingEnd
     );
+    console.log('currentAuthor          --', currentAuthor)
+
     const hasRequiredData = hasListingAndAuthor && hasBookingDates;
+    console.log('hasRequiredData          --', hasRequiredData)
+
     const canShowPage = hasRequiredData && !isOwnListing;
     const shouldRedirect = !isLoading && !canShowPage;
 
     // Redirect back to ListingPage if data is missing.
     // Redirection must happen before any data format error is thrown (e.g. wrong currency)
     if (shouldRedirect) {
+      console.log('hasRequiredData          --', hasRequiredData)
+      console.log('canShowPage          --', canShowPage)
+      console.log('shouldRedirect          --', shouldRedirect)
+      alert("can not book own listing")
       // eslint-disable-next-line no-console
       console.error('Missing or invalid data for checkout, redirecting back to listing page.', {
         transaction: currentTransaction,
@@ -257,16 +273,6 @@ export class CheckoutPageComponent extends Component {
 
     // Show breakdown only when transaction and booking are loaded
     // (i.e. have an id)
-    const breakdown =
-      currentTransaction.id && currentBooking.id ? (
-        <BookingBreakdown
-          className={css.bookingBreakdown}
-          userRole="customer"
-          unitType={config.bookingUnitType}
-          transaction={currentTransaction}
-          booking={currentBooking}
-        />
-      ) : null;
 
     // Allow showing page when currentUser is still being downloaded,
     // but show payment form only when user info is loaded.
@@ -395,12 +401,42 @@ export class CheckoutPageComponent extends Component {
     const unitTranslationKey = isNightly
       ? 'CheckoutPage.perNight'
       : isDaily
-      ? 'CheckoutPage.perDay'
-      : 'CheckoutPage.perUnit';
+        ? 'CheckoutPage.perDay'
+        : 'CheckoutPage.perUnit';
 
     const price = currentListing.attributes.price;
     const formattedPrice = formatMoney(intl, price);
     const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
+    let total_glampers = this.state && this.state.pageData
+      && this.state.pageData.bookingData
+      && this.state.pageData.bookingData.total_glampers;
+
+    const bookingData1 = {
+      unitType,
+      unitPrice: price,
+      startDate: bookingDates.bookingStart,
+      endDate: bookingDates.bookingEnd,
+      // NOTE: If unitType is `line-item/units`, a new picker
+      // for the quantity should be added to the form.
+      quantity: 1,
+      totalGlampers: total_glampers,
+    }
+
+    const breakdown =
+      currentTransaction.id && currentBooking.id ? (
+        <EstimatedBreakdownMaybe
+        bookingData={bookingData1}
+         price={price}
+         publicData={currentListing.attributes.publicData} />
+        // <BookingBreakdown
+        //   className={css.bookingBreakdown}
+        //   userRole="customer"
+        //   unitType={config.bookingUnitType}
+        //   transaction={currentTransaction}
+        //   booking={currentBooking}
+        // />
+      ) :
+        null;
 
     const showInitialMessageInput = !enquiredTransaction;
 
@@ -418,7 +454,9 @@ export class CheckoutPageComponent extends Component {
     }
 
     return (
+
       <Page {...pageProps}>
+        {console.log('sfdsyr AT RENDEREDDDD')}
         {topbar}
         <div className={css.contentContainer}>
           <div className={css.aspectWrapper}>
@@ -462,7 +500,7 @@ export class CheckoutPageComponent extends Component {
                   inProgress={this.state.submitting}
                   formId="CheckoutPagePaymentForm"
                   paymentInfo={intl.formatMessage({ id: 'CheckoutPage.paymentInfo' })}
-                  authorDisplayName={currentAuthor.attributes.profile.displayName}
+                  authorDisplayName={currentAuthor.attributes.profile.firstName}
                   showInitialMessageInput={showInitialMessageInput}
                 />
               ) : null}

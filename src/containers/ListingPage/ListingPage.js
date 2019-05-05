@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { LISTING_STATE_PENDING_APPROVAL, LISTING_STATE_CLOSED, propTypes } from '../../util/types';
+import { CalculateAmount } from '../../forms/BookingDatesForm/CalculationsUtils'
 import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -51,7 +52,7 @@ import SectionHost from './SectionHost';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-
+import { convertMoneyToNumber } from '../../util/currency'
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
 const { UUID } = sdkTypes;
@@ -80,7 +81,9 @@ export class ListingPageComponent extends Component {
     const { enquiryModalOpenForListingId, params } = props;
     this.state = {
       pageClassNames: [],
-      imageCarouselOpen: false,
+      // imageCarouselOpen: false,
+      props: props,
+      updatedTotalPrice: 10,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
     };
 
@@ -89,36 +92,40 @@ export class ListingPageComponent extends Component {
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
-  handleSubmit(values) {
-    const { history, getListing, params, useInitialValues } = this.props;
-    const listingId = new UUID(params.id);
-    const listing = getListing(listingId);
-
-    const { bookingDates, ...bookingData } = values;
+  handleSubmit(values, totalGlampers) {
+    let { history, getListing, params, useInitialValues, listing } = this.props;
+    listing = listing.data
+    const { total_glampers, totalPrice } = values;
+    const { startDate, endDate, } = values && values.bookingDates;
 
     const initialValues = {
       listing,
-      bookingData,
-      bookingDates: {
-        bookingStart: bookingDates.startDate,
-        bookingEnd: bookingDates.endDate,
+      bookingData: {
+        total_glampers: totalGlampers,
+        totalPrice: 10
       },
+      bookingDates: {
+        bookingStart: startDate,
+        bookingEnd: endDate,
+      },
+      totalGlampers
     };
 
     const routes = routeConfiguration();
     // Customize checkout page state with current listing and selected bookingDates
     const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
     useInitialValues(setInitialValues, initialValues);
-
-    // Redirect to CheckoutPage
-    history.push(
-      createResourceLocatorString(
-        'CheckoutPage',
-        routes,
-        { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
-        {}
-      )
-    );
+    if (listing) {
+      // Redirect to CheckoutPage
+      history.push(
+        createResourceLocatorString(
+          'CheckoutPage',
+          routes,
+          { id: listing.id.uuid, slug: createSlug(listing.attributes.title) },
+          {}
+        )
+      );
+    }
   }
 
   onContactUser() {
@@ -158,12 +165,48 @@ export class ListingPageComponent extends Component {
       });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ props: newProps })
+  }
+
+  calculatePrice = (publicData, price) => {
+    const otherCharges = publicData && publicData.other_charges && {
+      cleaning_fee: publicData.other_charges.cleaning_fee ? JSON.parse(publicData.other_charges.cleaning_fee) : 0,
+      extra_guest_fee: publicData.other_charges.extra_guest_fee ? JSON.parse(publicData.other_charges.extra_guest_fee) : 0,
+      seasonal_price: publicData.other_charges.seasonal_price ? JSON.parse(publicData.other_charges.seasonal_price) : 0,
+      special_price: publicData.other_charges.special_price ? JSON.parse(publicData.other_charges.special_price) : 0,
+      weekend_price: publicData.other_charges.weekend_price ? JSON.parse(publicData.other_charges.weekend_price) : 0,
+      seasonal_weekend: publicData.other_charges.seasonal_weekend ? JSON.parse(publicData.other_charges.seasonal_weekend) : 0,
+      special_weekend: publicData.other_charges.special_weekend ? JSON.parse(publicData.other_charges.special_weekend) : 0,
+      tax: publicData.other_charges.tax ? Number(publicData.other_charges.tax) : 0,
+    }
+    const { startDate, endDate } = this.state
+    if (startDate, endDate, publicData, price) {
+      let totalAmount = CalculateAmount(startDate, endDate, publicData.other_charges, otherCharges, price);
+      const { averagePrice } = totalAmount;
+      let formattedUnitPrice = (averagePrice / 100).toFixed(2).toString()
+      if (formattedUnitPrice == 'NaN') {
+        formattedUnitPrice = "Loading... Price"
+      }
+      this.setState({ updatedTotalPriceNew: formattedUnitPrice })
+    }
+  }
+
+  updateDates = (e) => {
+    this.setState({ startDate: e.startDate, endDate: e.endDate })
+  }
+
+  updateGlampers = (e) => {
+    this.setState({ total_glampers: e.target.value })
+  }
+
   render() {
     const {
       unitType,
       isAuthenticated,
       currentUser,
       getListing,
+      listing,
       getOwnListing,
       intl,
       onManageDisableScrolling,
@@ -178,16 +221,26 @@ export class ListingPageComponent extends Component {
       timeSlots,
       fetchTimeSlotsError,
       categoriesConfig,
-      amenitiesConfig,
-    } = this.props;
+      hospitalityAmenitiesConfig,
+      glampingAmenitiesConfig,
+      transportaionAmenitiesConfig,
+      cultureAmenitiesConfig,
+      natureAmenitiesConfig,
+      convenienceAmenitiesConfig,
+      tourAmenitiesConfig,
 
+    } = this.state.props;
+    const { startDate, endDate } = this.state
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
-    const currentListing =
-      isPendingApprovalVariant || isDraftVariant
-        ? ensureOwnListing(getOwnListing(listingId))
-        : ensureListing(getListing(listingId));
+    const currentListing = listing && listing.data//ensureOwnListing(getOwnListing(listingId))
+    if (!currentListing) {
+      return <div></div>
+    }
+    // isPendingApprovalVariant || isDraftVariant
+    //   ? ensureOwnListing(getOwnListing(listingId))
+    //   : ensureListing(getListing(listingId));
 
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
@@ -196,7 +249,6 @@ export class ListingPageComponent extends Component {
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
-
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 
@@ -216,15 +268,18 @@ export class ListingPageComponent extends Component {
     if (shouldShowPublicListingPage) {
       return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
     }
-
-    const {
+    let {
       description = '',
       geolocation = null,
       price = null,
       title = '',
       publicData,
     } = currentListing.attributes;
-
+    const charges = publicData.other_charges;
+    // price = charges
+    const {
+      author
+    } = currentListing.relationships;
     const richTitle = (
       <span>
         {richText(title, {
@@ -235,10 +290,10 @@ export class ListingPageComponent extends Component {
     );
 
     const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
+      <FormattedMessage id="ListingPage.bookingTitle" values={{ amount: this.state.updatedTotalPriceNew || price && (price.amount / 100) }} />
     );
     const bookingSubTitle = intl.formatMessage({ id: 'ListingPage.bookingSubTitle' });
-
+    // const bookingSubTitle =
     const topbar = <TopbarContainer />;
 
     if (showListingError && showListingError.status === 404) {
@@ -251,7 +306,6 @@ export class ListingPageComponent extends Component {
       const errorTitle = intl.formatMessage({
         id: 'ListingPage.errorLoadingListingTitle',
       });
-
       return (
         <Page title={errorTitle} scrollingDisabled={scrollingDisabled}>
           <LayoutSingleColumn className={css.pageRoot}>
@@ -312,15 +366,13 @@ export class ListingPageComponent extends Component {
     // Because listing can be never showed with banned or deleted user we don't have to provide
     // banned or deleted display names for the function
     const authorDisplayName = userDisplayNameAsString(ensuredAuthor, '');
-
     const { formattedPrice, priceTitle } = priceData(price, intl);
-
-    const handleBookingSubmit = values => {
+    const handleBookingSubmit = (values, totalGlampers) => {
       const isCurrentlyClosed = currentListing.attributes.state === LISTING_STATE_CLOSED;
       if (isOwnListing || isCurrentlyClosed) {
         window.scrollTo(0, 0);
       } else {
-        this.handleSubmit(values);
+        this.handleSubmit(values, totalGlampers);
       }
     };
 
@@ -366,7 +418,12 @@ export class ListingPageComponent extends Component {
           <span className={css.separator}>•</span>
         </span>
       ) : null;
-
+    let listingAuthor = {}
+    listing && listing.included.forEach(item => {
+      if (item.type == 'user')
+        listingAuthor = item
+    });
+    let listingAuthorName = listingAuthor.attributes && listingAuthor.attributes.profile && listingAuthor.attributes.profile.displayName
     return (
       <Page
         title={schemaTitle}
@@ -404,21 +461,31 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
                     priceTitle={priceTitle}
+                    publicData={publicData}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     category={category}
                     hostLink={hostLink}
+                    currentUser={currentUser}
                     showContactUser={showContactUser}
+                    author={author}
+                    listingAuthor={listingAuthorName}
                     onContactUser={this.onContactUser}
                   />
-                  <SectionDescriptionMaybe description={description} />
+                  <SectionDescriptionMaybe description={description} publicData={publicData} />
                   <SectionFeatures
-                    options={amenitiesConfig}
-                    selectedOptions={publicData.amenities}
+                    hospitalityAmenitiesConfig={hospitalityAmenitiesConfig}
+                    glampingAmenitiesConfig={glampingAmenitiesConfig}
+
+                    transportaionAmenitiesConfig={transportaionAmenitiesConfig}
+                    cultureAmenitiesConfig={cultureAmenitiesConfig}
+                    natureAmenitiesConfig={natureAmenitiesConfig}
+                    convenienceAmenitiesConfig={convenienceAmenitiesConfig}
+                    tourAmenitiesConfig={tourAmenitiesConfig}
+                    publicData={publicData}
                   />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
@@ -438,6 +505,8 @@ export class ListingPageComponent extends Component {
                     sendEnquiryInProgress={sendEnquiryInProgress}
                     onSubmitEnquiry={this.onSubmitEnquiry}
                     currentUser={currentUser}
+                    author={author}
+                    listingAuthorName={listingAuthorName}
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
@@ -453,6 +522,14 @@ export class ListingPageComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   timeSlots={timeSlots}
                   fetchTimeSlotsError={fetchTimeSlotsError}
+                  price={price}
+                  description={description}
+                  publicData={publicData}
+                  updatedTotalPrice={this.state.updatedTotalPrice}
+                  updateDates={this.updateDates}
+                  startDate={startDate}
+                  endDate={endDate}
+                  calculatePrice={this.calculatePrice}
                 />
               </div>
             </div>
@@ -477,7 +554,13 @@ ListingPageComponent.defaultProps = {
   fetchTimeSlotsError: null,
   sendEnquiryError: null,
   categoriesConfig: config.custom.categories,
-  amenitiesConfig: config.custom.amenities,
+  hospitalityAmenitiesConfig: config.custom.amenities_hospitality,
+  glampingAmenitiesConfig: config.custom.amenities_glamping,
+  transportaionAmenitiesConfig: config.custom.available_transportaion,
+  cultureAmenitiesConfig: config.custom.facilities_culture,
+  natureAmenitiesConfig: config.custom.facilities_nature,
+  convenienceAmenitiesConfig: config.custom.facilities_convenience,
+  tourAmenitiesConfig: config.custom.facilities_tour,
 };
 
 ListingPageComponent.propTypes = {
@@ -517,7 +600,15 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
 
   categoriesConfig: array,
-  amenitiesConfig: array,
+  glampingAmenitiesConfig: array,
+  hospitalityAmenitiesConfig: array,
+
+  transportaionAmenitiesConfig: array,
+  cultureAmenitiesConfig: array,
+  natureAmenitiesConfig: array,
+  convenienceAmenitiesConfig: array,
+  tourAmenitiesConfig: array,
+
 };
 
 const mapStateToProps = state => {
@@ -525,6 +616,7 @@ const mapStateToProps = state => {
   const {
     showListingError,
     reviews,
+    listing,
     fetchReviewsError,
     timeSlots,
     fetchTimeSlotsError,
@@ -549,6 +641,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated,
     currentUser,
+    listing,
     getListing,
     getOwnListing,
     scrollingDisabled: isScrollingDisabled(state),

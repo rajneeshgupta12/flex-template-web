@@ -2,46 +2,154 @@
  * Marketplace specific configuration.
  */
 
-export const amenities = [
+
+export const amenities_hospitality = [
   {
-    key: 'towels',
+    key: 'blanket_pillow',
+    label: 'Extra Blankets / Pillows',
+  },
+  {
+    key: 'towel',
     label: 'Towels',
   },
   {
-    key: 'bathroom',
-    label: 'Bathroom',
+    key: 'shampoo_conditioner',
+    label: 'Shampoo / Conditioner',
   },
   {
-    key: 'swimming_pool',
-    label: 'Swimming pool',
+    key: 'body_wash',
+    label: 'Body Wash',
   },
   {
-    key: 'own_drinks',
-    label: 'Own drinks allowed',
+    key: 'hair_dryer',
+    label: 'Hair dryer',
   },
   {
-    key: 'jacuzzi',
-    label: 'Jacuzzi',
+    key: 'heating',
+    label: 'Heating',
   },
   {
-    key: 'audiovisual_entertainment',
-    label: 'Audiovisual entertainment',
+    key: 'air_conditioning',
+    label: 'Air Conditioning',
   },
   {
-    key: 'barbeque',
-    label: 'Barbeque',
+    key: 'tv',
+    label: 'TV / Projector',
   },
   {
-    key: 'own_food_allowed',
-    label: 'Own food allowed',
+    key: 'wifi_internet',
+    label: 'Wifi / Internet',
   },
 ];
 
+export const amenities_glamping = [
+  {
+    key: 'firepit',
+    label: 'Firepit',
+  },
+  {
+    key: 'camping_chair',
+    label: 'Camping Chairs',
+  },
+  {
+    key: 'camping_table',
+    label: 'Camping Table',
+  },
+  {
+    key: 'hammock',
+    label: 'Hammock',
+  },
+  {
+    key: 'stove',
+    label: 'Stove',
+  },
+  {
+    key: 'refrigerator',
+    label: 'Refigerator',
+  },
+  {
+    key: 'kitchenware',
+    label: 'Kitchenware',
+  },
+  {
+    key: 'silverware',
+    label: 'Silverware',
+  },
+  {
+    key: 'toilet',
+    label: 'Toilet',
+  },
+  {
+    key: 'shower',
+    label: 'Shower',
+  },
+  {
+    key: 'bathtub',
+    label: 'Bathtub',
+  },
+  {
+    key: 'hot_tub',
+    label: 'Hot Tub',
+  },
+  {
+    key: 'power_outlet',
+    label: 'Power Outlet',
+  },
+];
+
+export const available_transportaion = [
+  { key: 'ride_service', label: 'Ride Service', hasInput: true, inputKeyName: "ride_service_text" },
+  { key: 'bus', label: 'Bus', hasInput: true, inputKeyName: "bus_text" },
+  { key: 'subway', label: 'Subway', hasInput: true, inputKeyName: "subway_text" },
+  { key: 'train', label: 'Train', hasInput: true, inputKeyName: "train_text" },
+  { key: 'parking_available', label: 'Parking Available', hasInput: true, inputKeyName: "parking_available_text" },
+];
+
+export const facilities_culture = [
+  { key: 'library', label: 'Library' },
+  { key: 'movie_theater', label: 'Movie theater' },
+  { key: 'theater', label: 'Theater(performance, concert)' },
+  { key: 'museum', label: 'Museum' },
+  { key: 'art_gallery', label: 'Art gallery' }
+];
+
+export const facilities_nature = [
+  { key: 'lake', label: 'lake' },
+  { key: 'beach', label: 'beach' },
+  { key: 'park', label: 'park' },
+  { key: 'mountain', label: 'mountain' },
+  { key: 'river', label: 'river' },
+  { key: 'desert', label: 'desert' }
+];
+
+export const facilities_convenience = [
+  { key: 'restaurant', label: 'restaurant' },
+  { key: 'bar', label: 'bar' },
+  { key: 'cafe', label: 'cafe' },
+  { key: 'grocery_store', label: 'grocery store' },
+  { key: 'hospital', label: 'hospital' },
+  { key: 'airport', label: 'airport' },
+  { key: 'shopping_mall', label: 'shopping mall' },
+  { key: 'gym', label: 'gym' },
+];
+
+export const facilities_tour = [
+  { key: 'winery', label: 'winery' },
+  { key: 'brewery', label: 'brewery' },
+  { key: 'roastery', label: 'roastery' },
+  { key: 'zoo', label: 'zoo' },
+  { key: 'amusement_park', label: 'amusement park' },
+  { key: 'market_flea_farmers', label: 'flea market/farmers market mall' },
+  { key: 'tower', label: 'tower' },
+  { key: 'historical_building_area', label: 'historical building/area' },
+  { key: 'regional_tour_spot', label: 'regional tour spot' },
+];
+
 export const categories = [
-  { key: 'smoke', label: 'Smoke' },
-  { key: 'electric', label: 'Electric' },
-  { key: 'wood', label: 'Wood' },
-  { key: 'other', label: 'Other' },
+  { key: 'one', label: '1' },
+  { key: 'two', label: '2' },
+  { key: 'three', label: '3' },
+  { key: 'more then 3', label: 'more then 3' },
 ];
 
 // Price filter configuration

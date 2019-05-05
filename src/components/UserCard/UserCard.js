@@ -3,6 +3,7 @@ import { string, func, oneOfType } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import truncate from 'lodash/truncate';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom'
 import { AvatarLarge, NamedLink, InlineTextButton } from '../../components';
 import { ensureUser, ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
@@ -63,8 +64,9 @@ ExpandableBio.propTypes = {
 };
 
 const UserCard = props => {
-  const { rootClassName, className, user, currentUser, onContactUser } = props;
 
+  const { rootClassName, className, user, currentUser, onContactUser, author, listingAuthorName, listing } = props;
+  user['profileImage'] = user.relationships.profileImage
   const userIsCurrentUser = user && user.type === 'currentUser';
   const ensuredUser = userIsCurrentUser ? ensureCurrentUser(user) : ensureUser(user);
 
@@ -72,7 +74,6 @@ const UserCard = props => {
   const isCurrentUser =
     ensuredUser.id && ensuredCurrentUser.id && ensuredUser.id.uuid === ensuredCurrentUser.id.uuid;
   const { displayName, bio } = ensuredUser.attributes.profile;
-
   const handleContactUserClick = () => {
     onContactUser(user);
   };
@@ -116,14 +117,21 @@ const UserCard = props => {
     </p>
   ) : null;
 
+  let hostId = author && author.data && author.data.id && author.data.id.uuid
+  let displayHostName = currentUser && currentUser.attributes && currentUser.attributes.profile && currentUser.attributes.profile.firstName
+  displayHostName = <Link to={`/u/${hostId}`} >{listingAuthorName}</Link>
+
+  let userArrayIndex = listing && listing.includedRelationships.map(function (x) { return x.id.uuid; }).indexOf(user&&user.profileImage&& user.profileImage.data&&  user.profileImage.data.id.uuid);
+  let image = listing&& listing.includedRelationships &&listing.includedRelationships[userArrayIndex]
+  user.profileImage = image
   return (
     <div className={classes}>
       <div className={css.content}>
-        <AvatarLarge className={css.avatar} user={user} />
+        <AvatarLarge className={css.avatar} user={user} listing={listing} />
         <div className={css.info}>
           <div className={css.headingRow}>
             <h3 className={css.heading}>
-              <FormattedMessage id="UserCard.heading" values={{ name: displayName }} />
+              <FormattedMessage id="UserCard.heading" values={{ name: displayHostName }} />
             </h3>
             {editProfileDesktop}
           </div>

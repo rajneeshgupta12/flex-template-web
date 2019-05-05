@@ -21,11 +21,13 @@ const EditListingAvailabilityPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    history
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
+  const { check_in_time, check_out_time, availability_period } = currentListing.attributes.publicData;
   const defaultAvailabilityPlan = {
     type: 'availability-plan/day',
     entries: [
@@ -38,6 +40,7 @@ const EditListingAvailabilityPanel = props => {
       { dayOfWeek: 'sun', seats: 1 },
     ],
   };
+
   const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
 
   return (
@@ -49,27 +52,40 @@ const EditListingAvailabilityPanel = props => {
             values={{ listingTitle: <ListingLink listing={listing} /> }}
           />
         ) : (
-          <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
-        )}
+            <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
+          )}
       </h1>
       <EditListingAvailabilityForm
         className={css.form}
+        initialValues={{ check_in_time, check_out_time, availability_period }}
         listingId={currentListing.id}
-        initialValues={{ availabilityPlan }}
+        // initialValues={{ availabilityPlan }}
         availability={availability}
         availabilityPlan={availabilityPlan}
-        onSubmit={() => {
+        onSubmit={(values) => {
+          let { check_in_time, check_out_time, availability_period } = values
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,
           // which is visible on this panel.
-          onSubmit({ availabilityPlan });
+          onSubmit({
+            availabilityPlan, publicData: {
+              check_in_time, check_out_time, availability_period
+            }
+          });
         }}
-        onChange={onChange}
+        onChange={(values) => {
+          // We save the default availability plan
+          // I.e. this listing is available every night.
+          // Exceptions are handled with live edit through a calendar,
+          // which is visible on this panel.
+          onChange({ availabilityPlan });
+        }}
         saveActionMsg={submitButtonText}
         updated={panelUpdated}
         updateError={errors.updateListingError}
         updateInProgress={updateInProgress}
+        history={history}
       />
     </div>
   );

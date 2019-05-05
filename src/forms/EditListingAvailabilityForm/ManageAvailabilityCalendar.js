@@ -392,7 +392,6 @@ class ManageAvailabilityCalendar extends Component {
 
     const monthName = currentMonth.format('MMMM');
     const classes = classNames(rootClassName || css.root, className);
-
     return (
       <div
         className={classes}

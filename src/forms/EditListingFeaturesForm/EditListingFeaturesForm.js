@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from 'react-intl';
-
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, Form } from '../../components';
@@ -26,13 +25,13 @@ const EditListingFeaturesFormComponent = props => (
         saveActionMsg,
         updated,
         updateInProgress,
+        invalid,
         fetchErrors,
       } = fieldRenderProps;
-
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = updated && pristine;
       const submitInProgress = updateInProgress;
-      const submitDisabled = disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
@@ -51,12 +50,23 @@ const EditListingFeaturesFormComponent = props => (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-
+          <label>
+            Amenities for hospitality
+          </label>
           <FieldCheckboxGroup
             className={css.features}
-            id={name}
-            name={name}
-            options={config.custom.amenities}
+            id={'amenities_hospitality'}
+            name={'amenities_hospitality'}
+            options={config.custom.amenities_hospitality}
+          />
+          <label>
+            Amenities for Glamping
+          </label>
+          <FieldCheckboxGroup
+            className={css.features}
+            id={'amenities_glamping'}
+            name={'amenities_glamping'}
+            options={config.custom.amenities_glamping}
           />
 
           <Button
@@ -68,6 +78,7 @@ const EditListingFeaturesFormComponent = props => (
           >
             {saveActionMsg}
           </Button>
+          <div onClick={() => props.history.goBack()}>Back: Capacity</div>
         </Form>
       );
     }}

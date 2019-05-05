@@ -14,19 +14,20 @@ import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
 
 import css from './FieldCheckboxGroup.css';
+import FieldTextInput from '../FieldTextInput/FieldTextInput';
 
 const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta } = props;
+  const { className, rootClassName, label, twoColumns, id, fields, options, meta,travelSubFields } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
-
   return (
     <fieldset className={classes}>
       {label ? <legend>{label}</legend> : null}
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
+         let textKey = option.key
           return (
             <li key={fieldId} className={css.item}>
               <FieldCheckbox
@@ -35,6 +36,15 @@ const FieldCheckboxRenderer = props => {
                 label={option.label}
                 value={option.key}
               />
+              {
+                option.hasInput &&travelSubFields[textKey] &&
+                <FieldTextInput
+                  type="text"
+                  name={option.inputKeyName}
+                  id={option.inputKeyName}
+                  placeholder={`Description about ${option.label} `}
+                />
+              }
             </li>
           );
         })}

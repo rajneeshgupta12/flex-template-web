@@ -326,11 +326,11 @@ const MapWithGoogleMap = withGoogleMap(props => {
     createURLToListing,
     mapComponentRefreshToken
   );
-
   return (
+
     <GoogleMap
-      defaultZoom={zoom}
-      defaultCenter={center}
+      defaultZoom={1}
+      defaultCenter={ {lat: 0, lng:  180 } }
       options={{
         // Disable all controls except zoom
         mapTypeControl: false,

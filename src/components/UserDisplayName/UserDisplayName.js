@@ -16,7 +16,7 @@ const UserDisplayName = props => {
   const userIsDeleted = hasAttributes && user.attributes.deleted;
   const userIsBanned = hasAttributes && user.attributes.banned;
   const userHasProfile = hasAttributes && user.attributes.profile;
-  const userDisplayName = userHasProfile && user.attributes.profile.displayName;
+  const userDisplayName = userHasProfile && user.attributes.profile.firstName;
 
   const deletedUserDisplayNameInUse = deletedUserDisplayName
     ? deletedUserDisplayName

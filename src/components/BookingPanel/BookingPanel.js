@@ -65,7 +65,17 @@ const BookingPanel = props => {
     fetchTimeSlotsError,
     history,
     location,
+    description,
+    publicData,
     intl,
+    setFormattedUnitPrice,
+    updatedTotalPrice,
+    startDate,
+    endDate,
+    updateDates
+    ,updateGlampers,
+    calculatePrice
+
   } = props;
 
   const price = listing.attributes.price;
@@ -77,8 +87,8 @@ const BookingPanel = props => {
   const subTitleText = !!subTitle
     ? subTitle
     : showClosedListingHelpText
-    ? intl.formatMessage({ id: 'BookingPanel.subTitleClosedListing' })
-    : null;
+      ? intl.formatMessage({ id: 'BookingPanel.subTitleClosedListing' })
+      : null;
 
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
@@ -86,12 +96,11 @@ const BookingPanel = props => {
   const unitTranslationKey = isNightly
     ? 'BookingPanel.perNight'
     : isDaily
-    ? 'BookingPanel.perDay'
-    : 'BookingPanel.perUnit';
+      ? 'BookingPanel.perDay'
+      : 'BookingPanel.perUnit';
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
-
   return (
     <div className={classes}>
       <ModalInMobile
@@ -123,6 +132,15 @@ const BookingPanel = props => {
             isOwnListing={isOwnListing}
             timeSlots={timeSlots}
             fetchTimeSlotsError={fetchTimeSlotsError}
+            description={description}
+            publicData={publicData}
+            setFormattedUnitPrice={setFormattedUnitPrice}
+            updatedTotalPrice={updatedTotalPrice}
+            startDate={startDate}
+            endDate={endDate}
+            updateDates={updateDates}
+            updateGlampers={updateGlampers}
+            calculatePrice={calculatePrice}
           />
         ) : null}
       </ModalInMobile>
@@ -144,10 +162,10 @@ const BookingPanel = props => {
             <FormattedMessage id="BookingPanel.ctaButtonMessage" />
           </Button>
         ) : (
-          <div className={css.closedListingButton}>
-            <FormattedMessage id="BookingPanel.closedListingButtonText" />
-          </div>
-        )}
+            <div className={css.closedListingButton}>
+              <FormattedMessage id="BookingPanel.closedListingButtonText" />
+            </div>
+          )}
       </div>
     </div>
   );

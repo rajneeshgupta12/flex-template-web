@@ -23,12 +23,17 @@ const EditListingCapacityPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    guestNumber,
+    maxGuestNumber,
+    bedsNumber,
+    bedroomsNumber,
+    bathroomsNumber,
+    updateCapacityValues,
+    history,
   } = props;
-
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const { publicData } = currentListing.attributes;
-
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -36,24 +41,20 @@ const EditListingCapacityPanel = props => {
       values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
-    <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
-  );
-
-  const amenities = publicData && publicData.amenities;
-  const initialValues = { amenities };
-
+      <FormattedMessage id="EditListingCapacityPanel.createListingTitle" />
+    );
+  const initialValues = {};
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingCapacityForm
+        history={history}
         className={css.form}
         name={CAPACITY_NAME}
         initialValues={initialValues}
-        onSubmit={values => {
-          const { amenities = [] } = values;
-
+        onSubmit={() => {
           const updatedValues = {
-            publicData: { amenities },
+            publicData: { capacity: { bedsNumber, guestNumber, maxGuestNumber,bathroomsNumber, bedroomsNumber } },
           };
           onSubmit(updatedValues);
         }}
@@ -62,10 +63,16 @@ const EditListingCapacityPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        guestNumber={(guestNumber) || 1}
+        maxGuestNumber={(maxGuestNumber) || 1}
+        bedsNumber={(bedsNumber) || 0}
+        bedroomsNumber={(bedroomsNumber ) || 0}
+        bathroomsNumber={(bathroomsNumber) || 0}
+        updateCapacityValues={updateCapacityValues}
       />
     </div>
   );
-};
+}
 
 EditListingCapacityPanel.defaultProps = {
   rootClassName: null,

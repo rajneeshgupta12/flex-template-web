@@ -40,3 +40,121 @@
     margin-top: 100px;
   }
 }
+
+.dropWrapper {
+  position: relative;
+  margin-top: 5px;
+}
+
+.dropHeader {
+  padding: 15px;
+  padding-left: 40px;
+  border: solid 1px #e6e6e6;
+  border-radius: 4px;
+  width: 250px;
+  height: 65px;
+}
+
+.dropHeaderTitle{
+  display:  inline-block;
+}
+
+.dropIcon {
+  position: relative;
+  float: right;
+  top: 5px;
+}
+
+.dropHeaderItem {
+  position: relative;
+}
+
+.headerItemImage {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  top: -8px;
+  left: -20px;
+}
+
+.headerItemTitle {
+  left: 35px;
+  position: relative;
+}
+
+.listWrapper{
+  width: 670px;
+  position: absolute;
+  z-index: 10;
+
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-basis: auto 0 0 ;
+    background-color: white;
+
+  height: 430px;
+  width: 670px;
+  padding-top: 40px;
+  padding-left: 44px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+.listItem{
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 30px;
+
+}
+
+.listItem:hover .listItemImage{
+    -webkit-filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+  filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+
+}
+
+.listItemImage{
+  width: 46px;
+  height: 46px;
+}
+
+.listItemSelectedImage {
+  composes: listItemImage;
+  -webkit-filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+  filter: brightness(3.5) hue-rotate(205deg) saturate(10);
+}
+
+.itemText{
+  position: relative;
+}
+
+.itemGhostText {
+  position: relative;
+  color: transparent;
+  font-weight: bold;
+  bottom: 5px;
+
+  left: 3px;
+
+   -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+.listItemText {
+  position: absolute;
+  text-align: center;
+  bottom: 5px;
+  left: 3px;
+}
+
+.listItemTextSelected {
+  composes: listItemText;
+  font-weight: bold;
+}

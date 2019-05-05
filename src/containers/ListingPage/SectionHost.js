@@ -17,14 +17,21 @@ const SectionHost = props => {
     sendEnquiryInProgress,
     onSubmitEnquiry,
     currentUser,
+    author,
     onManageDisableScrolling,
+    listingAuthorName
   } = props;
+
+  let includedRelationships = props && props.listing && props.listing.includedRelationships
+  let userArrayIndex = includedRelationships.map(function (x) { return x.type; }).indexOf('user');
+  let userObj = includedRelationships[userArrayIndex];
   return (
     <div id="host" className={css.sectionHost}>
       <h2 className={css.yourHostHeading}>
         <FormattedMessage id="ListingPage.yourHostHeading" />
       </h2>
-      <UserCard user={listing.author} currentUser={currentUser} onContactUser={onContactUser} />
+      <UserCard {...props}
+        user={userObj} listingAuthorName={listingAuthorName} author={author} currentUser={currentUser} onContactUser={onContactUser} />
       <Modal
         id="ListingPage.enquiry"
         contentClassName={css.enquiryModalContent}
