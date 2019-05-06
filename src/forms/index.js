@@ -22,6 +22,7 @@ export { default as PasswordRecoveryForm } from './PasswordRecoveryForm/Password
 export { default as PasswordResetForm } from './PasswordResetForm/PasswordResetForm';
 export { default as PayoutDetailsForm } from './PayoutDetailsForm/PayoutDetailsForm';
 export { default as PriceFilterForm } from './PriceFilterForm/PriceFilterForm';
+export { default as NumberFilterForm } from './NumberFilterForm/NumberFilterForm';
 export { default as ProfileSettingsForm } from './ProfileSettingsForm/ProfileSettingsForm';
 export { default as ReviewForm } from './ReviewForm/ReviewForm';
 export { default as SendMessageForm } from './SendMessageForm/SendMessageForm';

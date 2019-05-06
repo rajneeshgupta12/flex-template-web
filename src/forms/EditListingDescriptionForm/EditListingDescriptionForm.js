@@ -7,6 +7,8 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { nonEmptyArray, maxLength, required, composeValidators, } from '../../util/validators';
+import AvatarEditor from 'react-avatar-editor'
+
 import { Field } from 'react-final-form'
 import isEqual from 'lodash/isEqual';
 import { Form, Button, AddImages, FieldTextInput, ValidationError } from '../../components';
@@ -44,7 +46,31 @@ export class EditListingDescriptionFormComponent extends Component {
       [e.target.name]: e.target.value
     })
   }
+  onClickSave = () => {
+    if (this.editor) {
+      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
+      // drawn on another canvas, or added to the DOM.
+      const canvas = this.editor.getImage()
 
+      // If you want the image resized to the canvas size (also a HTMLCanvasElement)
+      const canvasScaled = this.editor.getImageScaledToCanvas()
+    }
+  }
+
+  setEditorRef = (editor) => this.editor = editor;
+
+  getImageEditor = (file) => {
+    return <div>
+      <AvatarEditor
+        ref={(editor) => this.setEditorRef(editor)}
+        image={file}
+        width={250}
+        height={250}
+        border={50}
+        scale={1.2}
+      />
+    </div>
+  }
 
   render() {
     if (this.props.initialValues && !this.props.initialValues.description
@@ -299,6 +325,7 @@ export class EditListingDescriptionFormComponent extends Component {
                     const { name } = input;
                     const onChange = e => {
                       const file = e.target.files[0];
+                      this.getImageEditor(file);
                       form.change(`addImage`, file);
                       form.blur(`addImage`);
                       onImageUploadHandler(file);

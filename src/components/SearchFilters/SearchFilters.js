@@ -11,6 +11,7 @@ import {
   SelectSingleFilter,
   SelectMultipleFilter,
   PriceFilter,
+  NumberFilter
 } from '../../components';
 import routeConfiguration from '../../routeConfiguration';
 import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
@@ -45,18 +46,19 @@ const initialPriceRangeValue = (queryParams, paramName) => {
 };
 
 const initialDateRangeValue = (queryParams, paramName) => {
-  if(queryParams.endDate && queryParams.startDate){
-  const startDate = queryParams['startDate'];
-  const endDate = queryParams['endDate'];
-  const rawValuesFromParams = [startDate, endDate];
-  const valuesFromParams = rawValuesFromParams.map(v => parseDateFromISO8601(v));
-  const initialValues =
-    valuesFromParams.length === 2
-      ? {
-        dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
-      }
-      : { dates: null };
-  return initialValues;}
+  if (queryParams.endDate && queryParams.startDate) {
+    const startDate = queryParams['startDate'];
+    const endDate = queryParams['endDate'];
+    const rawValuesFromParams = [startDate, endDate];
+    const valuesFromParams = rawValuesFromParams.map(v => parseDateFromISO8601(v));
+    const initialValues =
+      valuesFromParams.length === 2
+        ? {
+          dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
+        }
+        : { dates: null };
+    return initialValues;
+  }
 };
 
 const SearchFiltersComponent = props => {
@@ -148,6 +150,17 @@ const SearchFiltersComponent = props => {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
+  const handleNumber = (urlParam, range) => {
+    console.log('urlParam, range-------',urlParam, range)
+    const { minPrice, maxPrice } = range || {};
+    const queryParams =
+      minPrice != null && maxPrice != null
+        ? { ...urlQueryParams, [urlParam]: `${minPrice},${maxPrice}` }
+        : omit(urlQueryParams, urlParam);
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  };
+
   const handleDateRange = (urlParam, dateRange) => {
     const hasDates = dateRange && dateRange.dates;
     const { startDate, endDate } = hasDates ? dateRange.dates : {};
@@ -162,89 +175,102 @@ const SearchFiltersComponent = props => {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
-  const categoryFilterElement = categoryFilter ? (
-    <SelectSingleFilter
-      urlParam={categoryFilter.paramName}
-      label={glampersLabel}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={categoryFilter.options}
-      initialValue={initialCategory}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
+  const categoryFilterElement =
+    categoryFilter ? (
+      <NumberFilter
+        id={glampersLabel}
+        urlParam={priceFilter.paramName}
+        onSubmit={handleNumber}
+        showAsPopup={true}
+        {...priceFilter.config}
+        // initialValues={initialPriceRange}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+
+      // urlParam={categoryFilter.paramName}
+      // label={glampersLabel}
+      // onSelect={handleSelectOption}
+      // showAsPopup
+      // options={categoryFilter.options}
+      // initialValue={initialCategory}
+      // contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
 
   const oasisTypeFilterElement = categoryFilter ? (
-    <SelectSingleFilter
+    <SelectMultipleFilter
       urlParam={categoryFilter.paramName}
       label={oasisTypeLabel}
+      name={'oasisType'}
       onSelect={handleSelectOption}
       showAsPopup
       options={[
 
-          {
-            "key": '_0',
-            "label": "Bell Tent",
-          },
-          {
-            "key": '_1',
-            "label": "Safari Tent",
-          },
-          {
-            "key": '_2',
-            "label": "Tipi",
-          },
-          {
-            "key": '_3',
-            "label": "Yurt",
-          },
-          {
-            "key": '_4',
-            "label": "Igloo/Dome",
-          },
-          {
-            "key": '_5',
-            "label": "RV Camper",
-          },
-          {
-            "key": '_6',
-            "label": "Treehouse",
-          },
-          {
-            "key": '_7',
-            "label": "Tiny House",
-          },
-          {
-            "key": '_8',
-            "label": "Cabin",
-          },
-          {
-            "key": '_9',
-            "label": "Hut",
-          },
-          {
-            "key": '_10',
-            "label": "Sheperd's Hut",
-          },
-          {
-            "key": '_11',
-            "label": "Glamping Pod",
-          },
-          {
-            "key": '_12',
-            "label": "Boat/Yacht",
-          }
+        {
+          "key": '_0',
+          "label": "Bell Tent",
+        },
+        {
+          "key": '_1',
+          "label": "Safari Tent",
+        },
+        {
+          "key": '_2',
+          "label": "Tipi",
+        },
+        {
+          "key": '_3',
+          "label": "Yurt",
+        },
+        {
+          "key": '_4',
+          "label": "Igloo/Dome",
+        },
+        {
+          "key": '_5',
+          "label": "RV Camper",
+        },
+        {
+          "key": '_6',
+          "label": "Treehouse",
+        },
+        {
+          "key": '_7',
+          "label": "Tiny House",
+        },
+        {
+          "key": '_8',
+          "label": "Cabin",
+        },
+        {
+          "key": '_9',
+          "label": "Hut",
+        },
+        {
+          "key": '_10',
+          "label": "Sheperd's Hut",
+        },
+        {
+          "key": '_11',
+          "label": "Glamping Pod",
+        },
+        {
+          "key": '_12',
+          "label": "Boat/Yacht",
+        }
       ]}
       // initialValue={initialCategory}
+      onSubmit={handleSelectOptions}
+
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
 
   const themeFilterElement = categoryFilter ? (
-    <SelectSingleFilter
+    <SelectMultipleFilter
       urlParam={categoryFilter.paramName}
       label={themeLabel}
       onSelect={handleSelectOption}
+      name={'theme'}
       showAsPopup
       options={[
         { key: 'couple_friendly', label: 'Couple Friendly' },
@@ -253,6 +279,8 @@ const SearchFiltersComponent = props => {
         { key: 'pet_friendly', label: 'Pet Friendly' },
       ]}
       // initialValue={initialCategory}
+      onSubmit={handleSelectOptions}
+
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;

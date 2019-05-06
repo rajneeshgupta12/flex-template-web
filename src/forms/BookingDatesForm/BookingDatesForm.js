@@ -153,6 +153,8 @@ export class BookingDatesFormComponent extends Component {
           const submitButtonClasses = classNames(
             submitButtonWrapperClassName || css.submitButtonWrapper
           );
+          console.log('maxGuestNumber00000',this.props && this.props.publicData && this.props.publicData.capacity && this.props.publicData.capacity.maxGuestNumber
+          )
           return (
 
             <Form onSubmit={handleSubmit} className={classes}>
