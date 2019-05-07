@@ -18,32 +18,33 @@ import subwayIcon from '../../assets/Sub.png';
 import trainIcon from '../../assets/Train.png';
 import parkingIcon from '../../assets/Parking.png';
 
-import libraryIcon from '../../assets/Library.png';
-import movieIcon from '../../assets/Movie.png';
-import theaterIcon from '../../assets/Theater.png';
-import museumIcon from '../../assets/Art.png';
-import artIcon from '../../assets/Art.png';
+import libraryIcon from '../../assets/LibraryB.png';
+import movieIcon from '../../assets/MovieB.png';
+import theaterIcon from '../../assets/TheaterB.png';
+import museumIcon from '../../assets/HistoricB.png';
+import artIcon from '../../assets/ArtB.png';
 
-import lakeIcon from '../../assets/Lake.png';
-import beachIcon from '../../assets/Lake.png';
-import parkIcon from '../../assets/Park.png';
-import mountainIcon from '../../assets/Mountain.png';
-import riverIcon from '../../assets/Mountain.png';
-import desertIcon from '../../assets/Mountain.png';
+import lakeIcon from '../../assets/LakeB.png';
+import beachIcon from '../../assets/LakeB.png';
+import parkIcon from '../../assets/ForestB.png';
+import mountainIcon from '../../assets/MountainB.png';
+import riverIcon from '../../assets/MountainB.png';
+import desertIcon from '../../assets/MountainB.png';
 
-import restaurantIcon from '../../assets/Bar.png';
-import barIcon from '../../assets/Bar.png';
-import cafeIcon from '../../assets/Cafe.png';
-import groceryIcon from '../../assets/Grocery.png';
-import hospitalIcon from '../../assets/Medical.png';
-import airportIcon from '../../assets/Airport.png';
-import shoppingIcon from '../../assets/Shopping.png';
-import gymIcon from '../../assets/Gym.png';
+import restaurantIcon from '../../assets/RestaurantB.png';
+import barIcon from '../../assets/BarB.png';
+import cafeIcon from '../../assets/CafeB.png';
+import groceryIcon from '../../assets/GroceryB.png';
+import hospitalIcon from '../../assets/HospitalB.png';
+import airportIcon from '../../assets/AirportB.png';
+import shoppingIcon from '../../assets/ShoppingB.png';
+import gymIcon from '../../assets/GymB.png';
 
-import wineryIcon from '../../assets/Winery.png';
-import breweryIcon from '../../assets/Brewery.png';
-import roasteryIcon from '../../assets/Roastery.png';
-import zooIcon from '../../assets/Zoo.png';
+import wineryIcon from '../../assets/WineryB.png';
+import breweryIcon from '../../assets/BreweryB.png';
+import roasteryIcon from '../../assets/RoasteryB.png';
+import zooIcon from '../../assets/ZooB.png';
+import tourIcon from '../../assets/SightB.png';
 
 
 
@@ -71,44 +72,50 @@ const IconCheck = props => {
 };
 
 const Item = props => {
-  const { label, ID, isSelected } = props;
+  const { label, ID, category, isSelected } = props;
   const labelClass = isSelected ? css.selectedLabel : css.notSelectedLabel;
+  console.log(category + isSelected);
+  if (!isSelected && (category === 'Culture' || category === 'Nature' || category === 'tour'))
+    return;
+  else 
   return (
+
     <li className={css.item}>
       <span className={css.iconWrapper}>
 
         { ID === 'ride_service' ? <img src={rideIcon} className={css.transportationIcon}/>
         : ID === 'bus' ? <img src={busIcon} className={css.transportationIcon}/>
-        : ID === 'subway' ? <img src={subwayIcon} className={css.transportationIcon}/>
+        : ID === 'subway' ? <img src={subwayIcon} style={{bottom: '-1px'}} className={css.transportationIcon}/>
         : ID === 'train' ? <img src={trainIcon} className={css.transportationIcon}/>
         : ID === 'parking_available' ? <img src={parkingIcon} className={css.transportationIcon}/>
 
-        : ID === 'library' ? <img src={libraryIcon} className={css.transportationIcon}/>
-        : ID === 'movie_theater' ? <img src={movieIcon} className={css.transportationIcon}/>
-        : ID === 'theater' ? <img src={theaterIcon} className={css.transportationIcon}/>
-        : ID === 'museum' ? <img src={museumIcon} className={css.transportationIcon}/>
-        : ID === 'art_gallery' ? <img src={artIcon} className={css.transportationIcon}/>
+        : ID === 'library' ? <div className={css.circle}> <img src={libraryIcon} className={css.facilityIcon}/></div>
+        : ID === 'movie_theater' ? <div className={css.circle}><img src={movieIcon} className={css.facilityIcon}/></div>
+        : ID === 'theater' ?<div className={css.circle}> <img src={theaterIcon} className={css.facilityIcon}/></div>
+        : ID === 'museum' ? <div className={css.circle}><img src={museumIcon} className={css.facilityIcon}/></div>
+        : ID === 'art_gallery' ? <div className={css.circle}><img src={artIcon} className={css.facilityIcon}/></div>
 
-        : ID === 'lake' ? <img src={lakeIcon} className={css.transportationIcon}/>
-        : ID === 'beach' ? <img src={beachIcon} className={css.transportationIcon}/>
-        : ID === 'park' ? <img src={parkIcon} className={css.transportationIcon}/>
-        : ID === 'mountain' ? <img src={mountainIcon} className={css.transportationIcon}/>
-        : ID === 'river' ? <img src={riverIcon} className={css.transportationIcon}/>
-        : ID === 'desert' ? <img src={desertIcon} className={css.transportationIcon}/>
+        : ID === 'lake' ? <div className={css.circle}><img src={lakeIcon} className={css.facilityIcon}/></div>
+        : ID === 'beach' ? <div className={css.circle}><img src={beachIcon} className={css.facilityIcon}/></div>
+        : ID === 'park' ? <div className={css.circle}><img src={parkIcon} className={css.facilityIcon}/></div>
+        : ID === 'mountain' ? <div className={css.circle}><img src={mountainIcon} className={css.facilityIcon}/></div>
+        : ID === 'river' ? <div className={css.circle}><img src={riverIcon} className={css.facilityIcon}/></div>
+        : ID === 'desert' ? <div className={css.circle}><img src={desertIcon} className={css.facilityIcon}/></div>
 
-        : ID === 'restaurant' ? <img src={restaurantIcon} className={css.transportationIcon}/>
-        : ID === 'bar' ? <img src={barIcon} className={css.transportationIcon}/>
-        : ID === 'cafe' ? <img src={cafeIcon} className={css.transportationIcon}/>
-        : ID === 'grocery_store' ? <img src={groceryIcon} className={css.transportationIcon}/>
-        : ID === 'hospital' ? <img src={hospitalIcon} className={css.transportationIcon}/>
-        : ID === 'airport' ? <img src={airportIcon} className={css.transportationIcon}/>
-        : ID === 'shopping_mall' ? <img src={shoppingIcon} className={css.transportationIcon}/>
-        : ID === 'gym' ? <img src={gymIcon} className={css.transportationIcon}/>
+        : ID === 'restaurant' ? <div className={css.circle}><img src={restaurantIcon} className={css.facilityIcon} /></div>        
+        : ID === 'bar' ? <div className={css.circle}><img src={barIcon} className={css.facilityIcon}/></div>
+        : ID === 'cafe' ? <div className={css.circle}><img src={cafeIcon} className={css.facilityIcon}/></div>
+        : ID === 'grocery_store' ?<div className={css.circle}> <img src={groceryIcon} className={css.facilityIcon}/></div>
+        : ID === 'hospital' ? <div className={css.circle}><img src={hospitalIcon} className={css.facilityIcon}/></div>
+        : ID === 'airport' ? <div className={css.circle}><img src={airportIcon} className={css.facilityIcon}/></div>
+        : ID === 'shopping_mall' ? <div className={css.circle}><img src={shoppingIcon} className={css.facilityIcon}/></div>
+        : ID === 'gym' ? <div className={css.circle}><img src={gymIcon} className={css.facilityIcon}/></div>
 
-        : ID === 'winery' ? <img src={wineryIcon} className={css.transportationIcon}/>
-        : ID === 'brewery' ? <img src={breweryIcon} className={css.transportationIcon}/>
-        : ID === 'roastery' ? <img src={roasteryIcon} className={css.transportationIcon}/>
-        : ID === 'zoo' ? <img src={zooIcon} className={css.transportationIcon}/>
+        : ID === 'winery' ?<div className={css.circle}> <img src={wineryIcon} className={css.facilityIcon}/></div>
+        : ID === 'brewery' ? <div className={css.circle}><img src={breweryIcon} className={css.facilityIcon}/></div>
+        : ID === 'roastery' ? <div className={css.circle}><img src={roasteryIcon} className={css.facilityIcon}/></div>
+        : ID === 'zoo' ? <div className={css.circle}><img src={zooIcon} className={css.facilityIcon}/></div>
+        : ID === 'tour_spot' ? <div className={css.circle}><img src={tourIcon} className={css.facilityIcon}/></div>
 
 
         : <IconCheck isVisible={isSelected} />
@@ -131,7 +138,7 @@ const OnlyVisiblePropertyGroup = props => {
   return (
     <ul className={listClasses}>
       {checked.map(option => (
-        <Item key={`${id}.${option.key}`} ID={option.key} label={option.label} isSelected={option.isSelected} />
+        <Item category={id} key={`${id}.${option.key}`} ID={option.key} label={option.label} isSelected={option.isSelected} />
       ))}
     </ul>
   );

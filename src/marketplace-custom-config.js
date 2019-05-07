@@ -98,7 +98,7 @@ export const amenities_glamping = [
 ];
 
 export const available_transportaion = [
-  { key: 'ride_service', label: 'Ride Service', hasInput: true, inputKeyName: "ride_service_text" },
+  { key: 'ride_service', label: 'Ride Share', hasInput: true, inputKeyName: "ride_service_text" },
   { key: 'bus', label: 'Bus', hasInput: true, inputKeyName: "bus_text" },
   { key: 'subway', label: 'Subway', hasInput: true, inputKeyName: "subway_text" },
   { key: 'train', label: 'Train', hasInput: true, inputKeyName: "train_text" },
@@ -107,42 +107,42 @@ export const available_transportaion = [
 
 export const facilities_culture = [
   { key: 'library', label: 'Library' },
-  { key: 'movie_theater', label: 'Movie theater' },
-  { key: 'theater', label: 'Theater(performance, concert)' },
+  { key: 'movie_theater', label: 'Movie Theater' },
+  { key: 'theater', label: 'Theater' },
   { key: 'museum', label: 'Museum' },
-  { key: 'art_gallery', label: 'Art gallery' }
+  { key: 'art_gallery', label: 'Art Gallery' }
 ];
 
 export const facilities_nature = [
-  { key: 'lake', label: 'lake' },
-  { key: 'beach', label: 'beach' },
-  { key: 'park', label: 'park' },
-  { key: 'mountain', label: 'mountain' },
-  { key: 'river', label: 'river' },
-  { key: 'desert', label: 'desert' }
+  { key: 'lake', label: 'Lake' },
+  { key: 'beach', label: 'Beach' },
+  { key: 'park', label: 'Park' },
+  { key: 'mountain', label: 'Mountain' },
+  { key: 'river', label: 'River' },
+  { key: 'desert', label: 'Desert' }
 ];
 
 export const facilities_convenience = [
-  { key: 'restaurant', label: 'restaurant' },
-  { key: 'bar', label: 'bar' },
-  { key: 'cafe', label: 'cafe' },
-  { key: 'grocery_store', label: 'grocery store' },
-  { key: 'hospital', label: 'hospital' },
-  { key: 'airport', label: 'airport' },
-  { key: 'shopping_mall', label: 'shopping mall' },
-  { key: 'gym', label: 'gym' },
+  { key: 'restaurant', label: 'Restaurant' },
+  { key: 'bar', label: 'Bar' },
+  { key: 'cafe', label: 'Cafe' },
+  { key: 'grocery_store', label: 'Grocery store' },
+  { key: 'hospital', label: 'Hospital' },
+  { key: 'airport', label: 'Airport' },
+  { key: 'shopping_mall', label: 'Shopping Mall' },
+  { key: 'gym', label: 'Gym' },
 ];
 
 export const facilities_tour = [
-  { key: 'winery', label: 'winery' },
-  { key: 'brewery', label: 'brewery' },
-  { key: 'roastery', label: 'roastery' },
-  { key: 'zoo', label: 'zoo' },
-  { key: 'amusement_park', label: 'amusement park' },
-  { key: 'market_flea_farmers', label: 'flea market/farmers market mall' },
-  { key: 'tower', label: 'tower' },
-  { key: 'historical_building_area', label: 'historical building/area' },
-  { key: 'regional_tour_spot', label: 'regional tour spot' },
+  { key: 'winery', label: 'Winery' },
+  { key: 'brewery', label: 'Brewery' },
+  { key: 'roastery', label: 'Roastery' },
+  { key: 'zoo', label: 'Zoo' },
+  { key: 'amusement_park', label: 'Amusement Park' },
+  { key: 'market_flea_farmers', label: 'Farmers Market' },
+  { key: 'tower', label: 'Tower' },
+  { key: 'historical_building_area', label: 'Historic Places' },
+  { key: 'tour_spot', label: 'Tour Spot' },
 ];
 
 export const categories = [

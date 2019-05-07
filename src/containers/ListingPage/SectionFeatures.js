@@ -48,33 +48,35 @@ const SectionFeatures = props => {
       />
       <br />
 
-      <div className={css.row}>
-        <div className={css.column} >
-          <label>Culture</label>
-          <OnlyVisiblePropertyGroup
-            id="Culture"
-            options={cultureAmenitiesConfig}
-            selectedOptions={travel_info.facilities_culture}
-            fiveColumns={true}
-          />
-        </div>
+      <div className={css.facilityContainer}>
+        <div className={css.rowContainer} >
+          <div className={css.column}>
+            <label className={css.centerLabel}>Culture</label>
+            <OnlyVisiblePropertyGroup
+              id="Culture"
+              options={cultureAmenitiesConfig}
+              selectedOptions={travel_info.facilities_culture}
+              fiveColumns={true}
+            />
+          </div>
+          
+          <div className={css.column} >
+            <label className={css.centerLabel}>Nature</label>
 
-        <div className={css.column} >
-          <label>Nature</label>
-
-          <OnlyVisiblePropertyGroup
-            id="Nature"
-            options={natureAmenitiesConfig}
-            selectedOptions={travel_info.facilities_nature}
-            fiveColumns={true}
-          />
+            <OnlyVisiblePropertyGroup
+              id="Nature"
+              options={natureAmenitiesConfig}
+              selectedOptions={travel_info.facilities_nature}
+              fiveColumns={true}
+            />
+          </div>
         </div>
       </div>
       <br />
 
-      <div className={css.row}>
+      <div className={css.rowContainer}>
         <div className={css.column} >
-          <label>Convenience</label>
+          <label className={css.centerLabel}>Convenience</label>
 
           <OnlyVisiblePropertyGroup
             id="Convenience"
@@ -85,7 +87,7 @@ const SectionFeatures = props => {
         </div>
 
         <div className={css.column} >
-          <label>tour</label>
+          <label className={css.centerLabel}>Tour</label>
           <OnlyVisiblePropertyGroup
             id="tour"
             options={tourAmenitiesConfig}

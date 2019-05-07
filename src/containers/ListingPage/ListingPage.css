@@ -587,15 +587,36 @@
 
 
 /* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-}
+
 
 /* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
   clear: both;
+}
+
+.facilityContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  background-color: #ffffff;
+  width: 290px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 20px;
+  box-shadow: 2px 2px 2px #dddddd;
+}
+
+.centerLabel {
+  align-self: center;
+  text-align: center;
 }

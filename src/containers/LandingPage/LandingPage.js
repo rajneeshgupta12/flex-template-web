@@ -192,7 +192,7 @@ export class LandingPageComponent extends Component {
                   </div>
                 </li>
               }  {
-                isloggedin &&
+                isloggedin && props.result.LandingPage && props.result.LandingPage.visitedOasises &&
                 <li className={css.section}>
                   <div className={css.sectionContent}>
                     <SectionHistory user={isloggedin} {...props}
