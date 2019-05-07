@@ -176,8 +176,9 @@
   display: flex;
   align-items: center;
   color: grey;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   position: relative;
+  margin-top: 5px;
 }
 
 .typeName {
@@ -304,6 +305,7 @@
   margin: auto 0;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   width: 640px;
 }
 
@@ -312,6 +314,7 @@
   flex-direction: column;
   text-align: center;
   justify-content: center;
+  margin-right: 40px;
 }
 
 
@@ -330,7 +333,6 @@
   flex-direction: column;
   justify-content: space-between;
   width: 350px;
-  margin: 0 auto;
 }
 
 .tabs {
