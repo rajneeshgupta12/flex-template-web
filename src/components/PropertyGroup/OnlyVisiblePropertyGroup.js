@@ -74,10 +74,9 @@ const IconCheck = props => {
 const Item = props => {
   const { label, ID, category, isSelected } = props;
   const labelClass = isSelected ? css.selectedLabel : css.notSelectedLabel;
-  console.log(category + isSelected);
   if (!isSelected && (category === 'Culture' || category === 'Nature' || category === 'tour'))
     return;
-  else 
+  else
   return (
 
     <li className={css.item}>
@@ -102,7 +101,7 @@ const Item = props => {
         : ID === 'river' ? <div className={css.circle}><img src={riverIcon} className={css.facilityIcon}/></div>
         : ID === 'desert' ? <div className={css.circle}><img src={desertIcon} className={css.facilityIcon}/></div>
 
-        : ID === 'restaurant' ? <div className={css.circle}><img src={restaurantIcon} className={css.facilityIcon} /></div>        
+        : ID === 'restaurant' ? <div className={css.circle}><img src={restaurantIcon} className={css.facilityIcon} /></div>
         : ID === 'bar' ? <div className={css.circle}><img src={barIcon} className={css.facilityIcon}/></div>
         : ID === 'cafe' ? <div className={css.circle}><img src={cafeIcon} className={css.facilityIcon}/></div>
         : ID === 'grocery_store' ?<div className={css.circle}> <img src={groceryIcon} className={css.facilityIcon}/></div>

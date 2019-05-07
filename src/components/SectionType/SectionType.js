@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
-import {withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import { NamedLink } from '../../components';
 
@@ -59,14 +59,14 @@ const locationLink = (name, image, searchQuery, title, topMargin, grey = false) 
     opacity: grey ? 0.5 : 1
   };
   return (
-    <NamedLink name="SearchPage" to={{ search: searchQuery }} className={css.location}>
+    <NamedLink key={Math.random()} name="SearchPage" to={{ search: searchQuery }} className={css.location}>
       <div className={css.circleImage}>
-      
+
         <div className={css.imageContainer} style={imageStyle}>
 
           <div className={css.imageWrapper}>
             <div className={css.aspectWrapper}>
-                 <LazyImage src={image} alt={name} className={css.locationImage} />
+              <LazyImage src={image} alt={name} className={css.locationImage} />
             </div>
           </div>
         </div>
@@ -109,44 +109,70 @@ class SectionType extends React.Component {
   getLinks = (selectedLinks) => {
     let links = [], allStyles = [
 
-      { link: locationLink('Bell Tent', tentImage, '?pub_property_type_id=0', 'Romantic', 3),
-        colorLink: locationLink('Bell Tent', tentImageColor, '?pub_property_type_id=0', 'Romantic', 3), id: 0 },
+      {
+        link: locationLink('Bell Tent', tentImage, '?pub_property_type_id=0', 'Romantic', 3),
+        colorLink: locationLink('Bell Tent', tentImageColor, '?pub_property_type_id=0', 'Romantic', 3), id: 0
+      },
 
-      { link: locationLink('Safari Tent', safariImage, '?pub_property_type_id=1', 'Calm', 3),
-        colorLink: locationLink('Safari Tent', safariImageColor, '?pub_property_type_id=1', 'Calm', 3), id: 1 },
+      {
+        link: locationLink('Safari Tent', safariImage, '?pub_property_type_id=1', 'Calm', 3),
+        colorLink: locationLink('Safari Tent', safariImageColor, '?pub_property_type_id=1', 'Calm', 3), id: 1
+      },
 
-      { link: locationLink('Tipi', tipiImage, '?pub_property_type_id=2', 'Convienent', 2),
-        colorLink: locationLink('Tipi', tipiImageColor, '?pub_property_type_id=2', 'Convienent', 2), id: 2 },
+      {
+        link: locationLink('Tipi', tipiImage, '?pub_property_type_id=2', 'Convienent', 2),
+        colorLink: locationLink('Tipi', tipiImageColor, '?pub_property_type_id=2', 'Convienent', 2), id: 2
+      },
 
-      { link: locationLink('Yurt', yurtImage, '?pub_property_type_id=3', 'Great View', 3),
-        colorLink: locationLink('Yurt', yurtImageColor, '?pub_property_type_id=3', 'Great View', 3), id: 3 },
+      {
+        link: locationLink('Yurt', yurtImage, '?pub_property_type_id=3', 'Great View', 3),
+        colorLink: locationLink('Yurt', yurtImageColor, '?pub_property_type_id=3', 'Great View', 3), id: 3
+      },
 
-      { link: locationLink('Dome', iglooImage, '?pub_property_type_id=4', 'Isolated', 3),
-        colorLink: locationLink('Dome', iglooImageColor, '?pub_property_type_id=4', 'Isolated', 3), id: 4 },
+      {
+        link: locationLink('Dome', iglooImage, '?pub_property_type_id=4', 'Isolated', 3),
+        colorLink: locationLink('Dome', iglooImageColor, '?pub_property_type_id=4', 'Isolated', 3), id: 4
+      },
 
-      { link: locationLink('RV', rvImage, '?pub_property_type_id=5', 'Isolated', 7),
-        colorLink: locationLink('RV', rvImageColor, '?pub_property_type_id=5', 'Isolated', 7), id: 5 },
+      {
+        link: locationLink('RV', rvImage, '?pub_property_type_id=5', 'Isolated', 7),
+        colorLink: locationLink('RV', rvImageColor, '?pub_property_type_id=5', 'Isolated', 7), id: 5
+      },
 
-      { link: locationLink('Treehouse', treeImage, '?pub_property_type_id=6', 'Isolated', 10),
-        colorLink: locationLink('Treehouse', treeImageColor, '?pub_property_type_id=6', 'Isolated', 10), id: 6 },
+      {
+        link: locationLink('Treehouse', treeImage, '?pub_property_type_id=6', 'Isolated', 10),
+        colorLink: locationLink('Treehouse', treeImageColor, '?pub_property_type_id=6', 'Isolated', 10), id: 6
+      },
 
-      { link: locationLink('Tiny house', tinyImage, '?pub_property_type_id=7', 'Isolated', 0),
-        colorLink: locationLink('Tiny house', tinyImageColor, '?pub_property_type_id=7', 'Isolated', 0), id: 7 },
+      {
+        link: locationLink('Tiny house', tinyImage, '?pub_property_type_id=7', 'Isolated', 0),
+        colorLink: locationLink('Tiny house', tinyImageColor, '?pub_property_type_id=7', 'Isolated', 0), id: 7
+      },
 
-      { link: locationLink('Cabin', cabinImage, '?pub_property_type_id=8', 'Isolated', 5),
-        colorLink: locationLink('Cabin', cabinImageColor, '?pub_property_type_id=8', 'Isolated', 5), id: 8 },
+      {
+        link: locationLink('Cabin', cabinImage, '?pub_property_type_id=8', 'Isolated', 5),
+        colorLink: locationLink('Cabin', cabinImageColor, '?pub_property_type_id=8', 'Isolated', 5), id: 8
+      },
 
-      { link: locationLink('Hut', hutImage, '?pub_property_type_id=9', 'Isolated', 7),
-        colorLink: locationLink('Hut', hutImageColor, '?pub_property_type_id=9', 'Isolated', 7), id: 9 },
+      {
+        link: locationLink('Hut', hutImage, '?pub_property_type_id=9', 'Isolated', 7),
+        colorLink: locationLink('Hut', hutImageColor, '?pub_property_type_id=9', 'Isolated', 7), id: 9
+      },
 
-      { link: locationLink('Shepherd\'s Hut', shepherdImage, '?pub_property_type_id=10', 'Isolated', 7),
-        colorLink: locationLink('Shepherd\'s Hut', shepherdImageColor, '?pub_property_type_id=10', 'Isolated', 7), id: 10 },
+      {
+        link: locationLink('Shepherd\'s Hut', shepherdImage, '?pub_property_type_id=10', 'Isolated', 7),
+        colorLink: locationLink('Shepherd\'s Hut', shepherdImageColor, '?pub_property_type_id=10', 'Isolated', 7), id: 10
+      },
 
-      { link: locationLink('Pod', podImage, '?pub_property_type_id=11', 'Isolated', 7),
-        colorLink: locationLink('Pod', podImageColor, '?pub_property_type_id=11', 'Isolated', 7), id: 11 },
+      {
+        link: locationLink('Pod', podImage, '?pub_property_type_id=11', 'Isolated', 7),
+        colorLink: locationLink('Pod', podImageColor, '?pub_property_type_id=11', 'Isolated', 7), id: 11
+      },
 
-      { link: locationLink('Boat', yachtImage, '?pub_property_type_id=12', 'Isolated', 7),
-        colorLink: locationLink('Boat', yachtImageColor, '?pub_property_type_id=12', 'Isolated', 7), id: 12 },
+      {
+        link: locationLink('Boat', yachtImage, '?pub_property_type_id=12', 'Isolated', 7),
+        colorLink: locationLink('Boat', yachtImageColor, '?pub_property_type_id=12', 'Isolated', 7), id: 12
+      },
 
     ]
     allStyles.forEach(style => {
@@ -155,9 +181,9 @@ class SectionType extends React.Component {
       }
     })
     allStyles.forEach(style => {
-      if (links.indexOf(style.colorLink) < 0){
-      links.push(style.link)
-    }
+      if (links.indexOf(style.colorLink) < 0) {
+        links.push(style.link)
+      }
     })
     return [...new Set(links)]
   }
@@ -180,10 +206,10 @@ class SectionType extends React.Component {
         <div className={css.title}>
           <FormattedMessage id="SectionType.title" />
         </div>
-        <Fab onClick={() => this.click("left")} style={{position:'absolute', left:'5%', zIndex:'2', outline:'none', marginTop: 'calc((100px /2) - 56px/2)'}}className={classes.leftArrow}>
+        <Fab onClick={() => this.click("left")} style={{ position: 'absolute', left: '5%', zIndex: '2', outline: 'none', marginTop: 'calc((100px /2) - 56px/2)' }} className={classes.leftArrow}>
           <Icon>arrow_back</Icon>
         </Fab>
-        <Fab onClick={() => this.click("right")} style={{position:'absolute', right: '5%', zIndex:'2', outline:'none', marginTop: 'calc((100px /2) - 56px/2)'}} className={classes.rightArrow}>
+        <Fab onClick={() => this.click("right")} style={{ position: 'absolute', right: '5%', zIndex: '2', outline: 'none', marginTop: 'calc((100px /2) - 56px/2)' }} className={classes.rightArrow}>
           <Icon>arrow_forward</Icon>
         </Fab>
         <div className={css.rowWrapper}>

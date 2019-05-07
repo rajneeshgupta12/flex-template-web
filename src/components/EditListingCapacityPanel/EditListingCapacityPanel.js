@@ -54,7 +54,7 @@ const EditListingCapacityPanel = props => {
         initialValues={initialValues}
         onSubmit={() => {
           const updatedValues = {
-            publicData: { capacity: { bedsNumber, guestNumber, maxGuestNumber,bathroomsNumber, bedroomsNumber } },
+            publicData: { max_guest_number:maxGuestNumber,capacity: { bedsNumber, guestNumber, maxGuestNumber,bathroomsNumber, bedroomsNumber } },
           };
           onSubmit(updatedValues);
         }}

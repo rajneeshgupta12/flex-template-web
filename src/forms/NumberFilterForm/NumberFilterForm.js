@@ -42,7 +42,7 @@ class NumberFilterFormComponent extends React.Component {
 
 
   render() {
-    const { liveEdit, onChange, onSubmit, onCancel, onClear, ...rest } = this.props;
+    const { liveEdit, onChange, onSubmit, onCancel, onClear, updateSearch,...rest } = this.props;
 
     if (liveEdit && !onChange) {
       throw new Error('NumberFilterForm: if liveEdit is true you need to provide onChange function');
@@ -156,7 +156,6 @@ class NumberFilterFormComponent extends React.Component {
                     component="input"
                     type="number"
 
-                   defaultValue={this.state.value}
                   />
                 </div>
               </div>
@@ -191,7 +190,7 @@ class NumberFilterFormComponent extends React.Component {
                     <button className={css.cancelButton} type="button" onClick={handleCancel}>
                       {cancel}
                     </button>
-                    <button className={css.submitButton} type="submit">
+                    <button onClick={()=>updateSearch(this.state.value)} className={css.submitButton} type="submit">
                       {submit}
                     </button>
                   </div>
@@ -226,7 +225,7 @@ NumberFilterFormComponent.propTypes = {
   onCancel: func,
   onChange: func,
   onClear: func,
-  onSubmit: func,
+  // onSubmit: func,
   isOpen: bool,
   contentRef: func,
   style: object,

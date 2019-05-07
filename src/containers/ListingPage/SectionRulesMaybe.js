@@ -21,6 +21,7 @@ const SectionRulesMaybe = props => {
     }
   }
   const { className, rootClassName, publicData } = props;
+  console.log('publicData---', publicData)
   const classes = classNames(rootClassName || css.root, className);
   return publicData.glamping_rules ? (
     <div className={classes}>
@@ -28,6 +29,16 @@ const SectionRulesMaybe = props => {
         <FormattedMessage id="ListingPage.rulesTitle" />
       </h2>
       <p className={css.rules}>{publicData.glamping_rules}</p>
+      <br />
+      <h2 className={css.title}>
+        <FormattedMessage id="ListingPage.CCTime" />
+      </h2>
+      <ul>
+        <li>Check-in Time</li>
+        <li>{publicData.check_in_time}</li>
+        <li>Check-out Time</li>
+        <li>{publicData.check_out_time}</li>
+      </ul>
       <br />
       <div>
         <h2 className={css.title}>

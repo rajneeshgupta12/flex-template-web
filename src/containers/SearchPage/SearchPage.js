@@ -53,11 +53,83 @@ export class SearchPageComponent extends Component {
 
   filters() {
     const { categories, place, priceFilterConfig, dateRangeFilterConfig } = this.props;
-
+    const oasisTypeOptions =
+    [
+      {
+        "key": "0",
+        "label": "Bell Tent",
+      },
+      {
+        "key": "1",
+        "label": "Safari Tent",
+      },
+      {
+        "key": "2",
+        "label": "Tipi",
+      },
+      {
+        "key": "3",
+        "label": "Yurt",
+      },
+      {
+        "key": "4",
+        "label": "Igloo/Dome",
+      },
+      {
+        "key": "5",
+        "label": "RV Camper",
+      },
+      {
+        "key": "6",
+        "label": "Treehouse",
+      },
+      {
+        "key": "7",
+        "label": "Tiny House",
+      },
+      {
+        "key": "8",
+        "label": "Cabin",
+      },
+      {
+        "key": "9",
+        "label": "Hut",
+      },
+      {
+        "key": "10",
+        "label": "Sheperd's Hut",
+      },
+      {
+        "key": "11",
+        "label": "Glamping Pod",
+      },
+      {
+        "key": "12",
+        "label": "Boat/Yacht",
+      }
+    ]
     return {
       categoryFilter: {
         paramName: 'pub_glampers',
         options: categories,
+      },
+      glamperFilter: {
+        paramName: 'pub_glampers',
+        options: categories,
+      },
+
+      themeFilter: {
+        paramName: 'pub_place_theme',
+        options: [
+          { key: 'couple_friendly', label: 'Couple Friendly' },
+          { key: 'family_friendly', label: 'Family Friendly' },
+          { key: 'for_single_trip', label: 'Single Trip' },
+          { key: 'pet_friendly', label: 'Pet Friendly' },
+        ],
+      },
+      oasisTypeFilter: {
+        paramName: 'pub_property_type_id',
+        options: oasisTypeOptions,
       },
       placeFilter: {
         paramName: 'pub_place',
@@ -212,6 +284,9 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
               categoryFilter: filters.categoryFilter,
+              glamperFilter: filters.glamperFilter,
+              oasisTypeFilter: filters.oasisTypeFilter,
+              themeFilter: filters.themeFilter,
               placeFilter: filters.placeFilter,
               priceFilter: filters.priceFilter,
               dateRangeFilter: filters.dateRangeFilter,

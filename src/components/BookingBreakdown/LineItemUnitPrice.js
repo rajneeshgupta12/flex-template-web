@@ -4,6 +4,7 @@ import { formatMoney } from '../../util/currency';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import moment from 'moment';
 import { Modal, Button } from '../../components';
+import LineItemBookingPeriod from './LineItemBookingPeriod';
 
 import css from './BookingBreakdown.css';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -48,7 +49,7 @@ class LineItemUnitPrice extends React.Component {
   }
 
   render() {
-    const { transaction, unitType, intl, otherCharges, totalAmount, publicData, totalGlampers } = this.props;
+    const { transaction, booking, unitType, intl, otherCharges, totalAmount, publicData, totalGlampers } = this.props;
     const isNightly = unitType === LINE_ITEM_NIGHT;
     const isDaily = unitType === LINE_ITEM_DAY;
     const translationKey = isNightly
@@ -86,24 +87,6 @@ class LineItemUnitPrice extends React.Component {
     let totalPrice = 0
     return (
       <div>
-        <div onClick={() => {
-          this.setState({ showDetails: !this.state.showDetails })
-        }}>
-          ?
-        </div>
-        <Modal id="UniqueIdForThisModal" isOpen={this.state.showDetails} onClose={() => {
-          this.setState({ showDetails: !this.state.showDetails })
-        }} onManageDisableScrolling={() => { }} >
-          Base price breakdown
-          <ul>
-            {totalAmountDetails.map(days => {
-              totalPrice += days.charge / 100
-              return <li> {moment(days.selectedDay).format("ll")} ${days.charge / 100}</li>
-            })}
-          </ul>
-          <hr />
-          Total Base price {totalPrice}
-        </Modal>
         <div className={css.lineItem}>
           <span className={css.itemLabel}>
             <FormattedMessage id={translationKey} />
@@ -111,6 +94,8 @@ class LineItemUnitPrice extends React.Component {
           <span className={css.itemValue}>{formattedUnitPrice}</span>
 
         </div>
+
+        <LineItemBookingPeriod transaction={transaction} booking={booking} unitType={unitType} />
         {otherCharges && otherCharges.cleaning_fee &&
           <div className={css.lineItem}>
             <span className={css.itemLabel}>
@@ -126,15 +111,71 @@ class LineItemUnitPrice extends React.Component {
         </span>
             <span className={css.itemValue}>{formattedExtraGuestFee}</span> /Head
           </div>
-        }    {otherCharges && otherCharges.tax && <div className={css.lineItem}>
+        }
+        {otherCharges && otherCharges.tax && <div className={css.lineItem}>
           <span className={css.itemLabel}>
             Tax
         </span>
           <span className={css.itemValue}>{otherCharges.tax}%</span>
         </div>
         }
+        <div onClick={() => {
+          this.setState({ showDetails: !this.state.showDetails })
+        }}>
+          Show price details
+        </div>
+        <Modal id="UniqueIdForThisModal" isOpen={this.state.showDetails} onClose={() => {
+          this.setState({ showDetails: !this.state.showDetails })
+        }} onManageDisableScrolling={() => { }} >
+          Base price breakdown
+          <ul>
+            {totalAmountDetails.map(days => {
+              totalPrice += days.charge / 100
+              return <li key={Math.random()}> {moment(days.selectedDay).format("ll")} ${days.charge / 100}</li>
+            })}
+          </ul>
+          <hr />
+          <strong> Total Base price {totalPrice}</strong>
+          <hr />
+          {otherCharges && otherCharges.cleaning_fee &&
+            <div className={css.lineItem}>
+              <span className={css.itemLabel}>
+                <strong>   Cleaning Fee</strong>
+              </span>
+              <span className={css.itemValue}> <strong>{formattedCleaningFee}</strong></span>
+            </div>
+          }
+          <hr />
+          {otherCharges && otherCharges.extra_guest_fee && totalExtraGuests > 0 &&
+            <div className={css.lineItem}>
+              <span className={css.itemLabel}>
+                <strong>Extra Guest Fee</strong>
+              </span>
+              <span className={css.itemValue}><strong>{formattedExtraGuestFee}</strong>
+              </span> /Head
+          </div>
+          }
+          <hr />
 
-      </div>
+          {otherCharges && otherCharges.tax && <div className={css.lineItem}>
+            <span className={css.itemLabel}>
+              <strong>    Tax</strong>
+            </span>
+            <span className={css.itemValue}><strong>{otherCharges.tax}%</strong></span>
+          </div>
+          }
+          <hr />
+
+          <div>
+            <span className={css.itemLabel}>
+              <strong> Service fee</strong>
+            </span>
+            <strong>   <span className={css.itemValue}>10%</span></strong>
+          </div>
+          <hr />
+          <strong>Total Base price{totalPrice}</strong>
+        </Modal>
+      </div >
     );
   };
 };

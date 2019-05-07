@@ -63,14 +63,15 @@ const EditListingAvailabilityPanel = props => {
         availability={availability}
         availabilityPlan={availabilityPlan}
         onSubmit={(values) => {
-          let { check_in_time, check_out_time, availability_period } = values
+          let { check_in_time = 'Flexible', check_out_time = "Flexible", availability_period = 'indefinite', isInstaBookingAllow = [] } = values
           // We save the default availability plan
           // I.e. this listing is available every night.
           // Exceptions are handled with live edit through a calendar,
           // which is visible on this panel.
+          isInstaBookingAllow = isInstaBookingAllow && isInstaBookingAllow.length > 0 ? true : false
           onSubmit({
             availabilityPlan, publicData: {
-              check_in_time, check_out_time, availability_period
+              check_in_time, check_out_time, availability_period, insta_book: isInstaBookingAllow
             }
           });
         }}

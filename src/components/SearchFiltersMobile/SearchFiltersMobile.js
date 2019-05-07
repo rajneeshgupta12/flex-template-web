@@ -227,18 +227,18 @@ class SearchFiltersMobileComponent extends Component {
 
     const initialAmenities = this.initialValues(placeFilter.paramName);
 
-    const placeFilterElement = placeFilter ? (
-      <SelectMultipleFilter
-        id="SearchFiltersMobile.placeFilter"
-        name="amenities"
-        urlParam={placeFilter.paramName}
-        label={amenitiesLabel}
-        onSubmit={this.handleSelectMultiple}
-        liveEdit
-        options={placeFilter.options}
-        initialValues={initialAmenities}
-      />
-    ) : null;
+    // const placeFilterElement = placeFilter ? (
+    //   <SelectMultipleFilter
+    //     id="SearchFiltersMobile.placeFilter"
+    //     name="amenities"
+    //     urlParam={placeFilter.paramName}
+    //     label={amenitiesLabel}
+    //     onSubmit={this.handleSelectMultiple}
+    //     liveEdit
+    //     options={placeFilter.options}
+    //     initialValues={initialAmenities}
+    //   />
+    // ) : null;
 
     const initialPriceRange = this.initialPriceRangeValue(priceFilter.paramName);
 
@@ -300,7 +300,7 @@ class SearchFiltersMobileComponent extends Component {
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
               {categoryFilterElement}
-              {placeFilterElement}
+              {/* {placeFilterElement} */}
               {priceFilterElement}
               {dateRangeFilterElement}
             </div>
@@ -325,8 +325,8 @@ SearchFiltersMobileComponent.defaultProps = {
   selectedFiltersCount: 0,
   filterParamNames: [],
   categoryFilter: null,
-  placeFilter: null,
-  priceFilter: null,
+  // placeFilter: null,
+  // priceFilter: null,
   dateRangeFilter: null,
 };
 
@@ -345,8 +345,8 @@ SearchFiltersMobileComponent.propTypes = {
   selectedFiltersCount: number,
   filterParamNames: array,
   categoriesFilter: propTypes.filterConfig,
-  placeFilter: propTypes.filterConfig,
-  priceFilter: propTypes.filterConfig,
+  // placeFilter: propTypes.filterConfig,
+  // priceFilter: propTypes.filterConfig,
   dateRangeFilter: propTypes.filterConfig,
 
   // from injectIntl

@@ -6,7 +6,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput, FieldRadioButton, FieldTextInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldRadioButton, FieldTextInput, FieldDateRangeInput } from '../../components';
 import css from './EditListingPricingForm.css';
 import React, { Component } from 'react';
 import { compose } from 'redux';
@@ -115,7 +115,6 @@ export class EditListingPricingFormComponent extends Component {
         const submitDisabled = invalid || disabled || submitInProgress;
         const { updateListingError, showListingsError } = fetchErrors || {};
         const showAsRequired = pristine;
-
         return (
           <Form onSubmit={handleSubmit} className={classes}>
             {updateListingError ? (
@@ -202,15 +201,17 @@ export class EditListingPricingFormComponent extends Component {
                     placeholder={pricePlaceholderMessage}
                     currencyConfig={config.currencyConfig}
                   /><label> $ per night</label>
-                  <DateRangePicker
-                    startDate={this.state.startDateSeasonal} // momentPropTypes.momentObj or null,
-                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-                    endDate={this.state.endDateSeasonal} // momentPropTypes.momentObj or null,
-                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                    onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })} // PropTypes.func.isRequired,
-                    focusedInput={this.state.focusedInputSeasonal} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  <FieldDateRangeInput
+                    startDate={this.state.startDateSeasonal}
+                    name={"seasonal_price_date"}
+                    unitType={unitType}
+                    startDateId={"seasonal_price_start_date_id"}
+                    endDate={this.state.endDateSeasonal}
+                    endDateId={"seasonal_price_end_date_id"}
+                    updateDates={({ startDate, endDate }) => this.setState({ "startDateSeasonal": startDate, "endDateSeasonal": endDate })}
+                    focusedInput={this.state.focusedInputSeasonal}
                     numberOfMonths={1}
-                    onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })} // PropTypes.func.isRequired,
+                    onFocusChange={focusedInput => this.setState({ focusedInputSeasonal: focusedInput })}
                   />
                 </div>
                 <div onClick={() => {
@@ -241,27 +242,29 @@ export class EditListingPricingFormComponent extends Component {
               + Special price
             </div>{this.state.special_price &&
               <div>
-              <div>
-                <FieldCurrencyInput
-                  id="special_price"
-                  name="special_price"
-                  className={css.priceInput}
-                  label={""}
-                  placeholder={pricePlaceholderMessage}
-                  currencyConfig={config.currencyConfig}
-                /><label> $ per night</label>
-                <DateRangePicker
-                  startDate={this.state.startDateSpecial} // momentPropTypes.momentObj or null,
-                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-                  endDate={this.state.endDateSpecial} // momentPropTypes.momentObj or null,
-                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                  onDatesChange={({ startDate, endDate }) => this.setState({ "startDateSpecial": startDate, "endDateSpecial": endDate })} // PropTypes.func.isRequired,
-                  focusedInput={this.state.focusedInputSpecial} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  numberOfMonths={1}
-                  onFocusChange={focusedInput => this.setState({ focusedInputSpecial: focusedInput })} // PropTypes.func.isRequired,
-                />
-              </div>
-                 <div onClick={() => {
+                <div>
+                  <FieldCurrencyInput
+                    id="special_price"
+                    name="special_price"
+                    className={css.priceInput}
+                    label={""}
+                    placeholder={pricePlaceholderMessage}
+                    currencyConfig={config.currencyConfig}
+                  /><label> $ per night</label>
+                  <FieldDateRangeInput
+                    startDate={this.state.startDateSpecial}
+                    name={"special_price_date"}
+                    unitType={unitType}
+                    startDateId={"special_price_start_date_id"}
+                    endDate={this.state.endDateSpecial}
+                    endDateId={"special_price_end_date_id"}
+                    updateDates={({ startDate, endDate }) => this.setState({ "startDateSpecial": startDate, "endDateSpecial": endDate })}
+                    focusedInput={this.state.focusedInputSpecial}
+                    numberOfMonths={1}
+                    onFocusChange={focusedInput => this.setState({ focusedInputSpecial: focusedInput })}
+                  />
+                </div>
+                <div onClick={() => {
                   this.updateState("special_weekend")
                 }}>
                   + Special weekend Price

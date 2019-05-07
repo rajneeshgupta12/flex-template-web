@@ -44,7 +44,8 @@ const estimatedTotalPrice = (unitPrice, unitCount, otherCharges, totalPrice = 10
   const numericPrice = (totalPrice / 100).toFixed(2);
   let numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
   numericTotalPrice += totalExtraGuestsFee
-  numericTotalPrice += Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount / 100)
+  numericTotalPrice = Number(otherCharges && otherCharges.cleaning_fee && otherCharges.cleaning_fee.amount && otherCharges.cleaning_fee.amount / 100) || 0 +
+    numericTotalPrice;
   let taxRate = Number(otherCharges && otherCharges.tax);
   numericTotalPrice += (taxRate / 100 * numericTotalPrice)
   numericTotalPrice = numericTotalPrice.toFixed(2)
@@ -79,7 +80,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
     totalExtraGuestsFee *= (unitCount)
   };
 
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount,  otherCharges, averagePrice, totalExtraGuestsFee);
+  const totalPrice = estimatedTotalPrice(unitPrice, unitCount, otherCharges, averagePrice, totalExtraGuestsFee);
   // bookingStart: "Fri Mar 30 2018 12:00:00 GMT-1100 (SST)" aka "Fri Mar 30 2018 23:00:00 GMT+0000 (UTC)"
   // Server normalizes night/day bookings to start from 00:00 UTC aka "Thu Mar 29 2018 13:00:00 GMT-1100 (SST)"
   // The result is: local timestamp.subtract(12h).add(timezoneoffset) (in eg. -23 h)

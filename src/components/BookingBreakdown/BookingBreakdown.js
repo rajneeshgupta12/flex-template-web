@@ -25,7 +25,7 @@ import LineItemTotalPrice from './LineItemTotalPrice';
 import css from './BookingBreakdown.css';
 
 export const BookingBreakdownComponent = props => {
-  const { rootClassName, className, userRole, totalAmount, unitType, transaction, booking, intl, otherCharges, allowedGuestNumber, allowedMaxGuestNumber, totalGlampers, publicData,setFormattedUnitPrice,
+  const { rootClassName, className, userRole, totalAmount, unitType, transaction, booking, intl, otherCharges, allowedGuestNumber, allowedMaxGuestNumber, totalGlampers, publicData, setFormattedUnitPrice,
     updatedTotalPrice } = props;
 
   const isCustomer = userRole === 'customer';
@@ -39,21 +39,21 @@ export const BookingBreakdownComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
-        <LineItemUnitPrice
-          publicData={publicData}
-          allowedGuestNumber={allowedGuestNumber}
-          allowedMaxGuestNumber={allowedMaxGuestNumber}
-          totalAmount={totalAmount}
-          transaction={transaction}
-          otherCharges={otherCharges}
-          totalGlampers={totalGlampers}
-          unitType={unitType}
-          intl={intl}
-          setFormattedUnitPrice={setFormattedUnitPrice}
-          updatedTotalPrice={updatedTotalPrice}
-        />
+      <LineItemUnitPrice
+        booking={booking}
+        publicData={publicData}
+        allowedGuestNumber={allowedGuestNumber}
+        allowedMaxGuestNumber={allowedMaxGuestNumber}
+        totalAmount={totalAmount}
+        transaction={transaction}
+        otherCharges={otherCharges}
+        totalGlampers={totalGlampers}
+        unitType={unitType}
+        intl={intl}
+        setFormattedUnitPrice={setFormattedUnitPrice}
+        updatedTotalPrice={updatedTotalPrice}
+      />
 
-      <LineItemBookingPeriod transaction={transaction} booking={booking} unitType={unitType} />
       <LineItemUnitsMaybe transaction={transaction} unitType={unitType} />
 
       <LineItemSubTotalMaybe

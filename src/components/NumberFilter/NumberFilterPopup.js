@@ -29,6 +29,7 @@ class NumberFilterPopup extends Component {
   }
 
   handleSubmit(values) {
+    console.log('values----',values)
     const { onSubmit, urlParam } = this.props;
     this.setState({ isOpen: false });
     onSubmit(urlParam, values);
@@ -103,6 +104,7 @@ class NumberFilterPopup extends Component {
       step,
       intl,
       currencyConfig,
+      updateSearch
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
     const { minNumber, maxNumber } = initialValues || {};
@@ -149,6 +151,7 @@ class NumberFilterPopup extends Component {
           min={min}
           max={max}
           step={step}
+          updateSearch={updateSearch}
           showAsPopup
           isOpen={this.state.isOpen}
         />

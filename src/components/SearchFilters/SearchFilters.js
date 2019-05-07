@@ -70,6 +70,7 @@ const SearchFiltersComponent = props => {
     resultsCount,
     searchInProgress,
     categoryFilter,
+    oasisTypeFilter,
     amenitiesFilter,
     priceFilter,
     dateRangeFilter,
@@ -77,6 +78,7 @@ const SearchFiltersComponent = props => {
     toggleSearchFiltersPanel,
     searchFiltersPanelSelectedCount,
     history,
+    themeFilter,
     intl,
   } = props;
 
@@ -112,6 +114,16 @@ const SearchFiltersComponent = props => {
   const initialCategory = categoryFilter
     ? initialValue(urlQueryParams, categoryFilter.paramName)
     : null;
+
+  const initialoasisType = oasisTypeFilter
+    ? initialValue(urlQueryParams, oasisTypeFilter.paramName)
+    : null;
+
+  const initialtheme = themeFilter
+    ? initialValue(urlQueryParams, themeFilter.paramName)
+    : null;
+
+
 
   const initialPriceRange = priceFilter
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
@@ -149,9 +161,14 @@ const SearchFiltersComponent = props => {
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
+  const updateSearch = (glampers) => {
+    console.log('updateSearch--', glampers)
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, {'pub_max_guest_number':`${glampers}`}));
+  }
 
   const handleNumber = (urlParam, range) => {
-    console.log('urlParam, range-------',urlParam, range)
+    console.log('urlParam, range-------', urlParam, range)
     const { minPrice, maxPrice } = range || {};
     const queryParams =
       minPrice != null && maxPrice != null
@@ -180,7 +197,8 @@ const SearchFiltersComponent = props => {
       <NumberFilter
         id={glampersLabel}
         urlParam={priceFilter.paramName}
-        onSubmit={handleNumber}
+        onSubmit={()=>{}}
+        updateSearch={updateSearch}
         showAsPopup={true}
         {...priceFilter.config}
         // initialValues={initialPriceRange}
@@ -195,90 +213,47 @@ const SearchFiltersComponent = props => {
       // contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
       />
     ) : null;
+    const oasisTypeFilterElement = oasisTypeFilter ? (
+      <SelectMultipleFilter
+        urlParam={oasisTypeFilter.paramName}
+        label={oasisTypeLabel}
+        name={'oasisType'}
+        id={'oasisType'}
+        onSelect={handleSelectOption}
+        showAsPopup
+        options={oasisTypeFilter.options}
+        initialValue={initialoasisType}
+        onSubmit={handleSelectOptions}
 
-  const oasisTypeFilterElement = categoryFilter ? (
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+    const instaBookingFilterElement =      <SelectMultipleFilter
+        urlParam={oasisTypeFilter.paramName}
+        label={"Insta Booking"}
+        name={'insta-booking'}
+        id={'insta-booking'}
+        onSelect={handleSelectOption}
+        showAsPopup
+        options={[]}
+        initialValue={initialoasisType}
+        onSubmit={handleSelectOptions}
+
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+
+
+
+  const themeFilterElement = themeFilter ? (
     <SelectMultipleFilter
-      urlParam={categoryFilter.paramName}
-      label={oasisTypeLabel}
-      name={'oasisType'}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={[
-
-        {
-          "key": '_0',
-          "label": "Bell Tent",
-        },
-        {
-          "key": '_1',
-          "label": "Safari Tent",
-        },
-        {
-          "key": '_2',
-          "label": "Tipi",
-        },
-        {
-          "key": '_3',
-          "label": "Yurt",
-        },
-        {
-          "key": '_4',
-          "label": "Igloo/Dome",
-        },
-        {
-          "key": '_5',
-          "label": "RV Camper",
-        },
-        {
-          "key": '_6',
-          "label": "Treehouse",
-        },
-        {
-          "key": '_7',
-          "label": "Tiny House",
-        },
-        {
-          "key": '_8',
-          "label": "Cabin",
-        },
-        {
-          "key": '_9',
-          "label": "Hut",
-        },
-        {
-          "key": '_10',
-          "label": "Sheperd's Hut",
-        },
-        {
-          "key": '_11',
-          "label": "Glamping Pod",
-        },
-        {
-          "key": '_12',
-          "label": "Boat/Yacht",
-        }
-      ]}
-      // initialValue={initialCategory}
-      onSubmit={handleSelectOptions}
-
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const themeFilterElement = categoryFilter ? (
-    <SelectMultipleFilter
-      urlParam={categoryFilter.paramName}
+      urlParam={themeFilter.paramName}
       label={themeLabel}
       onSelect={handleSelectOption}
       name={'theme'}
+      id={'theme'}
       showAsPopup
-      options={[
-        { key: 'couple_friendly', label: 'Couple Friendly' },
-        { key: 'family_friendly', label: 'Family Friendly' },
-        { key: 'for_single_trip', label: 'Single Trip' },
-        { key: 'pet_friendly', label: 'Pet Friendly' },
-      ]}
-      // initialValue={initialCategory}
+      options={themeFilter.options}
+      initialValue={initialtheme}
       onSubmit={handleSelectOptions}
 
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
@@ -348,6 +323,7 @@ const SearchFiltersComponent = props => {
         {oasisTypeFilterElement}
         {priceFilterElement}
         {themeFilterElement}
+        {instaBookingFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
 

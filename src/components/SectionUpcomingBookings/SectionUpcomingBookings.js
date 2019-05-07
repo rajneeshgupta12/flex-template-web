@@ -41,7 +41,6 @@ const RecItemHost = props => {
   let title = bookedListing.attributes && bookedListing.attributes.title;
   let guestName = user && user.attributes.profile.displayName.split(' ')
   guestName = guestName && guestName.length > 0 && guestName[0] || '';
-  console.log('booking----', booking)
   let customerImageId = user && user.relationships && user.relationships.profileImage && user.relationships.profileImage.data && user.relationships.profileImage.data.id.uuid
   let customerProfileImage = result.marketplaceData.entities.image[customerImageId];
   if (user)
@@ -92,7 +91,6 @@ const RecItemHost = props => {
               <AvatarLarge className={css.avatar} user={user} listing={listing} />
             </div>
             <span>
-              {console.log('--------user', user)}
               {guestName}
             </span>
           </div>
@@ -120,7 +118,6 @@ const RecItemHost = props => {
 
 const SectionUpcomingBookings = props => {
   const { rootClassName, className, result, isGetBookingListingCalled, getBookingListingCalled, getTxCalled, isGetTxCalled } = props;
-  console.log('result---------', result)
   const classes = classNames(rootClassName || css.root, className);
   const listings = result && result.LandingPage && result.LandingPage.ownListings && result.LandingPage.ownListings.data;
 
@@ -156,7 +153,9 @@ const SectionUpcomingBookings = props => {
             <div>
               {bookedOasis.map((booking, idx) => {
                 if (idx === 0)
-                  return <RecItemHost booking={booking.booking}
+                  return <RecItemHost
+                  key={idx}
+                   booking={booking.booking}
                     bookedlistingId={allBookings.listingId}
                     listings={allListings}
                     bookedListing={booking.bookedListing}
@@ -184,61 +183,3 @@ SectionUpcomingBookings.propTypes = {
 
 export default SectionUpcomingBookings;
 
-
-/*
-
-
-        <div className={css.carouselWrapper}>
-          <Carousel interval={n}>
-            <Carousel.Item>
-              <div className={css.imageWrapper}>
-                <div className={css.aspectWrapper}>
-                  <img src={img && img.attributes && img.attributes.variants['landscape-crop'] && img.attributes.variants['landscape-crop'].url} className={css.imageContainer} />
-                </div>
-              </div>
-              <Carousel.Caption>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </div>
-        <div className={css.textWrapper}>
-          <div className={css.typeInfo}>
-            {
-              <img src={
-                bookedListing.attributes && bookedListing.attributes.publicData &&
-                bookedListing.attributes.publicData.property_type &&
-                bookedListing.attributes.publicData.property_type.type &&
-                bookedListing.attributes.publicData.property_type.type.image}
-                height="25" width="25"
-              />
-            }&nbsp;&nbsp;&nbsp;{bookedListing.attributes.publicData.property_type.type &&
-              bookedListing.attributes.publicData.property_type.type.title}
-            &nbsp;&nbsp;&nbsp;
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-              {title}
-            </strong>
-          </div>
-        </div>
-        <div>
-          <AvatarLarge className={css.avatar} user={user} listing={listing} />
-          <div className={css.typeInfo}>
-            {startDate} {startMonth}
-            ~
-            {endDate} {endMonth}
-          </div>
-          <div className={css.typeInfo}>
-            Check in {checkInTime} / Check out {checkOutTime}
-          </div>
-          <div className={css.titleInfo}>
-            <strong>
-            </strong>
-          </div>
-          <Link className={css.messageButton} to={`/sale/${tx}/details`}>
-            Message to the guest
-          </Link>
-          <div className={css.costInfo}>
-          </div>
-        </div>
-        */

@@ -17,7 +17,7 @@ export const validURLParamForExtendedData = (paramName, paramValue, filters) => 
   const filtersArray = Object.values(filters);
   // resolve configuration for this filter
   const filterConfig = filtersArray.find(f => f.paramName === paramName);
-
+  paramValue = paramValue && paramValue.toString()
   const valueArray = paramValue ? paramValue.split(',') : [];
 
   if (filterConfig && valueArray.length > 0) {
@@ -61,9 +61,9 @@ export const validFilterParams = (params, filters) => {
 
     return filterParamNames.includes(paramName)
       ? {
-          ...validParams,
-          ...validURLParamForExtendedData(paramName, paramValue, filters),
-        }
+        ...validParams,
+        ...validURLParamForExtendedData(paramName, paramValue, filters),
+      }
       : { ...validParams };
   }, {});
 };
@@ -86,9 +86,9 @@ export const validURLParamsForExtendedData = (params, filters) => {
 
     return filterParamNames.includes(paramName)
       ? {
-          ...validParams,
-          ...validURLParamForExtendedData(paramName, paramValue, filters),
-        }
+        ...validParams,
+        ...validURLParamForExtendedData(paramName, paramValue, filters),
+      }
       : { ...validParams, [paramName]: paramValue };
   }, {});
 };

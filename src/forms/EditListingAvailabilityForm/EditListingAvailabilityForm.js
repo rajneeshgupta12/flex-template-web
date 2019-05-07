@@ -5,7 +5,7 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { Form, Button, FieldSelect,FieldCheckboxGroup } from '../../components';
+import { Form, Button, FieldSelect, FieldCheckboxGroup } from '../../components';
 
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
 import css from './EditListingAvailabilityForm.css';
@@ -69,7 +69,7 @@ export class EditListingAvailabilityFormComponent extends Component {
             <option key={"10:00 PM"} value={"10:00 PM"}>  {"10:00 PM"} </option>,
             <option key={"11:00 PM"} value={"11:00 PM"}>  {"11:00 PM"} </option>,
           ]
-          const optionsQt = [{ key: "isAllowQT", label: 'Do you want to allow Multiple transaction process' }]
+          const optionsQt = [{ key: "isAllowQT", label: 'Do you want to allow Insta booking' }]
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               {errorMessage}
@@ -86,8 +86,8 @@ export class EditListingAvailabilityFormComponent extends Component {
                 id={"availability_period"}
                 label={"availability_period"}
               >
-                <option disabled value="">
-                  {"Default"}
+                <option selected value="indefinite">
+                  indefinite
                 </option>
                 <option key={"3"} value={"3"}> {"3 months later"} </option>,
                 <option key={"6"} value={"6"}>  {"6 months later"} </option>,
@@ -100,8 +100,8 @@ export class EditListingAvailabilityFormComponent extends Component {
                 id={"check_in_time"}
                 label={"check_in_time"}
               >
-                <option disabled value="">
-                  {"Check-in time"}
+                <option selected value="Flexible">
+                  Flexible
                 </option>
                 {options.map(option => {
                   return option
@@ -113,8 +113,8 @@ export class EditListingAvailabilityFormComponent extends Component {
                 id={"check_out_time"}
                 label={"check_out_time"}
               >
-                <option disabled value="">
-                  {"Check-out time"}
+                <option selected value="Flexible">
+                  Flexible
                 </option>
                 {options.map(option => {
                   return option
@@ -122,8 +122,8 @@ export class EditListingAvailabilityFormComponent extends Component {
               </FieldSelect>
               <FieldCheckboxGroup
                 className={css.features}
-                id={'isQuickIransactionAllow'}
-                name={'isQuickIransactionAllow'}
+                id={'isInstaBookingAllow'}
+                name={'isInstaBookingAllow'}
                 options={optionsQt}
               />
               <Button
